@@ -24,6 +24,10 @@ Airbnb, Inc. is one of the most well-known vacation rental platforms in the worl
 # Motivation
 A common challenge for many hosts is how to price their listing competitively compared to other listings in the same locale. This project aims to provide an application for airbnb hosts to identify whether they their prices are comparative to other accommodations, or too high/low.
 
+The abundance of Airbnb data provides us with a great opportunity to analyse clusters and geospatial clustering of rental units within Australia. It also allows us to review variables that lead towards better reviews and pricing through multilinear regression, and text analysis.
+
+Such analysis could benefit both potential hosts, and also policymakers, to ensure there is a balance between commercial and residential units in the property market.
+
 # Project Objectives
 * Develop an interactive application for end-users
 * Visual representation of accommodation listings by region
@@ -36,11 +40,14 @@ Timeline</br>![](images/Timeline.png)</br></br>
 # Proposed Scope and Methodology
 This project will focus on Australia as the location of interest.
 
-The methodology that will be used are:
-* Exploratory Data Analysis (EDA)
-* Cluster Analysis
-* Text Analytics
-* Development of an R-shiny app with interactive features
+![](images/australiamap.png)</br></br>
+
+The methodology that will be used are:</br>
+
+* Exploratory Data Analysis (EDA)</br>
+* Cluster Analysis</br>
+* Text Analytics</br>
+* Development of an R-shiny app with interactive features</br>
 
 # Application Features
 The application will consist of five main sections, one for each analysis approach.
@@ -85,3 +92,4 @@ These are the R packages used:
 # References
 * [Airbnb, Inc.](https://www.airbnb.com/)
 * [2021 Airbnb Statistics: Usage, Demographics, and Revenue Growth](https://www.stratosjets.com/blog/airbnb-statistics/) 
+* [Australian region boundaries in Tableau](https://blog.databender.net/2014/08/03/australian-region-boundaries-in-tableau/)
