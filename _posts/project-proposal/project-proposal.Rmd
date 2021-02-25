@@ -9,6 +9,7 @@ author:
 date: 02-28-2021
 output:
   distill::distill_article:
+    toc: true
     self_contained: false
 ---
 
@@ -27,6 +28,11 @@ A common challenge for many hosts is how to price their listing competitively co
 * Develop an interactive application for end-users
 * Visual representation of accommodation listings by region
 
+# Timeline of Project
+Our project timeline will be as follows
+
+Timeline</br>![](images/Timeline.png)</br></br>
+
 # Proposed Scope and Methodology
 This project will focus on Australia as the location of interest.
 
@@ -42,7 +48,7 @@ Exploratory Data Analysis</br>![](images/edasketch.png)</br></br>
 Cluster Analysis</br>![](images/clustersketch.png)</br></br>
 Spatial Cluster Analysis</br>![](images/spatialsketch.png)</br></br>
 Text Analysis</br>![](images/textsketch.png)</br></br>
-Multilinear Regression Analysis Analysis</br>![](images/mlrsketch.png)
+Multilinear Regression Analysis</br>![](images/mlrsketch.png)
 
 # Software Tool
 Tha interactive application, together with all documentation such as this project proposal and the final report will be written in R using [RStudio](https://rstudio.com/).
