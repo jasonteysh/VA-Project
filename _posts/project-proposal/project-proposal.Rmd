@@ -3,8 +3,8 @@ title: "Visual Analytics Project Proposal"
 description: |
   Proposal for the project work for this course.
 author:
-  - name: Jason TEY Shou Heng
   - name: Louelle TEO Fengmin
+  - name: Jason TEY Shou Heng
   - name: WONG Kian Hoong (Andy)
 date: 02-28-2021
 output:
@@ -19,10 +19,12 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 # Background
-Airbnb, Inc. is one of the most well-known vacation rental platforms in the world. With almost 3 million hosts listing over 7 million accommodations worldwide, airbnb is popular with holidaymakers for the wide availability of rental accommodations.
+Airbnb, Inc. is one of the most well-known vacation rental platforms in the world. With almost 3 million hosts listing over 7 million accommodations worldwide, Airbnb is popular with holidaymakers for the wide choice of rental accommodations that cater to different needs.
+
+Given the popularity of Airbnb to holidaymakers, people are also eager to list their accommodation for vacationers to stay in.
 
 # Motivation
-A common challenge for many hosts is how to price their listing competitively compared to other listings in the same locale. This project aims to provide an application for airbnb hosts to identify whether they their prices are comparative to other accommodations, or too high/low.
+A common challenge for many hosts is how to price their listing competitively compared to other listings in the same locale. This project aims to provide an application for Airbnb hosts to identify whether they their prices are comparative to other accommodations, or too high/low.
 
 The abundance of Airbnb data provides us with a great opportunity to analyse clusters and geospatial clustering of rental units within Australia. It also allows us to review variables that lead towards better reviews and pricing through multilinear regression, and text analysis.
 
@@ -85,8 +87,8 @@ These are the R packages used:
 * tmap: https://cran.r-project.org/web/packages/tmap
 
 # Team Members
-* Jason TEY Shou Heng
 * Louelle TEO Fengmin
+* Jason TEY Shou Heng
 * WONG Kian Hoong (Andy)
 
 # References
