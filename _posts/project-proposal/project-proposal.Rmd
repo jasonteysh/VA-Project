@@ -26,7 +26,7 @@ Given the popularity of Airbnb to holidaymakers, people are also eager to list t
 # Motivation
 A common challenge for many hosts is how to price their listing competitively in comparison to other listings in the same locale. This project aims to provide an application for Airbnb hosts to identify whether they their prices are comparative to other accommodations, too high or too low.
 
-The abundance of Airbnb data provides us with a great opportunity to perform clusters analysis and geospatial clustering of rental units within the geographical scope of this project. It also allows us to review variables that lead to better reviews and pricing stratgies through multilinear regression and text analysis.
+The abundance of Airbnb data provides us with a great opportunity to perform clusters analysis and geospatial clustering of rental units within the geographical scope of this project. It also allows us to review variables that lead to better reviews and pricing strategies through multilinear regression and text analysis.
 
 Such analysis could benefit potential hosts and policymakers, ensuring there is a balance between commercial and residential units in the property market.
 
@@ -74,7 +74,10 @@ These are the R packages used:
 * GWmodel: https://cran.r-project.org/web/packages/GWmodel
 * leaflet: https://cran.r-project.org/web/packages/leaflet
 * plotly: https://cran.r-project.org/web/packages/plotly
+* posterdown: https://cran.r-project.org/web/packages/posterdown
 * RColorBrewer: https://cran.r-project.org/web/packages/RColorBrewer
+* readr: https://cran.r-project.org/web/packages/readr
+* readxl: https://cran.r-project.org/web/packages/readxl
 * rgdal: https://cran.r-project.org/web/packages/rgdal
 * rgeos: https://cran.r-project.org/web/packages/rgeos
 * sf: https://cran.r-project.org/web/packages/sf
