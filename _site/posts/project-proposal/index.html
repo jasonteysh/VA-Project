@@ -118,7 +118,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["images/australiamap.png","images/clustersketch.png","images/edasketch.png","images/mlrsketch.png","images/spatialsketch.png","images/textsketch.png","images/Timeline.png","project-proposal_files/anchor-4.2.2/anchor.min.js","project-proposal_files/bowser-1.9.3/bowser.min.js","project-proposal_files/distill-2.2.21/template.v2.js","project-proposal_files/header-attrs-2.7/header-attrs.js","project-proposal_files/jquery-1.11.3/jquery.min.js","project-proposal_files/popper-2.6.0/popper.min.js","project-proposal_files/tippy-6.2.7/tippy-bundle.umd.min.js","project-proposal_files/tippy-6.2.7/tippy-light-border.css","project-proposal_files/tippy-6.2.7/tippy.css","project-proposal_files/tippy-6.2.7/tippy.umd.min.js","project-proposal_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["images/australiamap.png","images/clustersketch.png","images/edasketch.png","images/mlrsketch.png","images/spatialsketch.png","images/textsketch.png","images/Timeline.png","project-proposal_files/anchor-4.2.2/anchor.min.js","project-proposal_files/bowser-1.9.3/bowser.min.js","project-proposal_files/distill-2.2.21/template.v2.js","project-proposal_files/header-attrs-2.6/header-attrs.js","project-proposal_files/header-attrs-2.7/header-attrs.js","project-proposal_files/jquery-1.11.3/jquery.min.js","project-proposal_files/popper-2.6.0/popper.min.js","project-proposal_files/tippy-6.2.7/tippy-bundle.umd.min.js","project-proposal_files/tippy-6.2.7/tippy-light-border.css","project-proposal_files/tippy-6.2.7/tippy.css","project-proposal_files/tippy-6.2.7/tippy.umd.min.js","project-proposal_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -456,15 +456,8 @@ d-title {
   top: 0;
 }
 
-/* adjust viewport for navbar height */
-/* helps vertically center bootstrap (non-distill) content */
-.min-vh-100 {
-  min-height: calc(100vh - 100px) !important;
-}
-
 </style>
 
-<script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
 <link href="../../site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
 <link href="../../site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
 <script src="../../site_libs/headroom-0.9.4/headroom.min.js"></script>
@@ -572,21 +565,19 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
           var results = fuse.search(query, searchOptions);
           callback(results
             .map(function(result) { return result.item; })
+            .filter(function(item) { return !!item.description; })
           );
         },
         templates: {
           suggestion: function(suggestion) {
-            var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
-              ? `<img src="${offsetURL(suggestion.preview)}"</img>`
-              : '';
             var html = `
               <div class="search-item">
                 <h3>${suggestion.title}</h3>
                 <div class="search-item-description">
-                  ${suggestion.description || ''}
+                  ${suggestion.description}
                 </div>
                 <div class="search-item-preview">
-                  ${img}
+                  <img src="${suggestion.preview ? offsetURL(suggestion.preview) : ''}"</img>
                 </div>
               </div>
             `;
@@ -609,10 +600,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 
 <style type="text/css">
-
-.nav-search {
-  font-size: x-small;
-}
 
 /* Algolioa Autocomplete */
 
@@ -688,7 +675,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 }
 
 .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
-  font-size: 1rem;
   margin-block-start: 0;
   margin-block-end: 5px;
 }
@@ -916,11 +902,6 @@ d-article pre a:hover {
   text-decoration: underline;
 }
 
-d-article details {
-  grid-column: text;
-  margin-bottom: 0.8em;
-}
-
 @media(min-width: 768px) {
 
 d-article pre,
@@ -1075,17 +1056,6 @@ d-article .citation {
 
 div.hanging-indent{
   margin-left: 1em; text-indent: -1em;
-}
-
-/* Citation hover box */
-
-.tippy-box[data-theme~=light-border] {
-  background-color: rgba(250, 250, 250, 0.95);
-}
-
-.tippy-content > p {
-  margin-bottom: 0;
-  padding: 2px;
 }
 
 
@@ -1753,7 +1723,7 @@ function init_distill() {
     var layout = $(this).attr('data-layout');
 
     // apply layout to markdown level block elements
-    var elements = $(this).children().not('details, div.sourceCode, pre, script');
+    var elements = $(this).children().not('div.sourceCode, pre, script');
     elements.each(function(i, el) {
       var layout_div = $('<div class="' + layout + '"></div>');
       if (layout_div.hasClass('shaded')) {
@@ -1868,20 +1838,6 @@ function init_distill() {
     // move appendix-bottom entries to the bottom
     $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
     $('.appendix-bottom').remove();
-
-    // hoverable references
-    $('span.citation[data-cites]').each(function() {
-      var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
-      window.tippy(this, {
-        allowHTML: true,
-        content: refHtml,
-        maxWidth: 500,
-        interactive: true,
-        interactiveBorder: 10,
-        theme: 'light-border',
-        placement: 'bottom-start'
-      });
-    });
 
     // clear polling timer
     clearInterval(tid);
@@ -2042,12 +1998,8 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!--/radix_placeholder_distill-->
-  <script src="../../site_libs/header-attrs-2.7/header-attrs.js"></script>
+  <script src="../../site_libs/header-attrs-2.6/header-attrs.js"></script>
   <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
-  <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
-  <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
-  <link href="../../site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
-  <script src="../../site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
   <script src="../../site_libs/anchor-4.2.2/anchor.min.js"></script>
   <script src="../../site_libs/bowser-1.9.3/bowser.min.js"></script>
   <script src="../../site_libs/webcomponents-2.0.0/webcomponents.js"></script>
@@ -2121,12 +2073,16 @@ document.addEventListener('DOMContentLoaded', function() {
 </nav>
 </div>
 <h1 id="background">Background</h1>
-<p>Airbnb, Inc. is one of the most well-known vacation rental platforms in the world. With almost 3 million hosts listing over 7 million accommodations worldwide, Airbnb is popular with holidaymakers for the wide choice of rental accommodations catering to different needs.</p>
-<p>Given the popularity of Airbnb to holidaymakers, people are also eager to list their accommodation for vacationers to hire.</p>
+<p>Airbnb, Inc. is one of the most well-known vacation rental platforms in the world. With almost 3 million hosts listing over 7 million accommodations worldwide,</p>
+<p>United States, as the origin of the app, has the largest number of listings at 660,000, with the company having an estimated US$33.8B economic impact on the economy in 2018. Australia - the focus of this project - saw the company having an economic impact of US$4.4B in the same period, and ranked as the top-10 destination for both inbound and outbound guests, as well as having its cities listed as some of the most popular cities for bookings. In Australia, Airbnb is taking up more than two-thirds of the short-term rental market share.</p>
+<p>Prior to the Covid-19 pandemic, the company was valued at US$35B but dropped by 48.6% to around $18B, and the company is estimated to have lost as much as 54% of its revenue in 2020 due to the virus. However, Airbnb’s IPO in December 2020 had its valuation topping $100B, indicating optimism in its recovery post-COVID.</p>
+<p>Airbnb is popular with holidaymakers for the wide choice of rental accommodations catering to different needs.Given the popularity of Airbnb to holidaymakers, people are also eager to list their accommodation for vacationers to hire.</p>
+<p>This project provides an analytics platform for interested parties (especially non-data specialists) to conduct statistical analysis on the Australia Airbnb dataset using simple and user-friendly interactive dashboards that does not require programming knowledge.</p>
 <h1 id="motivation">Motivation</h1>
-<p>A common challenge for many hosts is how to price their listing competitively in comparison to other listings in the same locale. This project aims to provide an application for Airbnb hosts to identify whether they their prices are comparative to other accommodations, too high or too low.</p>
-<p>The abundance of Airbnb data provides us with a great opportunity to perform clusters analysis and geospatial clustering of rental units within the geographical scope of this project. It also allows us to review variables that lead to better reviews and pricing strategies through multilinear regression and text analysis.</p>
-<p>Such analysis could benefit potential hosts and policymakers, ensuring there is a balance between commercial and residential units in the property market.</p>
+<p>The dataset that has be scrapped on the Airbnb web and made publicly available by <a href="http://insideairbnb.com/get-the-data.html">Inside Airbnb</a> provides geospatial, textual (description of house, house rules, reviews etc.), and quantitative data (per-night price, average ratings, available facilities etc.) on each of the listings listed on the web.</p>
+<p>The abundance of Airbnb data provides great opportunity to conduct a variety of data analyses to understand the residential short-lease rental market. Exploratory data analysis allows broad overview of the short-term residential rental market captured by Airbnb, cluster and geospatial analysis provides a deeper understanding into the different types of dwelling units available on the web, as well as the geographical distribution and patterns of the rental market. Text analysis is also plausible with the rich multitude of textual data made available from the descriptive nature of dataset, to peer into the linguistic association of different attributes of the rental market. Finally, regression analysis complements the other methods to dive deep into the various factors that could crack the code to a successful rental listing and vibrant residential market.</p>
+<p>While there are studies and reports available on these various aspects of the short-lease rental market in the context of individual countries, a prominent short-coming is the lack of publicly and readily accessible data analytic tools for non-specialist to explore unmask the plethora of knowledge beneath. This project hence aims to provide an application for Airbnb hosts, policymakers, or common man and woman alike who are keen on exploring the interesting geospatial, textual, and statistical relationship of the various interacting elements affecting the Airbnb short-term residential rental market.</p>
+<p>While this project focuses on one particular country - Australia - the analytical tools and methods are easily transferable to incorporate datasets from other region, country, or city, subject to the availability of dataset and processing capabilities of the hardware.</p>
 <h1 id="project-objectives">Project Objectives</h1>
 <ul>
 <li>Develop an interactive application for end-users</li>
@@ -2140,10 +2096,10 @@ document.addEventListener('DOMContentLoaded', function() {
 <p><img src="images/australiamap.png" /></br></br></p>
 <p>The methodologies that will be used are:</br></p>
 <ul>
-<li>Exploratory Data Analysis (EDA)</br></li>
+<li>Exploratory and Exploratory Spatial Data Analysis (EDA &amp; ESDA)</br></li>
 <li>Cluster Analysis</br></li>
 <li>Text Analytics</br></li>
-<li>Development of an R-shiny app with interactive features</br></li>
+<li>Multi-linear Regression</br></li>
 </ul>
 <h1 id="application-features">Application Features</h1>
 <p>The application will consist of five main sections, one for each analysis approach. Exploratory Data Analysis</br><img src="images/edasketch.png" /></br></br> Cluster Analysis</br><img src="images/clustersketch.png" /></br></br> Spatial Cluster Analysis</br><img src="images/spatialsketch.png" /></br></br> Text Analysis</br><img src="images/textsketch.png" /></br></br> Multilinear Regression Analysis</br><img src="images/mlrsketch.png" /></p>
@@ -2151,30 +2107,53 @@ document.addEventListener('DOMContentLoaded', function() {
 <p>Tha interactive application, together with all documentation such as this project proposal and the final report will be written in R using <a href="https://rstudio.com/">RStudio</a>.</p>
 <h1 id="r-packages">R Packages</h1>
 <p>These are the R packages used:</p>
+<p><strong>General</strong></p>
 <ul>
-<li>ClustGeo: <a href="https://cran.r-project.org/web/packages/ClustGeo" class="uri">https://cran.r-project.org/web/packages/ClustGeo</a></li>
-<li>corrplot: <a href="https://cran.r-project.org/web/packages/corrplot" class="uri">https://cran.r-project.org/web/packages/corrplot</a></li>
-<li>dendextend <a href="https://cran.r-project.org/web/packages/dendextend" class="uri">https://cran.r-project.org/web/packages/dendextend</a></li>
 <li>DT: <a href="https://cran.r-project.org/web/packages/DT" class="uri">https://cran.r-project.org/web/packages/DT</a></li>
+<li>ggplot2: <a href="https://cran.r-project.org/web/packages/ggplot2/index.html" class="uri">https://cran.r-project.org/web/packages/ggplot2/index.html</a></li>
 <li>GGally: <a href="https://cran.r-project.org/web/packages/GGally" class="uri">https://cran.r-project.org/web/packages/GGally</a></li>
-<li>ggdendro: <a href="https://cran.r-project.org/web/packages/ggdendro" class="uri">https://cran.r-project.org/web/packages/ggdendro</a></li>
-<li>GWmodel: <a href="https://cran.r-project.org/web/packages/GWmodel" class="uri">https://cran.r-project.org/web/packages/GWmodel</a></li>
 <li>leaflet: <a href="https://cran.r-project.org/web/packages/leaflet" class="uri">https://cran.r-project.org/web/packages/leaflet</a></li>
+<li>lubridate: <a href="https://cran.r-project.org/web/packages/lubridate/index.html" class="uri">https://cran.r-project.org/web/packages/lubridate/index.html</a></li>
 <li>plotly: <a href="https://cran.r-project.org/web/packages/plotly" class="uri">https://cran.r-project.org/web/packages/plotly</a></li>
 <li>posterdown: <a href="https://cran.r-project.org/web/packages/posterdown" class="uri">https://cran.r-project.org/web/packages/posterdown</a></li>
 <li>RColorBrewer: <a href="https://cran.r-project.org/web/packages/RColorBrewer" class="uri">https://cran.r-project.org/web/packages/RColorBrewer</a></li>
 <li>readr: <a href="https://cran.r-project.org/web/packages/readr" class="uri">https://cran.r-project.org/web/packages/readr</a></li>
 <li>readxl: <a href="https://cran.r-project.org/web/packages/readxl" class="uri">https://cran.r-project.org/web/packages/readxl</a></li>
-<li>rgdal: <a href="https://cran.r-project.org/web/packages/rgdal" class="uri">https://cran.r-project.org/web/packages/rgdal</a></li>
-<li>rgeos: <a href="https://cran.r-project.org/web/packages/rgeos" class="uri">https://cran.r-project.org/web/packages/rgeos</a></li>
-<li>sf: <a href="https://cran.r-project.org/web/packages/sf" class="uri">https://cran.r-project.org/web/packages/sf</a></li>
 <li>shiny: <a href="https://shiny.rstudio.com" class="uri">https://shiny.rstudio.com</a></li>
 <li>shinythemes: <a href="https://cran.r-project.org/web/packages/shinythemes" class="uri">https://cran.r-project.org/web/packages/shinythemes</a></li>
 <li>shinyWidgets: <a href="https://cran.r-project.org/web/packages/shinyWidgets" class="uri">https://cran.r-project.org/web/packages/shinyWidgets</a></li>
-<li>sp: <a href="https://cran.r-project.org/web/packages/sp" class="uri">https://cran.r-project.org/web/packages/sp</a></li>
-<li>spdep: <a href="https://cran.r-project.org/web/packages/spdep" class="uri">https://cran.r-project.org/web/packages/spdep</a></li>
 <li>tidyverse: <a href="https://www.tidyverse.org" class="uri">https://www.tidyverse.org</a></li>
 <li>tmap: <a href="https://cran.r-project.org/web/packages/tmap" class="uri">https://cran.r-project.org/web/packages/tmap</a></li>
+</ul>
+<p><strong>Exploratory Data Analytics</strong></p>
+<ul>
+<li>corrplot: <a href="https://cran.r-project.org/web/packages/corrplot" class="uri">https://cran.r-project.org/web/packages/corrplot</a></li>
+<li>purr: <a href="https://cran.r-project.org/web/packages/purrr/index.html" class="uri">https://cran.r-project.org/web/packages/purrr/index.html</a></li>
+<li>rgdal: <a href="https://cran.r-project.org/web/packages/rgdal" class="uri">https://cran.r-project.org/web/packages/rgdal</a></li>
+<li>rgeos: <a href="https://cran.r-project.org/web/packages/rgeos" class="uri">https://cran.r-project.org/web/packages/rgeos</a></li>
+<li>sf: <a href="https://cran.r-project.org/web/packages/sf" class="uri">https://cran.r-project.org/web/packages/sf</a></li>
+<li>sp: <a href="https://cran.r-project.org/web/packages/sp" class="uri">https://cran.r-project.org/web/packages/sp</a></li>
+<li>spdep: <a href="https://cran.r-project.org/web/packages/spdep" class="uri">https://cran.r-project.org/web/packages/spdep</a></li>
+</ul>
+<p><strong>Cluster Analysis</strong></p>
+<ul>
+<li>cluster: <a href="https://cran.r-project.org/web/packages/cluster/index.html" class="uri">https://cran.r-project.org/web/packages/cluster/index.html</a></li>
+<li>dendextend <a href="https://cran.r-project.org/web/packages/dendextend" class="uri">https://cran.r-project.org/web/packages/dendextend</a></li>
+<li>factoextra: <a href="https://cran.r-project.org/web/packages/factoextra/index.html" class="uri">https://cran.r-project.org/web/packages/factoextra/index.html</a></li>
+<li>ggdendro: <a href="https://cran.r-project.org/web/packages/ggdendro" class="uri">https://cran.r-project.org/web/packages/ggdendro</a></li>
+</ul>
+<p><strong>Text Analysis</strong></p>
+<ul>
+<li>quanteda: <a href="https://cran.r-project.org/web/packages/quanteda/index.html" class="uri">https://cran.r-project.org/web/packages/quanteda/index.html</a></li>
+<li>SnowballC: <a href="https://cran.r-project.org/web/packages/SnowballC/index.html" class="uri">https://cran.r-project.org/web/packages/SnowballC/index.html</a></li>
+<li>spacyr: <a href="https://cran.r-project.org/web/packages/spacyr/index.html" class="uri">https://cran.r-project.org/web/packages/spacyr/index.html</a></li>
+<li>stringr: <a href="https://cran.r-project.org/web/packages/stringr/index.html" class="uri">https://cran.r-project.org/web/packages/stringr/index.html</a></li>
+<li>tm: <a href="https://cran.r-project.org/web/packages/tm/index.html" class="uri">https://cran.r-project.org/web/packages/tm/index.html</a></li>
+<li>wordcloud: <a href="https://cran.r-project.org/web/packages/wordcloud/" class="uri">https://cran.r-project.org/web/packages/wordcloud/</a></li>
+</ul>
+<p><strong>Multilinear Regression</strong></p>
+<ul>
+<li>MASS: <a href="https://cran.r-project.org/web/packages/MASS/index.html" class="uri">https://cran.r-project.org/web/packages/MASS/index.html</a></li>
 </ul>
 <h1 id="team-members">Team Members</h1>
 <ul>
@@ -2184,9 +2163,11 @@ document.addEventListener('DOMContentLoaded', function() {
 </ul>
 <h1 id="references">References</h1>
 <ul>
-<li><a href="https://www.airbnb.com/">Airbnb, Inc.</a></li>
-<li><a href="https://www.stratosjets.com/blog/airbnb-statistics/">2021 Airbnb Statistics: Usage, Demographics, and Revenue Growth</a></li>
+<li><a href="https://www.stratosjets.com/blog/airbnb-statistics/">2021 Airbnb Statistics: Usage, Demographics, and Revenue Growth</a> * <a href="https://www.airbnb.com/">Airbnb, Inc.</a></li>
 <li><a href="https://blog.databender.net/2014/08/03/australian-region-boundaries-in-tableau/">Australian region boundaries in Tableau</a></li>
+<li><a href="https://www.afr.com/property/residential/airbnb-wins-the-battle-for-australia-s-short-term-rental-market-20190410-p51ctw">Airbnb wins the battle for Australia’s short-term rental market</a></li>
+<li><a href="http://insideairbnb.com/get-the-data.html">Inside Airbnb</a></li>
+<li><a href="https://ipropertymanagement.com/research/airbnb-statistics">iProperty Management: Airbnb Statistics</a></li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
