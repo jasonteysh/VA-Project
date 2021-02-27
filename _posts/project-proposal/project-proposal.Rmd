@@ -19,23 +19,23 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 # Background
-Airbnb, Inc. is one of the most well-known vacation rental platforms in the world. With almost 3 million hosts listing over 7 million accommodations worldwide, Airbnb is popular with holidaymakers for the wide choice of rental accommodations that cater to different needs.
+Airbnb, Inc. is one of the most well-known vacation rental platforms in the world. With almost 3 million hosts listing over 7 million accommodations worldwide, Airbnb is popular with holidaymakers for the wide choice of rental accommodations catering to different needs.
 
-Given the popularity of Airbnb to holidaymakers, people are also eager to list their accommodation for vacationers to stay in.
+Given the popularity of Airbnb to holidaymakers, people are also eager to list their accommodation for vacationers to hire.
 
 # Motivation
-A common challenge for many hosts is how to price their listing competitively compared to other listings in the same locale. This project aims to provide an application for Airbnb hosts to identify whether they their prices are comparative to other accommodations, or too high/low.
+A common challenge for many hosts is how to price their listing competitively in comparison to other listings in the same locale. This project aims to provide an application for Airbnb hosts to identify whether they their prices are comparative to other accommodations, too high or too low.
 
-The abundance of Airbnb data provides us with a great opportunity to analyse clusters and geospatial clustering of rental units within Australia. It also allows us to review variables that lead towards better reviews and pricing through multilinear regression, and text analysis.
+The abundance of Airbnb data provides us with a great opportunity to perform clusters analysis and geospatial clustering of rental units within the geographical scope of this project. It also allows us to review variables that lead to better reviews and pricing stratgies through multilinear regression and text analysis.
 
-Such analysis could benefit both potential hosts, and also policymakers, to ensure there is a balance between commercial and residential units in the property market.
+Such analysis could benefit potential hosts and policymakers, ensuring there is a balance between commercial and residential units in the property market.
 
 # Project Objectives
 * Develop an interactive application for end-users
 * Visual representation of accommodation listings by region
 
 # Timeline of Project
-Our project timeline will be as follows
+Our project timeline will be as follows:
 
 Timeline</br>![](images/Timeline.png)</br></br>
 
@@ -44,7 +44,7 @@ This project will focus on Australia as the location of interest.
 
 ![](images/australiamap.png)</br></br>
 
-The methodology that will be used are:</br>
+The methodologies that will be used are:</br>
 
 * Exploratory Data Analysis (EDA)</br>
 * Cluster Analysis</br>
