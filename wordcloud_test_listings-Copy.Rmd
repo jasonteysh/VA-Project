@@ -1,0 +1,55 @@
+install.packages("tm")
+install.packages("SnowballC")
+install.packages("wordcloud")
+library(tm)
+library(SnowballC)
+library(wordcloud)
+library(tidyverse)
+
+listings <- read_csv("listings-Copy.csv")
+
+listings <- read.delim("listings-Copy.csv",stringsAsFactors = FALSE)
+str(listings)
+
+# 1.create a corpus
+listings_corpus <- Corpus(VectorSource(listings))
+listings_corpus
+#inspect the first review
+writeLines(as.character(listings_corpus[[1]]))
+getTransformations()
+# to lower case
+listings_corpus <- tm_map(listings_corpus, tolower)
+# remove punctuation
+listings_corpus <- tm_map(listings_corpus, removePunctuation)
+# remove stop words
+stopwords("english")
+listings_corpus <- tm_map(listings_corpus, removeWords,stopwords("english"))
+# remove numbers
+listings_corpus <- tm_map(listings_corpus, removeNumbers)
+# remove extra white space
+listings_corpus <- tm_map(listings_corpus, stripWhitespace)
+# Stem Document
+listings_corpus <- tm_map(listings_corpus, stemDocument,"english")
+writeLines(as.character(listings_corpus[[1]]))
+
+# Document term matrix
+dtm <- DocumentTermMatrix(listings_corpus)
+# check total frequency of words
+freq <- colSums(as.matrix(dtm))
+freq
+# convert to a data frame
+freq_df <- data.frame(word = names(freq),freq=freq)
+head(freq_df, 10)
+# check the frequncey
+summary(freq_df$freq)
+dim(freq_df)
+
+#----------------------------------
+# Word cloud
+#----------------------------------
+wordcloud(freq_df$word,freq,min.freq = 50)
+# add some colors
+wordcloud(words = freq_df$word, freq = freq_df$freq, min.freq = 50,
+          random.order=FALSE,
+          rot.per=0.35, 
+          colors=brewer.pal(10, "Dark2"))
