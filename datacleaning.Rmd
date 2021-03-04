@@ -1,0 +1,29 @@
+---
+title: "datacleaning"
+author: "Andy Wong"
+date: "3/4/2021"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(readxl)
+
+airbnb_raw <- read_csv("data/listings.csv")
+
+airbnb <- select(airbnb_raw, c(1, 6, 7, 8, 10, 13, 14, 15, 16, 17, 18, 19, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 49, 50, 51, 52, 53, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 80))
+
+hostresprate <- airbnb$host_response_rate
+summary(hostresprate)
+hostresprate <- as.numeric(str_replace(hostresprate, "%", ""))
+summary(hostresprate)
+
+head(airbnb, n = 10)
+
+
+```
