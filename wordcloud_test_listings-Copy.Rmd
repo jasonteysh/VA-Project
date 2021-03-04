@@ -47,8 +47,7 @@ dim(freq_df)
 #----------------------------------
 # Word cloud
 #----------------------------------
-wordcloud(freq_df$word,freq,min.freq = 50)
-# add some colors
+
 wordcloud(words = freq_df$word, freq = freq_df$freq, min.freq = 50,
           random.order=FALSE,
           rot.per=0.35, 
