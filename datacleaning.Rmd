@@ -10,20 +10,55 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Step 1: Loading Data 
+
 ```{r}
 library(tidyverse)
-library(readxl)
 
 airbnb_raw <- read_csv("data/listings.csv")
 
+```
+
+## Step 2: Selecting Relevant columns 
+
+```{r}
+
 airbnb <- select(airbnb_raw, c(1, 6, 7, 8, 10, 13, 14, 15, 16, 17, 18, 19, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 49, 50, 51, 52, 53, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 80))
 
-hostresprate <- airbnb$host_response_rate
-summary(hostresprate)
-hostresprate <- as.numeric(str_replace(hostresprate, "%", ""))
-summary(hostresprate)
+head(airbnb, n = 10)
+
+```
+
+## Step 3: Converting Date Variables from chr to date Type
+
+```{r}
+
+class(airbnb$host_since)
+airbnb$host_since <- as.Date(airbnb$host_since, '%d/%m/%y')
+airbnb$first_review <- as.Date(airbnb$first_review, '%d/%m/%y')
+airbnb$last_review <- as.Date(airbnb$last_review, '%d/%m/%y')
+
+```
+
+## Step 4: Converting Rate Variables from chr to dbl Type
+
+```{r}
+
+library(stringr)
+airbnb$host_response_rate <- ((as.numeric(str_remove_all(airbnb$host_response_rate, "%")))/100)
+airbnb$host_acceptance_rate <- ((as.numeric(str_remove_all(airbnb$host_acceptance_rate, "%")))/100)
+
+```
+
+## Step 4: Converting Price Variables from chr to dbl Type
+
+```{r}
+
+airbnb$price <- (as.numeric(str_remove_all(airbnb$price, "$")))
+airbnb$price <- (as.numeric(str_remove_all(airbnb$price, "$")))
 
 head(airbnb, n = 10)
 
 
 ```
+
