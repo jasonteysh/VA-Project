@@ -2047,7 +2047,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
-
 <span class='va'>airbnb_raw</span> <span class='op'>&lt;-</span> <span class='fu'>read_csv</span><span class='op'>(</span><span class='st'>"data/listings.csv"</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -2056,59 +2055,11 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre><code><span class='va'>airbnb</span> <span class='op'>&lt;-</span> <span class='fu'>select</span><span class='op'>(</span><span class='va'>airbnb_raw</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>6</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>10</span>, <span class='fl'>13</span>, <span class='fl'>14</span>, <span class='fl'>15</span>, <span class='fl'>16</span>, <span class='fl'>17</span>, <span class='fl'>18</span>, <span class='fl'>19</span>, <span class='fl'>23</span>, <span class='fl'>24</span>, <span class='fl'>25</span>, <span class='fl'>26</span>, <span class='fl'>27</span>, <span class='fl'>28</span>, <span class='fl'>29</span>, <span class='fl'>30</span>, <span class='fl'>31</span>, <span class='fl'>32</span>, <span class='fl'>33</span>, <span class='fl'>35</span>, <span class='fl'>36</span>, <span class='fl'>37</span>, <span class='fl'>38</span>, <span class='fl'>39</span>, <span class='fl'>40</span>, <span class='fl'>41</span>, <span class='fl'>42</span>, <span class='fl'>43</span>, <span class='fl'>44</span>, <span class='fl'>45</span>, <span class='fl'>46</span>, <span class='fl'>47</span>, <span class='fl'>49</span>, <span class='fl'>50</span>, <span class='fl'>51</span>, <span class='fl'>52</span>, <span class='fl'>53</span>, <span class='fl'>55</span>, <span class='fl'>56</span>, <span class='fl'>57</span>, <span class='fl'>58</span>, <span class='fl'>59</span>, <span class='fl'>60</span>, <span class='fl'>61</span>, <span class='fl'>62</span>, <span class='fl'>63</span>, <span class='fl'>64</span>, <span class='fl'>65</span>, <span class='fl'>66</span>, <span class='fl'>68</span>, <span class='fl'>69</span>, <span class='fl'>70</span>, <span class='fl'>71</span>, <span class='fl'>72</span>, <span class='fl'>73</span>, <span class='fl'>74</span>, <span class='fl'>75</span>, <span class='fl'>76</span>, <span class='fl'>77</span>, <span class='fl'>80</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>airbnb</span>, n <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code># A tibble: 10 x 64
-       id name  description neighborhood_ov~ host_id host_since
-    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;     
- 1 4.61e7 The ~ &quot;This tast~ Orange is a bea~  5.32e7 4/1/2016  
- 2 3.88e7 &#39;Wen~ &quot;Treat you~ &#39;Wendouree&#39; is ~  2.59e8 28/4/2019 
- 3 2.15e7 THE ~ &quot;Boutique ~ &lt;NA&gt;              1.56e8 25/10/2017
- 4 2.38e7 King~ &quot;Master ki~ Very friendly.    1.15e8 6/2/2017  
- 5 4.17e7 Luxu~ &quot;Set in on~ &lt;NA&gt;              3.29e8 19/1/2020 
- 6 2.98e7 4 be~ &quot;Family ho~ &lt;NA&gt;              9.18e7 25/8/2016 
- 7 2.15e7 Mode~ &quot;Fantastic~ Multicultural P~  1.56e8 27/10/2017
- 8 2.20e7 Quie~ &quot;A quiet n~ Very quiet neig~  1.61e8 29/11/2017
- 9 1.69e7 Wate~ &quot;Enjoy the~ Year-round ente~  1.04e7 5/12/2013 
-10 3.65e7 2BR ~ &quot;2BR Spaci~ &lt;NA&gt;              2.60e8 6/5/2019  
-# ... with 58 more variables: host_location &lt;chr&gt;, host_about &lt;chr&gt;,
-#   host_response_time &lt;chr&gt;, host_response_rate &lt;chr&gt;,
-#   host_acceptance_rate &lt;chr&gt;, host_is_superhost &lt;lgl&gt;,
-#   host_listings_count &lt;dbl&gt;, host_total_listings_count &lt;dbl&gt;,
-#   host_verifications &lt;chr&gt;, host_has_profile_pic &lt;lgl&gt;,
-#   host_identity_verified &lt;lgl&gt;, neighbourhood &lt;chr&gt;,
-#   latitude &lt;dbl&gt;, longitude &lt;dbl&gt;, property_type &lt;chr&gt;,
-#   room_type &lt;chr&gt;, accommodates &lt;dbl&gt;, bathrooms_text &lt;chr&gt;,
-#   bedrooms &lt;dbl&gt;, beds &lt;dbl&gt;, amenities &lt;chr&gt;, price &lt;chr&gt;,
-#   minimum_nights &lt;dbl&gt;, maximum_nights &lt;dbl&gt;,
-#   minimum_minimum_nights &lt;dbl&gt;, maximum_minimum_nights &lt;dbl&gt;,
-#   minimum_maximum_nights &lt;dbl&gt;, maximum_maximum_nights &lt;dbl&gt;,
-#   minimum_nights_avg_ntm &lt;dbl&gt;, maximum_nights_avg_ntm &lt;dbl&gt;,
-#   has_availability &lt;lgl&gt;, availability_30 &lt;dbl&gt;,
-#   availability_60 &lt;dbl&gt;, availability_90 &lt;dbl&gt;,
-#   availability_365 &lt;dbl&gt;, number_of_reviews &lt;dbl&gt;,
-#   number_of_reviews_ltm &lt;dbl&gt;, number_of_reviews_l30d &lt;dbl&gt;,
-#   first_review &lt;chr&gt;, last_review &lt;chr&gt;,
-#   review_scores_rating &lt;dbl&gt;, review_scores_accuracy &lt;dbl&gt;,
-#   review_scores_cleanliness &lt;dbl&gt;, review_scores_checkin &lt;dbl&gt;,
-#   review_scores_communication &lt;dbl&gt;, review_scores_location &lt;dbl&gt;,
-#   review_scores_value &lt;dbl&gt;, license &lt;chr&gt;, instant_bookable &lt;lgl&gt;,
-#   calculated_host_listings_count &lt;dbl&gt;,
-#   calculated_host_listings_count_entire_homes &lt;dbl&gt;,
-#   calculated_host_listings_count_private_rooms &lt;dbl&gt;,
-#   calculated_host_listings_count_shared_rooms &lt;dbl&gt;,
-#   region_id &lt;dbl&gt;, region_name &lt;chr&gt;, region_parent_id &lt;dbl&gt;,
-#   region_parent_name &lt;chr&gt;, reviews_per_month &lt;dbl&gt;</code></pre>
 </div>
 <h2 id="step-3-converting-date-variables-from-chr-to-date-type">Step 3: Converting Date Variables from chr to date Type</h2>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre><code><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>airbnb</span><span class='op'>$</span><span class='va'>host_since</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code>[1] &quot;character&quot;</code></pre>
 <div class="sourceCode">
 <pre><code><span class='va'>airbnb</span><span class='op'>$</span><span class='va'>host_since</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='va'>airbnb</span><span class='op'>$</span><span class='va'>host_since</span>, <span class='st'>'%d/%m/%y'</span><span class='op'>)</span>
 <span class='va'>airbnb</span><span class='op'>$</span><span class='va'>first_review</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='va'>airbnb</span><span class='op'>$</span><span class='va'>first_review</span>, <span class='st'>'%d/%m/%y'</span><span class='op'>)</span>
@@ -2128,55 +2079,26 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h2 id="step-4-converting-price-variables-from-chr-to-dbl-type">Step 4: Converting Price Variables from chr to dbl Type</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre><code><span class='va'>airbnb</span><span class='op'>$</span><span class='va'>price</span> <span class='op'>&lt;-</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_remove.html'>str_remove_all</a></span><span class='op'>(</span><span class='va'>airbnb</span><span class='op'>$</span><span class='va'>price</span>, <span class='st'>"$"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>airbnb</span><span class='op'>$</span><span class='va'>price</span> <span class='op'>&lt;-</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_remove.html'>str_remove_all</a></span><span class='op'>(</span><span class='va'>airbnb</span><span class='op'>$</span><span class='va'>price</span>, <span class='st'>"$"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>airbnb</span>, n <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+<pre><code><span class='va'>airbnb</span><span class='op'>$</span><span class='va'>price</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>gsub</a></span><span class='op'>(</span><span class='st'>"\\$"</span>,<span class='st'>""</span>, <span class='va'>airbnb</span><span class='op'>$</span><span class='va'>price</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code># A tibble: 10 x 64
-       id name  description neighborhood_ov~ host_id host_since
-    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;              &lt;dbl&gt; &lt;date&gt;    
- 1 4.61e7 The ~ &quot;This tast~ Orange is a bea~  5.32e7 2020-01-04
- 2 3.88e7 &#39;Wen~ &quot;Treat you~ &#39;Wendouree&#39; is ~  2.59e8 2020-04-28
- 3 2.15e7 THE ~ &quot;Boutique ~ &lt;NA&gt;              1.56e8 2020-10-25
- 4 2.38e7 King~ &quot;Master ki~ Very friendly.    1.15e8 2020-02-06
- 5 4.17e7 Luxu~ &quot;Set in on~ &lt;NA&gt;              3.29e8 2020-01-19
- 6 2.98e7 4 be~ &quot;Family ho~ &lt;NA&gt;              9.18e7 2020-08-25
- 7 2.15e7 Mode~ &quot;Fantastic~ Multicultural P~  1.56e8 2020-10-27
- 8 2.20e7 Quie~ &quot;A quiet n~ Very quiet neig~  1.61e8 2020-11-29
- 9 1.69e7 Wate~ &quot;Enjoy the~ Year-round ente~  1.04e7 2020-12-05
-10 3.65e7 2BR ~ &quot;2BR Spaci~ &lt;NA&gt;              2.60e8 2020-05-06
-# ... with 58 more variables: host_location &lt;chr&gt;, host_about &lt;chr&gt;,
-#   host_response_time &lt;chr&gt;, host_response_rate &lt;dbl&gt;,
-#   host_acceptance_rate &lt;dbl&gt;, host_is_superhost &lt;lgl&gt;,
-#   host_listings_count &lt;dbl&gt;, host_total_listings_count &lt;dbl&gt;,
-#   host_verifications &lt;chr&gt;, host_has_profile_pic &lt;lgl&gt;,
-#   host_identity_verified &lt;lgl&gt;, neighbourhood &lt;chr&gt;,
-#   latitude &lt;dbl&gt;, longitude &lt;dbl&gt;, property_type &lt;chr&gt;,
-#   room_type &lt;chr&gt;, accommodates &lt;dbl&gt;, bathrooms_text &lt;chr&gt;,
-#   bedrooms &lt;dbl&gt;, beds &lt;dbl&gt;, amenities &lt;chr&gt;, price &lt;dbl&gt;,
-#   minimum_nights &lt;dbl&gt;, maximum_nights &lt;dbl&gt;,
-#   minimum_minimum_nights &lt;dbl&gt;, maximum_minimum_nights &lt;dbl&gt;,
-#   minimum_maximum_nights &lt;dbl&gt;, maximum_maximum_nights &lt;dbl&gt;,
-#   minimum_nights_avg_ntm &lt;dbl&gt;, maximum_nights_avg_ntm &lt;dbl&gt;,
-#   has_availability &lt;lgl&gt;, availability_30 &lt;dbl&gt;,
-#   availability_60 &lt;dbl&gt;, availability_90 &lt;dbl&gt;,
-#   availability_365 &lt;dbl&gt;, number_of_reviews &lt;dbl&gt;,
-#   number_of_reviews_ltm &lt;dbl&gt;, number_of_reviews_l30d &lt;dbl&gt;,
-#   first_review &lt;date&gt;, last_review &lt;date&gt;,
-#   review_scores_rating &lt;dbl&gt;, review_scores_accuracy &lt;dbl&gt;,
-#   review_scores_cleanliness &lt;dbl&gt;, review_scores_checkin &lt;dbl&gt;,
-#   review_scores_communication &lt;dbl&gt;, review_scores_location &lt;dbl&gt;,
-#   review_scores_value &lt;dbl&gt;, license &lt;chr&gt;, instant_bookable &lt;lgl&gt;,
-#   calculated_host_listings_count &lt;dbl&gt;,
-#   calculated_host_listings_count_entire_homes &lt;dbl&gt;,
-#   calculated_host_listings_count_private_rooms &lt;dbl&gt;,
-#   calculated_host_listings_count_shared_rooms &lt;dbl&gt;,
-#   region_id &lt;dbl&gt;, region_name &lt;chr&gt;, region_parent_id &lt;dbl&gt;,
-#   region_parent_name &lt;chr&gt;, reviews_per_month &lt;dbl&gt;</code></pre>
 </div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h2 id="step-5-replacing-string-nas-with-na">Step 5: replacing String “N/A”s with NA</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='va'>airbnb</span><span class='op'>$</span><span class='va'>host_response_time</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/na_if.html'>na_if</a></span><span class='op'>(</span><span class='va'>airbnb</span><span class='op'>$</span><span class='va'>host_response_time</span>, <span class='st'>"N/A"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h2 id="save-cleaned-dataset-as-airbnb.csv">Save cleaned dataset as “Airbnb.csv”</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='fu'><a href='https://rdrr.io/r/utils/write.table.html'>write.csv</a></span><span class='op'>(</span><span class='va'>airbnb</span>, <span class='st'>"data/Airbnb.csv"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
