@@ -1,0 +1,35 @@
+---
+title: "louelle draft"
+author: "Louelle Teo"
+date: "06/03/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Load Data
+
+```{r}
+
+library(tidyverse)
+library(lubridate)
+library(anytime)
+
+airbnb <- read_csv("data/Airbnb.csv")
+
+```
+## Exploratory Data Analysis
+
+``` {r}
+
+today <- as.Date("2021-02-01")
+host_days <- time_length(today-airbnb$host_since,"years")
+
+ggplot(airbnb,aes(x=host_since,y=airbnb$review_scores_rating))+
+  geom_point()
+
+?as.Date
+
+```

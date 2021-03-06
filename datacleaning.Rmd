@@ -28,9 +28,9 @@ airbnb <- select(airbnb_raw, c(1, 6, 7, 8, 10, 13, 14, 15, 16, 17, 18, 19, 23, 2
 ## Step 3: Converting Date Variables from chr to date Type
 
 ```{r}
-airbnb$host_since <- as.Date(airbnb$host_since, '%d/%m/%y')
-airbnb$first_review <- as.Date(airbnb$first_review, '%d/%m/%y')
-airbnb$last_review <- as.Date(airbnb$last_review, '%d/%m/%y')
+airbnb$host_since <- as.Date(airbnb$host_since, format = '%d/%m/%Y')
+airbnb$first_review <- as.Date(airbnb$first_review, '%d/%m/%Y')
+airbnb$last_review <- as.Date(airbnb$last_review, '%d/%m/%Y')
 
 ```
 
