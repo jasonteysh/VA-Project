@@ -16,20 +16,207 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(lubridate)
 library(anytime)
+library(shiny)
+library(shinydashboard)
+library(plotly)
 
 airbnb <- read_csv("data/Airbnb.csv")
 
 ```
-## Exploratory Data Analysis
+
+##Sidebar
 
 ``` {r}
 
-today <- as.Date("2021-02-01")
-host_days <- time_length(today-airbnb$host_since,"years")
-
-ggplot(airbnb,aes(x=host_since,y=airbnb$review_scores_rating))+
-  geom_point()
-
-?as.Date
+sidebar <- dashboardSidebar(
+  sidebarMenu(
+    menuItem("EDA" ,tabName = "EDA", icon = icon("globe")),
+    menuItem("Cluster Analysis",tabName = "Cluster Analysis", icon = icon("dashboard")),
+    menuItem("Spatial Cluster Analysis",tabName = "Spatial Cluster Analysis", icon = icon("dashboard")),
+    menuItem("Text Analysis", tabName = "Text Analysis", icon = icon("chart-line")),
+    menuItem("MLR", tabName = "MLR", icon = icon("chart-line"))
+    
+  )
+)
 
 ```
+
+##Body
+
+``` {r}
+body <- dashboardBody(
+  tabItems(
+    tabItem(
+      tabName = "EDA",
+      fluidPage(
+        titlePanel("Exploratory Data Analysis"),
+        fluidRow(
+          column(
+            width=12,
+            tabsetPanel(
+              tabPanel("Bivariate Analysis",
+                       box(
+                       selectInput("variable_x_bivariate", "X Variable:",
+                                   c("Host Response Time" =  "host_response_time",
+                                     "Host Response Rate" =  "host_response_rate",
+                                     "Host Acceptance Rate" =  "host_acceptance_rate",
+                                     "Host Total Listings Count" =  "host_total_listings_count",
+                                     "Accommodates" =  "accommodates",
+                                     "Bedrooms" =  "bedrooms",
+                                     "Beds" =  "beds",
+                                     "Price" =  "price",
+                                     "Number Of Reviews" =  "number_of_reviews",
+                                     "Review Scores Rating" =  "review_scores_rating",
+                                     "Review Scores Accuracy" =  "review_scores_accuracy",
+                                     "Review Scores Cleanliness" =  "review_scores_cleanliness",
+                                     "Review Scores Checkin" =  "review_scores_checkin",
+                                     "Review Scores Communication" =  "review_scores_communication",
+                                     "Review Scores Location" =  "review_scores_location",
+                                     "Review Scores Value" =  "review_scores_value"),
+                                   selected = "review_scores_rating"
+                       ),
+                       selectInput("variable_y_bivariate", "Y Variable:",
+                                   c("Host Response Time" =  "host_response_time",
+                                     "Host Response Rate" =  "host_response_rate",
+                                     "Host Acceptance Rate" =  "host_acceptance_rate",
+                                     "Host Total Listings Count" =  "host_total_listings_count",
+                                     "Accommodates" =  "accommodates",
+                                     "Bedrooms" =  "bedrooms",
+                                     "Beds" =  "beds",
+                                     "Price" =  "price",
+                                     "Number Of Reviews" =  "number_of_reviews",
+                                     "Review Scores Rating" =  "review_scores_rating",
+                                     "Review Scores Accuracy" =  "review_scores_accuracy",
+                                     "Review Scores Cleanliness" =  "review_scores_cleanliness",
+                                     "Review Scores Checkin" =  "review_scores_checkin",
+                                     "Review Scores Communication" =  "review_scores_communication",
+                                     "Review Scores Location" =  "review_scores_location",
+                                     "Review Scores Value" =  "review_scores_value"),
+                                   selected = "price"
+                       ),),
+                       box(width=12,
+                           title = "Bivariate Analysis",
+                           plotOutput(outputId = "bivariateplot")),
+                       box(width=7,
+                           title = "Confidence Interval of X",
+                       tableOutput(outputId = "bivariateX")),
+                       box(width=7,
+                           title = "Confidence Interval of Y",
+                       tableOutput(outputId = "bivariateY"))
+                       
+              ),
+              tabPanel("Correlation Analysis",
+                      plotOutput("corrplotEDA",
+                      width="800px",
+                      height="800px")
+                      #"asd"
+                      )
+              )
+          )
+        )
+      )      
+    ),
+    tabItem(tabName = "MLR",
+            fluidPage(
+              titlePanel("Multiple linear regression"),
+              fluidRow(
+                column(
+                  width = 12,
+                  height = 100,
+                  tabsetPanel(
+                    tabPanel("Regression for Price",
+                             box(
+                               width = 12,
+                               height = 240,
+                               selectInput("mlr1", "Independent Variables:",
+                                           choices = c("host_response_rate", "host_acceptance_rate", "host_total_listings_count", "accommodates", "bedrooms", "beds", "number_of_reviews", "review_scores_rating", "review_scores_accuracy", "review_scores_cleanliness", "review_scores_checkin", "review_scores_communication", "review_scores_location", "review_scores_value")
+                                           ,multiple = TRUE,selected = c("host_response_rate", "host_acceptance_rate", "host_total_listings_count", "accommodates", "bedrooms", "beds", "number_of_reviews", "review_scores_rating", "review_scores_accuracy", "review_scores_cleanliness", "review_scores_checkin", "review_scores_communication", "review_scores_location", "review_scores_value")
+                               ),
+                               selectInput("variable_selection", "Strategies of Stepwise:",
+                                           choices =  list("Forward Selection", "Backward Selection", "Stepwise Selection")
+                               )),
+                             box(
+                               width = 12,
+                               h4('Regression Summary:'),
+                               verbatimTextOutput("lb1")
+                                )
+                            )
+                             )
+                )
+              )
+              )
+    )
+  )
+)
+
+```
+
+```{r}
+
+ui <- dashboardPage(
+  dashboardHeader(title = "Airbnb Analysis"),
+  sidebar,
+  body
+)
+
+```
+
+
+``` {r}
+server<-function(input,output){
+  
+#output bivariate plot
+output$bivariateplot <- renderPlot({
+  
+xaxis <- unlist(airbnb[,input$variable_x_bivariate])
+yaxis <- unlist(airbnb[,input$variable_y_bivariate])
+
+ggplot(airbnb,aes(x=xaxis,y=yaxis, color=airbnb$region_parent_name))+
+  geom_jitter()+
+  labs(title=paste(input$variable_x_bivariate, "Vs", input$variable_y_bivariate), y = input$variable_y_bivariate, x=input$variable_x_bivariate)+
+  theme(legend.position="bottom", axis.text.y = element_text(angle = 90))
+   
+    })
+
+output$bivariateX <- renderTable({
+  airbnb2<- airbnb %>%
+    summarise(Min = min(get(input$variable_x_bivariate), na.rm = TRUE), 
+                  Max = max(get(input$variable_x_bivariate), na.rm = TRUE), 
+                  Mean = mean(get(input$variable_x_bivariate), na.rm = TRUE),
+                  Sd = sd(get(input$variable_x_bivariate), na.rm = TRUE),
+                  Median = median(get(input$variable_x_bivariate), na.rm = TRUE),
+                  Count = n())
+  airbnb2$lower_CI <- airbnb2$Mean - qnorm(0.975)* airbnb2$Sd/sqrt(airbnb2$Count)
+  airbnb2$upper_CI <- airbnb2$Mean + qnorm(0.975)* airbnb2$Sd/sqrt(airbnb2$Count)
+      
+return(airbnb2)
+  
+})
+
+output$bivariateY <- renderTable({
+  airbnb3<- airbnb %>%
+    summarise(Min = min(get(input$variable_y_bivariate), na.rm = TRUE), 
+                  Max = max(get(input$variable_y_bivariate), na.rm = TRUE), 
+                  Mean = mean(get(input$variable_y_bivariate), na.rm = TRUE),
+                  Sd = sd(get(input$variable_y_bivariate), na.rm = TRUE),
+                  Median = median(get(input$variable_y_bivariate), na.rm = TRUE),
+                  Count = n())
+  airbnb3$lower_CI <- airbnb3$Mean - qnorm(0.975)* airbnb3$Sd/sqrt(airbnb3$Count)
+  airbnb3$upper_CI <- airbnb3$Mean + qnorm(0.975)* airbnb3$Sd/sqrt(airbnb3$Count)
+      
+return(airbnb3)
+  
+})
+
+
+}
+
+shinyApp(ui=ui,server=server)
+
+
+```
+
+
+
+
+
