@@ -1,13 +1,18 @@
-install.packages("tm")
-install.packages("SnowballC")
-install.packages("wordcloud")
-library(tm)
-library(SnowballC)
-library(wordcloud)
-library(tidyverse)
-library(SentimentAnalysis)
+## load required R packages
+```{r}
+packages = c('tm', 'SnowballC', 'wordcloud')
+for (p in packages){
+if(!require(p, character.only = T)){
+install.packages(p)
+}
+library(p, character.only = T)
+}
+```
 
-listings <- read_csv("listings-Copy.csv")
+## read in listings.csv
+```{r}
+listings <- read_csv("data/listings.csv")
+```
 
 listings <- read.delim("listings-Copy.csv",stringsAsFactors = FALSE)
 str(listings)
