@@ -5,6 +5,7 @@ library(tm)
 library(SnowballC)
 library(wordcloud)
 library(tidyverse)
+library(SentimentAnalysis)
 
 listings <- read_csv("listings-Copy.csv")
 
