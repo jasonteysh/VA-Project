@@ -1,6 +1,6 @@
 ## load required R packages
 ```{r}
-packages = c('tm', 'SnowballC', 'wordcloud')
+packages = c('tidyverse', 'tidytext', 'tm', 'SnowballC', 'wordcloud', 'wordcloud2', 'RColorBrewer', 'stringi', 'readr', 'stringr')
 for (p in packages){
 if(!require(p, character.only = T)){
 install.packages(p)
@@ -9,52 +9,100 @@ library(p, character.only = T)
 }
 ```
 
-## read in listings.csv
+## read in Airbnb.csv
 ```{r}
-listings <- read_csv("data/listings.csv")
+Airbnb <- read_csv("data/Airbnb(extract100).csv")
+
+#str(Airbnb_desc)
 ```
 
-listings <- read.delim("listings-Copy.csv",stringsAsFactors = FALSE)
-str(listings)
+```{r}
+# create a corpus
+Airbnb_corpus <- Corpus(VectorSource(Airbnb$description))
 
-# 1.create a corpus
-listings_corpus <- Corpus(VectorSource(listings))
-listings_corpus
-#inspect the first review
-writeLines(as.character(listings_corpus[[1]]))
-getTransformations()
+Airbnb_corpus <- Airbnb_corpus %>%
+  tm_map(removeNumbers) %>%
+  tm_map(removePunctuation) %>%
+  tm_map(stripWhitespace)
+Airbnb_corpus <- tm_map(Airbnb_corpus, content_transformer(tolower))
+Airbnb_corpus <- tm_map(Airbnb_corpus, removeWords, stopwords("english"))
+
+Airbnb_dtm <- TermDocumentMatrix(Airbnb_corpus)
+matrix <- as.matrix(Airbnb_dtm)
+words <- sort(rowSums(matrix),decreasing=TRUE) 
+df <- data.frame(word = names(words),freq=words)
+
+wordcloud(words = df$word, freq = df$freq, min.freq = 1, max.words=200, random.order=FALSE, rot.per=0.35, scale=c(3.5,0.25), colors=brewer.pal(8, "Dark2"))
+```
+
+```{r}
+# Airbnb_desc_Corpus
+
+# getTransformations()
+
+# gsub("<br />", " ", Airbnb_desc_Corpus)
+# gsub("é", "e", Airbnb_desc_Corpus)
+
+# view(guess_encoding(Airbnb_desc_Corpus))
+
+#guess_encoding(readr_example("mtcars.csv"))
+#view(guess_encoding(readr_example("mtcars.csv")))
+
+#iconv(Airbnb_desc_Corpus, from = "windows-1252", to = "UTF-8", sub = " ")
+#iconv(Airbnb_desc_Corpus, from = "ASCII", to = "UTF-8", sub = " ")
+
+#iconvlist()
+
+# Delete non-alphanumeric characters
+#str_replace_all(Airbnb_desc_Corpus, "[^[:alnum:]]", "")
+
 # to lower case
-listings_corpus <- tm_map(listings_corpus, tolower)
-# remove punctuation
-listings_corpus <- tm_map(listings_corpus, removePunctuation)
-# remove stop words
-stopwords("english")
-listings_corpus <- tm_map(listings_corpus, removeWords,stopwords("english"))
-# remove numbers
-listings_corpus <- tm_map(listings_corpus, removeNumbers)
-# remove extra white space
-listings_corpus <- tm_map(listings_corpus, stripWhitespace)
-# Stem Document
-listings_corpus <- tm_map(listings_corpus, stemDocument,"english")
-writeLines(as.character(listings_corpus[[1]]))
+Airbnb_desc_Corpus <- tm_map(Airbnb_desc_Corpus, stri_trans_tolower)
 
+# remove punctuation
+Airbnb_desc_Corpus <- tm_map(Airbnb_desc_Corpus, removePunctuation)
+
+# str_replace_all(Airbnb_desc_Corpus, "br", " ")
+
+# remove stopwords and others
+# Airbnb_desc_Corpus <- tm_map(Airbnb_desc_Corpus, removeWords, stopwords("en"))
+
+# view(guess_encoding(Airbnb_desc_Corpus[-1]))
+
+# remove numbers
+Airbnb_desc_Corpus <- tm_map(Airbnb_desc_Corpus, removeNumbers)
+
+# remove extra white space
+Airbnb_desc_Corpus <- tm_map(Airbnb_desc_Corpus, stripWhitespace)
+
+# Stem Document
+Airbnb_desc_Corpus <- tm_map(Airbnb_desc_Corpus, stemDocument,"english")
+#writeLines(as.character(listings_corpus[[1]]))
+
+Airbnb_desc_Corpus <- tm_map(Airbnb_desc_Corpus[35799], removeWords, stopwords("english"))
+
+```
+
+```{r}
 # Document term matrix
-dtm <- DocumentTermMatrix(listings_corpus)
+dtm <- DocumentTermMatrix(Airbnb_desc_Corpus)
 # check total frequency of words
 freq <- colSums(as.matrix(dtm))
 freq
 # convert to a data frame
 freq_df <- data.frame(word = names(freq),freq=freq)
 head(freq_df, 10)
+view(freq_df)
 # check the frequncey
 summary(freq_df$freq)
 dim(freq_df)
+```
 
-#----------------------------------
-# Word cloud
-#----------------------------------
-
+#create word cloud
+```{r}
 wordcloud(words = freq_df$word, freq = freq_df$freq, min.freq = 50,
           random.order=FALSE,
-          rot.per=0.35, 
-          colors=brewer.pal(10, "Dark2"))
+          rot.per=0.5,
+          colors=brewer.pal(8, "Dark2"))
+```
+
