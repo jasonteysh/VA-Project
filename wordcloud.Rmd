@@ -11,28 +11,40 @@ library(p, character.only = T)
 
 ## read in Airbnb.csv
 ```{r}
-Airbnb <- read_csv("data/Airbnb(extract100).csv")
+Airbnb <- read_csv("data/Airbnb.csv")
 
 #str(Airbnb_desc)
 ```
 
 ```{r}
 # create a corpus
-Airbnb_corpus <- Corpus(VectorSource(Airbnb$description))
 
-Airbnb_corpus <- Airbnb_corpus %>%
+# Airbnb_desc <- Corpus(VectorSource(Airbnb$description)))
+
+Airbnb_orange <- Airbnb %>% filter(region_name == 'Orange')
+
+Airbnb_desc <- Corpus(VectorSource(Airbnb_orange$description))
+
+#see how to clean up the words in the word cloud
+
+# tokenization and cleaning tokens
+Airbnb_corpus <- Airbnb_desc %>%
   tm_map(removeNumbers) %>%
   tm_map(removePunctuation) %>%
   tm_map(stripWhitespace)
 Airbnb_corpus <- tm_map(Airbnb_corpus, content_transformer(tolower))
-Airbnb_corpus <- tm_map(Airbnb_corpus, removeWords, stopwords("english"))
+Airbnb_corpus <- tm_map(Airbnb_corpus, removeWords, c(stopwords("english"), "orange"))
 
-Airbnb_dtm <- TermDocumentMatrix(Airbnb_corpus)
-matrix <- as.matrix(Airbnb_dtm)
+gsub(c("%br", "%bbr"), "", Airbnb_corpus)
+
+# create the term document matrix
+Airbnb_tdm <- TermDocumentMatrix(Airbnb_corpus)
+matrix <- as.matrix(Airbnb_tdm)
 words <- sort(rowSums(matrix),decreasing=TRUE) 
 df <- data.frame(word = names(words),freq=words)
 
-wordcloud(words = df$word, freq = df$freq, min.freq = 1, max.words=200, random.order=FALSE, rot.per=0.35, scale=c(3.5,0.25), colors=brewer.pal(8, "Dark2"))
+# create the word cloud
+wordcloud(words = df$word, freq = df$freq, min.freq = 50, max.words=400, random.order=FALSE, rot.per=0.35, scale=c(3.5,0.1), colors=brewer.pal(8, "Dark2"))
 ```
 
 ```{r}
