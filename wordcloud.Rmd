@@ -1,6 +1,6 @@
 ## load required R packages
 ```{r}
-packages = c('tidyverse', 'tidytext', 'tm', 'SnowballC', 'wordcloud', 'wordcloud2', 'RColorBrewer', 'stringi', 'readr', 'stringr')
+packages = c('tidyverse', 'tidytext', 'tm', 'SnowballC', 'wordcloud', 'wordcloud2', 'RColorBrewer', 'stringi', 'readr', 'stringr', 'topicmodels', 'dplyr', 'plotly', 'parallelPlot')
 for (p in packages){
 if(!require(p, character.only = T)){
 install.packages(p)
@@ -42,9 +42,36 @@ Airbnb_tdm <- TermDocumentMatrix(Airbnb_corpus)
 matrix <- as.matrix(Airbnb_tdm)
 words <- sort(rowSums(matrix),decreasing=TRUE) 
 df <- data.frame(word = names(words),freq=words)
+```
 
+```{r}
 # create the word cloud
-wordcloud(words = df$word, freq = df$freq, min.freq = 50, max.words=400, random.order=FALSE, rot.per=0.35, scale=c(3.5,0.1), colors=brewer.pal(8, "Dark2"))
+wordcloud(words = df$word, freq = df$freq, min.freq = 50, max.words=400, random.order=FALSE, rot.per=0.35, scale=c(3.5, 0.1), colors=brewer.pal(8, "Dark2"))
+
+wordcloud2(data=df, size = 0.7, shape = 'pentagon')
+
+```
+
+```{r}
+#> A LDA_VEM topic model with 5 topics.
+Airbnb_lda <- LDA(Airbnb_tdm, k = 2)
+Airbnb_lda
+
+Airbnb_topics <- tidy(Airbnb_lda, matrix = "beta")
+Airbnb_topics
+
+Airbnb_top_terms <- Airbnb_topics %>%
+  group_by(topic) %>%
+  top_n(10, beta) %>%
+  ungroup() %>%
+  arrange(topic, -beta)
+
+Airbnb_top_terms %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  scale_y_reordered()
 ```
 
 ```{r}

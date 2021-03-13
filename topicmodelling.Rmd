@@ -1,0 +1,28 @@
+## load required R packages
+```{r}
+packages = c('tidyverse', 'tidytext', 'topicmodels')
+for (p in packages){
+if(!require(p, character.only = T)){
+install.packages(p)
+}
+library(p, character.only = T)
+}
+```
+
+## read in Airbnb.csv
+```{r}
+Airbnb <- read_csv("data/Airbnb.csv")
+
+#str(Airbnb_desc)
+```
+
+```{r}
+# create a corpus
+
+# Airbnb_desc <- Corpus(VectorSource(Airbnb$description)))
+
+Airbnb_orange <- Airbnb %>% filter(region_name == 'Orange')
+
+#> A LDA_VEM topic model with 5 topics.
+Airbnb_lda <- LDA(Airbnb_orange, k = 5)
+Airbnb_lda
