@@ -1,6 +1,6 @@
 ## load required R packages
 ```{r}
-packages = c('tidyverse', 'tidytext', 'topicmodels')
+packages = c('tidyverse', 'tidytext', 'topicmodels', 'dplyr', 'plotly', 'parallelPlot')
 for (p in packages){
 if(!require(p, character.only = T)){
 install.packages(p)
@@ -17,12 +17,33 @@ Airbnb <- read_csv("data/Airbnb.csv")
 ```
 
 ```{r}
-# create a corpus
-
 # Airbnb_desc <- Corpus(VectorSource(Airbnb$description)))
 
 Airbnb_orange <- Airbnb %>% filter(region_name == 'Orange')
 
+Airbnb_desc <- Corpus(VectorSource(Airbnb_orange$description))
+
+#see how to clean up the words in the word cloud
+
+# tokenization and cleaning tokens
+Airbnb_corpus <- Airbnb_desc %>%
+  tm_map(removeNumbers) %>%
+  tm_map(removePunctuation) %>%
+  tm_map(stripWhitespace)
+Airbnb_corpus <- tm_map(Airbnb_corpus, content_transformer(tolower))
+Airbnb_corpus <- tm_map(Airbnb_corpus, removeWords, c(stopwords("english"), "orange"))
+
+
+gsub(c("%br", "%bbr"), "", Airbnb_corpus)
+
+# create the term document matrix
+Airbnb_tdm <- TermDocumentMatrix(Airbnb_corpus)
+matrix <- as.matrix(Airbnb_tdm)
+words <- sort(rowSums(matrix),decreasing=TRUE) 
+df <- data.frame(word = names(words),freq=words)
+
 #> A LDA_VEM topic model with 5 topics.
 Airbnb_lda <- LDA(Airbnb_orange, k = 5)
+
 Airbnb_lda
+```

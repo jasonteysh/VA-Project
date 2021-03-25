@@ -1,6 +1,6 @@
 ## load required R packages
 ```{r}
-packages = c('tidyverse', 'tidytext', 'tm', 'SnowballC', 'wordcloud', 'wordcloud2', 'RColorBrewer', 'stringi', 'readr', 'stringr', 'topicmodels', 'dplyr', 'plotly', 'parallelPlot')
+packages = c('tidyverse', 'tidytext', 'tm', 'SnowballC', 'wordcloud', 'wordcloud2', 'RColorBrewer', 'stringi', 'readr', 'stringr', 'topicmodels', 'ggplot2', 'dplyr', 'plotly', 'parallelPlot', 'readtext', 'quanteda', 'stringi', 'sentimentr', 'SentimentAnalysis', 'syuzhet', 'RSentiment')
 for (p in packages){
 if(!require(p, character.only = T)){
 install.packages(p)
@@ -11,62 +11,69 @@ library(p, character.only = T)
 
 ## read in Airbnb.csv
 ```{r}
-Airbnb <- read_csv("data/Airbnb.csv")
-
-#str(Airbnb_desc)
+airbnb <- read_csv("data/Airbnb(extract100).csv")
 ```
 
+## tokenisation to create a tibble of text from 'description' column
 ```{r}
-# create a corpus
-
-# Airbnb_desc <- Corpus(VectorSource(Airbnb$description)))
-
-Airbnb_orange <- Airbnb %>% filter(region_name == 'Orange')
-
-Airbnb_desc <- Corpus(VectorSource(Airbnb_orange$description))
-
-#see how to clean up the words in the word cloud
-
-# tokenization and cleaning tokens
-Airbnb_corpus <- Airbnb_desc %>%
-  tm_map(removeNumbers) %>%
-  tm_map(removePunctuation) %>%
-  tm_map(stripWhitespace)
-Airbnb_corpus <- tm_map(Airbnb_corpus, content_transformer(tolower))
-Airbnb_corpus <- tm_map(Airbnb_corpus, removeWords, c(stopwords("english"), "orange"))
-
-gsub(c("%br", "%bbr"), "", Airbnb_corpus)
-
-# create the term document matrix
-Airbnb_tdm <- TermDocumentMatrix(Airbnb_corpus)
-matrix <- as.matrix(Airbnb_tdm)
-words <- sort(rowSums(matrix),decreasing=TRUE) 
-df <- data.frame(word = names(words),freq=words)
+airbnb_text <- airbnb$description
+airbnb_tibble <- tibble(airbnb_text)
+airbnb_tibble %>%
+  unnest_tokens(word, airbnb_text)
 ```
 
+## Create a corpus
 ```{r}
-# create the word cloud
-wordcloud(words = df$word, freq = df$freq, min.freq = 50, max.words=400, random.order=FALSE, rot.per=0.35, scale=c(3.5, 0.1), colors=brewer.pal(8, "Dark2"))
+airbnb_corpus <- Corpus(VectorSource(airbnb_tibble))
 
-wordcloud2(data=df, size = 0.7, shape = 'pentagon')
-
+# cleaning the corpus
+airbnb_corpus_clean <- tm_map(airbnb_corpus, stripWhitespace)
+airbnb_corpus_clean <- tm_map(airbnb_corpus_clean, content_transformer(tolower))
+airbnb_corpus_clean <- tm_map(airbnb_corpus_clean, removeNumbers)
+airbnb_corpus_clean <- tm_map(airbnb_corpus_clean, removePunctuation)
+airbnb_corpus_clean <- tm_map(airbnb_corpus_clean, removeWords, c((stopwords("english")), "%br"))
+airbnb_corpus_clean <- tm_map(airbnb_corpus_clean, stemDocument)
+```
+#create the Document Term Matrix
+```{r}
+airbnb_corpus_dtm <- DocumentTermMatrix(airbnb_corpus_clean)
 ```
 
+#create the wordcloud
 ```{r}
+sums <- as.data.frame(colSums(as.matrix(airbnb_corpus_dtm)))
+sums <- rownames_to_column(sums) 
+colnames(sums) <- c("terms", "count")
+sums <- arrange(sums, desc(count))
+head <- sums
+
+#wordcloud will show the most common terms used in the 'description' column
+wordcloud(words = head$terms, freq = head$count, min.freq = 10,
+  max.words=200, random.order=FALSE, rot.per=0.35, 
+  colors=brewer.pal(8, "Dark2"))
+```
+
+## Topic modelling using Latent Dirichlet Allocation (LDA) model
+```{r}
+# set a seed so that the output of the model is predictable
+airbnb_lda <- LDA(airbnb_corpus_dtm, k = 5, control = list(seed = 1234))
 #> A LDA_VEM topic model with 5 topics.
-Airbnb_lda <- LDA(Airbnb_tdm, k = 2)
-Airbnb_lda
+```
 
-Airbnb_topics <- tidy(Airbnb_lda, matrix = "beta")
-Airbnb_topics
+## extracting the per-topic-per-word probabilities, called β (beta)
+```{r}
+airbnb_topics <- tidy(airbnb_lda, matrix = "beta")
+```
 
-Airbnb_top_terms <- Airbnb_topics %>%
+## find the 10 most common terms within each topic
+```{r}
+airbnb_top_terms <- airbnb_topics %>%
   group_by(topic) %>%
   top_n(10, beta) %>%
   ungroup() %>%
   arrange(topic, -beta)
 
-Airbnb_top_terms %>%
+airbnb_top_terms %>%
   mutate(term = reorder_within(term, beta, topic)) %>%
   ggplot(aes(beta, term, fill = factor(topic))) +
   geom_col(show.legend = FALSE) +
@@ -74,74 +81,54 @@ Airbnb_top_terms %>%
   scale_y_reordered()
 ```
 
+## sentiment analysis
 ```{r}
-# Airbnb_desc_Corpus
+sent <- analyzeSentiment(airbnb_dtm, language = "english")
+# we're going to just select the Harvard-IV dictionary results ..  
+sent <- sent[,1:4]
+#Organizing it as a dataframe
+sent <- as.data.frame(sent)
+# Now lets take a look at what these sentiment values look like. 
+view(head(sent))
 
-# getTransformations()
+summary(sent$SentimentGI)
 
-# gsub("<br />", " ", Airbnb_desc_Corpus)
-# gsub("é", "e", Airbnb_desc_Corpus)
+# Start by attaching to other data which has the company names 
+final <- bind_cols(airbnb_dtm$terms, sent)
+# now lets get the top 5 
+final %>% group_by(airbnb_dtm$terms) %>%
+  summarize(sent = mean(SentimentGI)) %>%
+  arrange(desc(sent)) %>%
+  head(n= 5)
 
-# view(guess_encoding(Airbnb_desc_Corpus))
 
-#guess_encoding(readr_example("mtcars.csv"))
-#view(guess_encoding(readr_example("mtcars.csv")))
+sent2 <- get_nrc_sentiment(airbnb$description)
+# Let's look at the corpus as a whole again:
+sent3 <- as.data.frame(colSums(sent))
+sent3 <- rownames_to_column(sent3) 
+colnames(sent3) <- c("emotion", "count")
+ggplot(sent3, aes(x = emotion, y = count, fill = emotion)) + geom_bar(stat = "identity") + theme_minimal() + theme(legend.position="none", panel.grid.major = element_blank()) + labs( x = "Emotion", y = "Total Count") + ggtitle("Sentiment of Job Descriptions") + theme(plot.title = element_text(hjust=0.5))
+```
 
-#iconv(Airbnb_desc_Corpus, from = "windows-1252", to = "UTF-8", sub = " ")
-#iconv(Airbnb_desc_Corpus, from = "ASCII", to = "UTF-8", sub = " ")
-
-#iconvlist()
-
-# Delete non-alphanumeric characters
-#str_replace_all(Airbnb_desc_Corpus, "[^[:alnum:]]", "")
-
-# to lower case
-Airbnb_desc_Corpus <- tm_map(Airbnb_desc_Corpus, stri_trans_tolower)
-
-# remove punctuation
-Airbnb_desc_Corpus <- tm_map(Airbnb_desc_Corpus, removePunctuation)
-
-# str_replace_all(Airbnb_desc_Corpus, "br", " ")
-
-# remove stopwords and others
-# Airbnb_desc_Corpus <- tm_map(Airbnb_desc_Corpus, removeWords, stopwords("en"))
-
-# view(guess_encoding(Airbnb_desc_Corpus[-1]))
-
-# remove numbers
-Airbnb_desc_Corpus <- tm_map(Airbnb_desc_Corpus, removeNumbers)
-
-# remove extra white space
-Airbnb_desc_Corpus <- tm_map(Airbnb_desc_Corpus, stripWhitespace)
-
-# Stem Document
-Airbnb_desc_Corpus <- tm_map(Airbnb_desc_Corpus, stemDocument,"english")
-#writeLines(as.character(listings_corpus[[1]]))
-
-Airbnb_desc_Corpus <- tm_map(Airbnb_desc_Corpus[35799], removeWords, stopwords("english"))
-
+#LDA analysis
+```{r}
+# set a seed so that the output of the model is predictable
+ap_lda <- LDA(airbnb_dtm, k = 2, control = list(seed = 1234))
+ap_lda
+#> A LDA_VEM topic model with 2 topics.
 ```
 
 ```{r}
-# Document term matrix
-dtm <- DocumentTermMatrix(Airbnb_desc_Corpus)
-# check total frequency of words
-freq <- colSums(as.matrix(dtm))
-freq
-# convert to a data frame
-freq_df <- data.frame(word = names(freq),freq=freq)
-head(freq_df, 10)
-view(freq_df)
-# check the frequncey
-summary(freq_df$freq)
-dim(freq_df)
-```
+airbnb_top_terms <- airbnb_topics %>%
+  group_by(term) %>%
+  top_n(10, beta) %>%
+  ungroup() %>%
+  arrange(term, -beta)
 
-#create word cloud
-```{r}
-wordcloud(words = freq_df$word, freq = freq_df$freq, min.freq = 50,
-          random.order=FALSE,
-          rot.per=0.5,
-          colors=brewer.pal(8, "Dark2"))
+airbnb_top_terms %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  scale_y_reordered()
 ```
-
