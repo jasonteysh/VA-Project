@@ -56,7 +56,7 @@ wordcloud(words = head$terms, freq = head$count, min.freq = 10,
 ## Topic modelling using Latent Dirichlet Allocation (LDA) model
 ```{r}
 # set a seed so that the output of the model is predictable
-airbnb_lda <- LDA(airbnb_corpus_dtm, k = 5, control = list(seed = 1234))
+airbnb_lda <- LDA(airbnb_corpus_dtm, k = 5)
 #> A LDA_VEM topic model with 5 topics.
 ```
 
