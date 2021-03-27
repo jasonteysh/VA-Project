@@ -1,3 +1,4 @@
+#Setting up
 ## load required R packages
 ```{r}
 packages = c('tidyverse', 'tidytext', 'tm', 'SnowballC', 'wordcloud', 'wordcloud2', 'RColorBrewer', 'stringi', 'readr', 'stringr', 'topicmodels', 'ggplot2', 'dplyr', 'plotly', 'parallelPlot', 'readtext', 'quanteda', 'stringi', 'sentimentr', 'SentimentAnalysis', 'syuzhet', 'RSentiment')
@@ -11,22 +12,24 @@ library(p, character.only = T)
 
 ## read in Airbnb.csv
 ```{r}
-airbnb <- read_csv("data/Airbnb(extract100).csv")
+airbnb <- read_csv("data/Airbnb_victoria.csv")
 ```
-
+# Preparing the data
 ## tokenisation to create a tibble of text from 'description' column
 ```{r}
-airbnb_text <- airbnb$description
+airbnb_desc <- airbnb$description
+airbnb_text <- iconv(airbnb_desc, to = "UTF-8")
 airbnb_tibble <- tibble(airbnb_text)
 airbnb_tibble %>%
   unnest_tokens(word, airbnb_text)
 ```
 
-## Create a corpus
+## Create a corpus and tokenisation
 ```{r}
+# creating the corpus
 airbnb_corpus <- Corpus(VectorSource(airbnb_tibble))
 
-# cleaning the corpus
+# tokenisation
 airbnb_corpus_clean <- tm_map(airbnb_corpus, stripWhitespace)
 airbnb_corpus_clean <- tm_map(airbnb_corpus_clean, content_transformer(tolower))
 airbnb_corpus_clean <- tm_map(airbnb_corpus_clean, removeNumbers)
@@ -39,7 +42,9 @@ airbnb_corpus_clean <- tm_map(airbnb_corpus_clean, stemDocument)
 airbnb_corpus_dtm <- DocumentTermMatrix(airbnb_corpus_clean)
 ```
 
-#create the wordcloud
+#Creating the visualisations
+
+## Wordcloud
 ```{r}
 sums <- as.data.frame(colSums(as.matrix(airbnb_corpus_dtm)))
 sums <- rownames_to_column(sums) 
@@ -48,12 +53,12 @@ sums <- arrange(sums, desc(count))
 head <- sums
 
 #wordcloud will show the most common terms used in the 'description' column
-wordcloud(words = head$terms, freq = head$count, min.freq = 10,
-  max.words=200, random.order=FALSE, rot.per=0.35, 
+wordcloud(words = head$terms, freq = head$count, min.freq = 100,
+  max.words=1000, random.order=FALSE, rot.per=0.35, 
   colors=brewer.pal(8, "Dark2"))
 ```
 
-## Topic modelling using Latent Dirichlet Allocation (LDA) model
+## Latent Dirichlet Allocation (LDA) model
 ```{r}
 # set a seed so that the output of the model is predictable
 airbnb_lda <- LDA(airbnb_corpus_dtm, k = 5)
@@ -65,66 +70,16 @@ airbnb_lda <- LDA(airbnb_corpus_dtm, k = 5)
 airbnb_topics <- tidy(airbnb_lda, matrix = "beta")
 ```
 
-## find the 10 most common terms within each topic
+## visualise the topics
 ```{r}
+## find the 10 most common terms within each topic
 airbnb_top_terms <- airbnb_topics %>%
   group_by(topic) %>%
   top_n(10, beta) %>%
   ungroup() %>%
   arrange(topic, -beta)
 
-airbnb_top_terms %>%
-  mutate(term = reorder_within(term, beta, topic)) %>%
-  ggplot(aes(beta, term, fill = factor(topic))) +
-  geom_col(show.legend = FALSE) +
-  facet_wrap(~ topic, scales = "free") +
-  scale_y_reordered()
-```
-
-## sentiment analysis
-```{r}
-sent <- analyzeSentiment(airbnb_dtm, language = "english")
-# we're going to just select the Harvard-IV dictionary results ..  
-sent <- sent[,1:4]
-#Organizing it as a dataframe
-sent <- as.data.frame(sent)
-# Now lets take a look at what these sentiment values look like. 
-view(head(sent))
-
-summary(sent$SentimentGI)
-
-# Start by attaching to other data which has the company names 
-final <- bind_cols(airbnb_dtm$terms, sent)
-# now lets get the top 5 
-final %>% group_by(airbnb_dtm$terms) %>%
-  summarize(sent = mean(SentimentGI)) %>%
-  arrange(desc(sent)) %>%
-  head(n= 5)
-
-
-sent2 <- get_nrc_sentiment(airbnb$description)
-# Let's look at the corpus as a whole again:
-sent3 <- as.data.frame(colSums(sent))
-sent3 <- rownames_to_column(sent3) 
-colnames(sent3) <- c("emotion", "count")
-ggplot(sent3, aes(x = emotion, y = count, fill = emotion)) + geom_bar(stat = "identity") + theme_minimal() + theme(legend.position="none", panel.grid.major = element_blank()) + labs( x = "Emotion", y = "Total Count") + ggtitle("Sentiment of Job Descriptions") + theme(plot.title = element_text(hjust=0.5))
-```
-
-#LDA analysis
-```{r}
-# set a seed so that the output of the model is predictable
-ap_lda <- LDA(airbnb_dtm, k = 2, control = list(seed = 1234))
-ap_lda
-#> A LDA_VEM topic model with 2 topics.
-```
-
-```{r}
-airbnb_top_terms <- airbnb_topics %>%
-  group_by(term) %>%
-  top_n(10, beta) %>%
-  ungroup() %>%
-  arrange(term, -beta)
-
+## visualising the output
 airbnb_top_terms %>%
   mutate(term = reorder_within(term, beta, topic)) %>%
   ggplot(aes(beta, term, fill = factor(topic))) +
