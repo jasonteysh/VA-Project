@@ -6,7 +6,10 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.retina = 3, 
+                      message = FALSE,
+                      warning = FALSE)
 ```
 
 #Load Data
@@ -21,6 +24,9 @@ library(shinydashboard)
 library(plotly)
 library(corrplot)
 library(heatmaply)
+library(dplyr)
+library(MASS)
+library(parallelPlot)
 
 airbnb <- read_csv("data/Airbnb.csv")
 
@@ -37,8 +43,7 @@ sidebar <- dashboardSidebar(
     menuItem("Spatial Cluster Analysis",tabName = "Spatial Cluster Analysis", icon = icon("dashboard")),
     menuItem("Text Analysis", tabName = "Text Analysis", icon = icon("chart-line")),
     menuItem("MLR", tabName = "MLR", icon = icon("chart-line"))
-    
-  )
+            )
 )
 
 ```
@@ -48,8 +53,10 @@ sidebar <- dashboardSidebar(
 ``` {r}
 body <- dashboardBody(
   tabItems(
-    tabItem(
-      tabName = "EDA",
+
+################################EDA##############################################
+
+    tabItem(tabName = "EDA",
       fluidPage(
         titlePanel("Exploratory Data Analysis"),
         fluidRow(
@@ -120,6 +127,9 @@ body <- dashboardBody(
         )
       )      
     ),
+
+################################MLR##############################################
+
     tabItem(tabName = "MLR",
             fluidPage(
               titlePanel("Multiple linear regression"),
@@ -129,27 +139,21 @@ body <- dashboardBody(
                   height = 100,
                   tabsetPanel(
                     tabPanel("Regression for Price",
-                             box(
-                               width = 12,
+                             box(width = 12,
                                height = 240,
                                selectInput("mlr1", "Independent Variables:",
                                            choices = c("host_acceptance_rate", "host_total_listings_count", "accommodates", "bedrooms", "beds", "number_of_reviews", "review_scores_rating", "review_scores_accuracy", "review_scores_cleanliness", "review_scores_checkin", "review_scores_communication", "review_scores_location", "review_scores_value")
                                            ,multiple = TRUE,selected = c("host_acceptance_rate", "host_total_listings_count", "accommodates", "bedrooms", "beds", "number_of_reviews", "review_scores_rating", "review_scores_accuracy", "review_scores_cleanliness", "review_scores_checkin", "review_scores_communication", "review_scores_location", "review_scores_value")
                                ),
                                selectInput("variable_selection", "Strategies of Stepwise:",
-                                           choices =  list("Forward Selection", "Backward Selection", "Stepwise Selection")
-                               )),
+                                           choices =  list("Forward Selection", "Backward Selection", "Stepwise Selection"))
+                               ),
                              box(
                                width = 12,
                                h4('Regression Summary:'),
-                               verbatimTextOutput("lb1")
-                                )
-                            )
-                             )
-                )
-              )
-              )
-    )
+                               verbatimTextOutput("MLR"))
+                                ))))))
+###########################################################################
   )
 )
 
@@ -169,7 +173,7 @@ ui <- dashboardPage(
 ``` {r}
 server<-function(input,output){
   
-#output bivariate plot
+#############output bivariate plot#########################
 output$bivariateplot <- renderPlotly({
   
   if(input$variable_region==0){
@@ -177,7 +181,7 @@ output$bivariateplot <- renderPlotly({
 xaxis <- unlist(airbnb[,input$variable_x_bivariate])
 yaxis <- unlist(airbnb[,input$variable_y_bivariate])
 
-ggplot(airbnb,aes(x=xaxis,y=yaxis, color=airbnb$region_parent_name))+
+ggplot(airbnb,aes(x=xaxis,y=yaxis, color=region_parent_name))+
   geom_jitter()+
   labs(title=paste(input$variable_x_bivariate, "Vs", input$variable_y_bivariate), y = input$variable_y_bivariate, x=input$variable_x_bivariate)+
   theme(legend.position="bottom", axis.text.y = element_text(angle = 90))
@@ -185,7 +189,7 @@ ggplot(airbnb,aes(x=xaxis,y=yaxis, color=airbnb$region_parent_name))+
   
   else{
     
-regionfilter <- filter(airbnb,(airbnb$region_parent_name == input$variable_region))
+regionfilter <- filter(airbnb,(region_parent_name == input$variable_region))
 xaxis <- unlist(regionfilter[,input$variable_x_bivariate])
 yaxis <- unlist(regionfilter[,input$variable_y_bivariate])
 
@@ -196,7 +200,7 @@ ggplot(regionfilter,aes(x=xaxis,y=yaxis, color=regionfilter$region_parent_name))
   }
   })
 
-#output Confidence Interval X
+################output Confidence Interval X####################
 output$bivariateX <- renderTable({
 
    if(input$variable_region==0){
@@ -215,7 +219,7 @@ return(airbnb2)
    }
   else{
     
-regionfilterX <- filter(airbnb,(airbnb$region_parent_name == input$variable_region))
+regionfilterX <- filter(airbnb,(region_parent_name == input$variable_region))
 
   airbnb2<- regionfilterX %>%
     summarise(Min = min(get(input$variable_x_bivariate), na.rm = TRUE), 
@@ -233,7 +237,7 @@ return(airbnb2)
   }
 })
 
-#output Confidence Interval Y
+#########################output Confidence Interval Y######################
 output$bivariateY <- renderTable({
 
 if(input$variable_region==0){  
@@ -252,7 +256,7 @@ return(airbnb3)
      }
   else{
     
-regionfilterY <- filter(airbnb,(airbnb$region_parent_name == input$variable_region))
+regionfilterY <- filter(airbnb,(region_parent_name == input$variable_region))
     
       airbnb3<- regionfilterY %>%
     summarise(Min = min(get(input$variable_y_bivariate), na.rm = TRUE), 
@@ -270,8 +274,10 @@ regionfilterY <- filter(airbnb,(airbnb$region_parent_name == input$variable_regi
   
 })
 
+##################Output Corr Plot########################
+
 output$corrplotEDA <- renderPlot({
-  airbnb.cor <- select(airbnb,c(11, 12, 15, 24, 26, 27, 29, 43, 48, 49, 50, 51, 52, 53, 54))
+  airbnb.cor <- dplyr::select(airbnb,c(11, 12, 15, 24, 26, 27, 29, 43, 48, 49, 50, 51, 52, 53, 54))
 airbnb.cor2 <- cor(airbnb.cor,use = "complete.obs")
 corrplot(airbnb.cor2,
          method = "ellipse",
@@ -281,6 +287,30 @@ corrplot(airbnb.cor2,
          order = "hclust")
 })
 
+####################Output MLR###########################
+
+output$MLR <- renderPrint({
+  airbnb.mlr <- dplyr::select(airbnb,c(11, 12, 15, 24, 26, 27, 29, 43, 48, 49, 50, 51, 52, 53, 54))
+  variablesxMlr<-c("price",input$mlr1)
+  Rdata = airbnb.mlr[,variablesxMlr]
+  Rdata<-na.omit(Rdata)
+    fit1<-lm(price ~.,data=Rdata)
+    fit2<-lm(price ~1,data=Rdata)
+    
+if (input$variable_selection == "Backward Selection") {
+      step<- stepAIC(fit1,direction = "backward")
+      
+    } else if (input$variable_selection == "Forward Selection") {
+      step<- stepAIC(fit2,direction = "forward",scope = list(upper = fit1,lower = fit2))
+      
+    } else {
+      step<- stepAIC(fit2,direction = "both",scope = list(upper = fit1,lower = fit2))
+    }
+    return(summary(step))
+  })
+
+######################################################
+
 }
 
 shinyApp(ui=ui,server=server)
@@ -289,18 +319,30 @@ shinyApp(ui=ui,server=server)
 ```
 
 
-```{r}
 
-airbnb.cor <- select(airbnb,c(11, 12, 15, 24, 26, 27, 29, 43, 48, 49, 50, 51, 52, 53, 54))
-airbnb.cor2 <- cor(airbnb.cor,use = "complete.obs")
-corrplot(airbnb.cor2,
-         method = "ellipse",
-         type="lower",
-         diag = FALSE,
-         tl.col = "black",
-         order = "hclust")
 
-```
+airbnb.cluster <- dplyr::select(airbnb,c(price,bedrooms, beds, region_parent_name))
+airbnb.cluster$region_parent_name <- as.factor(airbnb.cluster$region_parent_name)
+airbnb.cluster<- data.frame(airbnb.cluster)
+airbnb.cluster <- na.omit(airbnb.cluster)
+airbnb.cluster <- filter(airbnb.cluster,(airbnb.cluster$region_parent_name == "victoria"))
+class(airbnb.cluster$region_parent_name)
+class(airbnb.cluster$price)
+class(airbnb.cluster)
+summary(airbnb.cluster)
+parallelPlot(airbnb.cluster)
+
+
+
+
+parallelPlot(iris)
+summary(iris)
+class(iris$Species)
+class(iris)
+class(iris$Sepal.Width)
+data.frame(iris)
+
+parallelPlot(mtcars)
 
 
 

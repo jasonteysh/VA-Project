@@ -1,0 +1,122 @@
+---
+title: "Assignment - Louelle Teo"
+description: |
+  ISSS608 Assignment - Louelle Teo
+author:
+  - name: Louelle TEO Fengmin
+date: 03-30-2021
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.retina = 3, 
+                      message = FALSE,
+                      warning = FALSE)
+```
+
+Conducting literature review on how the analysis were performed before. The focus should be on identifying gaps whereby interactive web approach and visual Analytics techniques can be used to enhance user experience on using the analysis techniques.
+
+Preparing the storyboard for the design of the sub-module.
+
+Extracting, wrangling and preparing the input data required to perform the analysis. The focus should be on exploring appropriate tidyverse methods
+
+Testing and prototyping the proposed sub-module in R Markdown. The R Markdown document must be in full working html report format. This link provides a useful example for your reference.
+
+```{r}
+
+library(tidyverse)
+library(plotly)
+library(purrr)
+library(dplyr)
+library(gdata)
+
+airbnb <- read_csv("data/Airbnb.csv")
+airbnb.vic <- read_csv("data/Airbnb_victoria.csv")
+summary(airbnb.vic)
+
+```
+
+#Exploratory Data Analysis
+
+```{r}
+unique_host_id <- airbnb.vic %>%
+  dplyr::select(host_id, region_name) %>%
+  unique() %>%
+  mutate(hostcount=1)%>%
+  dplyr::select(-host_id)%>%
+  group_by(region_name)%>%
+  count(hostcount, name="number.of.host")%>%
+  ungroup() %>% 
+  dplyr::select(-hostcount)%>%
+  arrange(desc(number.of.host))%>%
+  slice_head(n=10)
+  
+
+
+ggplot(unique_host_id,aes(x=(reorder(region_name,-number.of.host)),y=number.of.host))+
+  geom_col() +
+  labs(title= "Number of Hosts per Region", x="Region", y="Number of Hosts")+
+  theme(legend.position="bottom", axis.text.x = element_text(angle = 90))
+  
+```
+
+```{r}
+
+#boxplots
+
+cities<-unique_host_id$region_name
+
+eda_boxplot<-airbnb.vic %>%
+  filter(region_name %in% cities)%>%
+  dplyr::select(region_name,price)
+  
+
+ggplot(eda_boxplot, aes(x=region_name,y=price))+
+  geom_boxplot()+
+  theme(legend.position="bottom", axis.text.x = element_text(angle = 90))+
+  labs(title= "Boxplot of Prices", x="Region", y="Prices")
+
+```
+```{r fig.height=10, fig.width=12}
+#boxplots of property types and prices
+
+cities<-unique_host_id$region_name
+
+property.type.focus <- airbnb.vic%>%
+  dplyr::select(property_type)%>%
+  group_by(property_type)%>%
+  count(property_type,name="total.no.property")%>%
+  ungroup()%>%
+  arrange(-total.no.property)%>%
+  slice_head(n=10)
+
+eda_boxplot_propertytype<-airbnb.vic %>%
+  filter(region_name %in% cities)%>%
+  filter(property_type %in% property.type.focus$property_type)%>%
+  dplyr::select(region_name,price,property_type)
+  
+
+ggplot(eda_boxplot_propertytype, aes(x=property_type,y=price))+
+  geom_boxplot()+
+  theme(legend.position="bottom", axis.text.x = element_text(angle = 90))+
+  labs(title= "Boxplot of Prices by Property Type", x="Region", y="Prices")+
+  facet_wrap(~region_name)
+
+
+```
+
+``` {r fig.height=6, fig.width=12}
+#bivariate prices vs reviews
+
+bivariateplot<- airbnb.vic%>%
+  filter(region_name %in% cities)%>%
+  dplyr::select(price,review_scores_rating,region_name)
+
+ggplot(bivariateplot,aes(review_scores_rating,price,color=region_name))+
+  geom_jitter()
+
+```
