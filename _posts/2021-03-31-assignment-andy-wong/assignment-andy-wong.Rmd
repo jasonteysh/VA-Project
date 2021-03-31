@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # The assignment
-The assignment is part of the bigger Shiny-based Visual Analytics Application (Shiny-VAA) project. Each team member is required to select a sub-module from the proposed Shiny-VAA and to complete the tasks below:
+[The assignment](https://wiki.smu.edu.sg/2021t2isss608/Assignment) is part of the bigger Shiny-based Visual Analytics Application (Shiny-VAA) project. Each team member is required to select a sub-module from the proposed Shiny-VAA and to complete the tasks below:
 
 1. Conducting literature review on how the analysis were performed before. The focus should be on identifying gaps whereby interactive web approach and visualanalytics techniques can be used to enhance user experience on using the analysis techniques.
 2. Preparing the storyboard for the design of the sub-module.
