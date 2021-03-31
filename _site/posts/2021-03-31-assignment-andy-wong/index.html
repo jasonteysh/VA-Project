@@ -2105,6 +2105,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
+<li><a href="#the-assignment">The assignment</a></li>
 <li><a href="#introduction">1.0 Introduction</a></li>
 <li><a href="#literature-review-of-current-analysis-of-airbnb-listings.">2.0 Literature Review of current analysis of Airbnb listings.</a></li>
 <li><a href="#storyboard">3.0 Storyboard</a></li>
@@ -2127,26 +2128,38 @@ document.addEventListener('DOMContentLoaded', function() {
 <ul>
 <li><a href="#tokenisation-to-create-a-tibble-of-text-from-description-column">tokenisation to create a tibble of text from ‘description’ column</a></li>
 <li><a href="#create-a-corpus-and-tokenisation">Create a corpus and tokenisation</a></li>
-<li><a href="#wordcloud">Wordcloud</a></li>
+</ul></li>
+<li><a href="#create-the-document-term-matrix">create the Document Term Matrix</a></li>
+<li><a href="#creating-the-visualisations">Creating the visualisations</a>
+<ul>
+<li><a href="#wordcloud-of-words-most-commonly-appearing">Wordcloud of words most commonly appearing</a></li>
 <li><a href="#topic-modelling-using-latent-dirichlet-allocation-lda-model">Topic modelling using Latent Dirichlet Allocation (LDA) model</a></li>
-<li><a href="#extracting-the-per-topic-per-word-probabilities-β-beta">extracting the per-topic-per-word probabilities β (beta)</a></li>
-<li><a href="#visualise-the-topics">visualise the topics</a></li>
 </ul></li>
 </ul>
 </nav>
 </div>
+<h1 id="the-assignment">The assignment</h1>
+<p>The assignment is part of the bigger Shiny-based Visual Analytics Application (Shiny-VAA) project. Each team member is required to select a sub-module from the proposed Shiny-VAA and to complete the tasks below:</p>
+<ol type="1">
+<li>Conducting literature review on how the analysis were performed before. The focus should be on identifying gaps whereby interactive web approach and visualanalytics techniques can be used to enhance user experience on using the analysis techniques.</li>
+<li>Preparing the storyboard for the design of the sub-module.</li>
+<li>Extracting, wrangling and preparing the input data required to perform the analysis. The focus should be on exploring appropriate tidyverse methods</li>
+<li>Testing and prototyping the proposed sub-module in R Markdown. The R Markdown document must be in full working html report format. This link provides a useful example for your reference.</li>
+</ol>
 <h1 id="introduction">1.0 Introduction</h1>
 <p>Text analysis has been done on Airbnb data sets, but typically not in an interactive manner.</p>
 <h1 id="literature-review-of-current-analysis-of-airbnb-listings.">2.0 Literature Review of current analysis of Airbnb listings.</h1>
-<p>Text analysis has been done on Airbnb data sets, but typically not in an interactive manner. Most of these are written in Python and makes use of Python tools like VADER (<em>V</em>alence <em>A</em>ware <em>D</em>ictionary and s<em>E</em>ntiment <em>R</em>easoner) for sentiment analysis. The typical exploratory analysis conducted for text analytics, other than sentiment analysis, include correlations between accommodation facilities, correlation analysis on price versus actual value, word cloud presenting common terms used in listing reviews, It is usually reported as graphs and explained by the author, but does not allow the user to manipulate the graphs for customised analysis. Some examples <a href="https://medium.com/analytics-vidhya/airbnb-data-analysis-43554ec39832">here</a> and <a href="https://medium.datadriveninvestor.com/making-models-airbnb-price-prediction-data-analysis-15b9af87c9d8">here</a>.</p>
-<p>This assignment attempts to create a visualisation of text analysis of Airbnb listings, which will allow the user to manipulate variables to be able to customise the view to his/her preference.</p>
+<p>Text analysis has been done on Airbnb data sets, but typically not in an interactive manner. A large number of practitioners prefer to perform text analysis in Python like VADER (<em>V</em>alence <em>A</em>ware <em>D</em>ictionary and s<em>E</em>ntiment <em>R</em>easoner) for <a href="https://www.researchgate.net/publication/333114485_Large-Scale_Sentiment_Analysis_on_Airbnb_Reviews_from_15_Cities">sentiment analysis</a>, while R is commonly deemed to be more suitable for data analysis. The typical exploratory analysis conducted for text analytics, other than sentiment analysis, include correlations between accommodation facilities, correlation analysis on price versus actual value, word cloud presenting common terms used in listing reviews, It is usually reported as graphs and explained by the author, but does not allow the user to manipulate the graphs for customised analysis. Some examples <a href="https://medium.com/analytics-vidhya/airbnb-data-analysis-43554ec39832">here</a> and <a href="https://medium.datadriveninvestor.com/making-models-airbnb-price-prediction-data-analysis-15b9af87c9d8">here</a>.</p>
+<p>This assignment attempts to create a visualisation of text analysis of Airbnb listings, which will allow the user to manipulate variables such as te listing review score, and see common characteristics, and to be able to customise the view to his/her preference.</p>
 <h1 id="storyboard">3.0 Storyboard</h1>
 <p><img src="images/textsketch.png" style="width:100.0%" /></p>
 <h1 id="data-preparation">4.0 Data preparation</h1>
 <h3 id="step-1-load-the-required-r-packages">Step 1: Load the required R packages</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>packages</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'tidyverse'</span>, <span class='st'>'stringr'</span>, <span class='st'>'dplyr'</span>, <span class='st'>'lubridate'</span>, <span class='st'>'anytime'</span>, <span class='st'>'shiny'</span>, <span class='st'>'shinydashboard'</span>, <span class='st'>'plotly'</span>, <span class='st'>'corrplot'</span>, <span class='st'>'heatmaply'</span>, <span class='st'>'tidytext'</span>, <span class='st'>'tm'</span>, <span class='st'>'SnowballC'</span>, <span class='st'>'wordcloud'</span>, <span class='st'>'topicmodels'</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>packages</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'tidyverse'</span>, <span class='st'>'stringr'</span>, <span class='st'>'dplyr'</span>, <span class='st'>'lubridate'</span>, <span class='st'>'anytime'</span>, <span class='st'>'shiny'</span>,
+             <span class='st'>'shinydashboard'</span>, <span class='st'>'plotly'</span>, <span class='st'>'corrplot'</span>, <span class='st'>'heatmaply'</span>, <span class='st'>'tidytext'</span>, <span class='st'>'tm'</span>,
+             <span class='st'>'SnowballC'</span>, <span class='st'>'wordcloud'</span>, <span class='st'>'topicmodels'</span><span class='op'>)</span>
 <span class='kw'>for</span> <span class='op'>(</span><span class='va'>p</span> <span class='kw'>in</span> <span class='va'>packages</span><span class='op'>)</span><span class='op'>{</span>
 <span class='kw'>if</span><span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'>p</span>, character.only <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span><span class='op'>)</span><span class='op'>{</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
@@ -2167,11 +2180,11 @@ document.addEventListener('DOMContentLoaded', function() {
 <p>Many of the columns are not relevant to the analysis. As such, only columns relevant to the analysis are selected.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>airbnb</span> <span class='op'>&lt;-</span> <span class='fu'>select</span><span class='op'>(</span><span class='va'>airbnb_raw</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>6</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>10</span>, <span class='fl'>13</span>, <span class='fl'>14</span>, <span class='fl'>15</span>, <span class='fl'>16</span>, <span class='fl'>17</span>, <span class='fl'>18</span>, <span class='fl'>19</span>, <span class='fl'>23</span>, <span class='fl'>24</span>, <span class='fl'>25</span>, <span class='fl'>26</span>,
-                               <span class='fl'>27</span>, <span class='fl'>28</span>, <span class='fl'>29</span>, <span class='fl'>30</span>, <span class='fl'>31</span>, <span class='fl'>32</span>, <span class='fl'>33</span>, <span class='fl'>35</span>, <span class='fl'>36</span>, <span class='fl'>37</span>, <span class='fl'>38</span>, <span class='fl'>39</span>, <span class='fl'>40</span>, <span class='fl'>41</span>, <span class='fl'>42</span>,
-                               <span class='fl'>43</span>, <span class='fl'>44</span>, <span class='fl'>45</span>, <span class='fl'>46</span>, <span class='fl'>47</span>, <span class='fl'>49</span>, <span class='fl'>50</span>, <span class='fl'>51</span>, <span class='fl'>52</span>, <span class='fl'>53</span>, <span class='fl'>55</span>, <span class='fl'>56</span>, <span class='fl'>57</span>, <span class='fl'>58</span>, <span class='fl'>59</span>,
-                               <span class='fl'>60</span>, <span class='fl'>61</span>, <span class='fl'>62</span>, <span class='fl'>63</span>, <span class='fl'>64</span>, <span class='fl'>65</span>, <span class='fl'>66</span>, <span class='fl'>68</span>, <span class='fl'>69</span>, <span class='fl'>70</span>, <span class='fl'>71</span>, <span class='fl'>72</span>, <span class='fl'>73</span>, <span class='fl'>74</span>, <span class='fl'>75</span>,
-                               <span class='fl'>76</span>, <span class='fl'>77</span>, <span class='fl'>80</span><span class='op'>)</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>airbnb</span> <span class='op'>&lt;-</span> <span class='fu'>select</span><span class='op'>(</span><span class='va'>airbnb_raw</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>6</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>10</span>, <span class='fl'>13</span>, <span class='fl'>14</span>, <span class='fl'>15</span>, <span class='fl'>16</span>, <span class='fl'>17</span>, <span class='fl'>18</span>, <span class='fl'>19</span>, <span class='fl'>23</span>, <span class='fl'>24</span>, <span class='fl'>25</span>,
+                               <span class='fl'>26</span>, <span class='fl'>27</span>, <span class='fl'>28</span>, <span class='fl'>29</span>, <span class='fl'>30</span>, <span class='fl'>31</span>, <span class='fl'>32</span>, <span class='fl'>33</span>, <span class='fl'>35</span>, <span class='fl'>36</span>, <span class='fl'>37</span>, <span class='fl'>38</span>, <span class='fl'>39</span>, <span class='fl'>40</span>,
+                               <span class='fl'>41</span>, <span class='fl'>42</span>, <span class='fl'>43</span>, <span class='fl'>44</span>, <span class='fl'>45</span>, <span class='fl'>46</span>, <span class='fl'>47</span>, <span class='fl'>49</span>, <span class='fl'>50</span>, <span class='fl'>51</span>, <span class='fl'>52</span>, <span class='fl'>53</span>, <span class='fl'>55</span>, <span class='fl'>56</span>,
+                               <span class='fl'>57</span>, <span class='fl'>58</span>, <span class='fl'>59</span>, <span class='fl'>60</span>, <span class='fl'>61</span>, <span class='fl'>62</span>, <span class='fl'>63</span>, <span class='fl'>64</span>, <span class='fl'>65</span>, <span class='fl'>66</span>, <span class='fl'>68</span>, <span class='fl'>69</span>, <span class='fl'>70</span>, <span class='fl'>71</span>,
+                               <span class='fl'>72</span>, <span class='fl'>73</span>, <span class='fl'>74</span>, <span class='fl'>75</span>, <span class='fl'>76</span>, <span class='fl'>77</span>, <span class='fl'>80</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
@@ -2187,8 +2200,11 @@ document.addEventListener('DOMContentLoaded', function() {
 <h3 id="step-5-convert-rate-variables-from-character-to-number-type">Step 5: Convert Rate variables from Character to Number Type</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>airbnb</span><span class='op'>$</span><span class='va'>host_response_rate</span> <span class='op'>&lt;-</span> <span class='op'>(</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'>str_remove_all</span><span class='op'>(</span><span class='va'>airbnb</span><span class='op'>$</span><span class='va'>host_response_rate</span>, <span class='st'>"%"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>100</span><span class='op'>)</span>
-<span class='va'>airbnb</span><span class='op'>$</span><span class='va'>host_acceptance_rate</span> <span class='op'>&lt;-</span> <span class='op'>(</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'>str_remove_all</span><span class='op'>(</span><span class='va'>airbnb</span><span class='op'>$</span><span class='va'>host_acceptance_rate</span>, <span class='st'>"%"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>100</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>airbnb</span><span class='op'>$</span><span class='va'>host_response_rate</span> <span class='op'>&lt;-</span>
+  <span class='op'>(</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'>str_remove_all</span><span class='op'>(</span><span class='va'>airbnb</span><span class='op'>$</span><span class='va'>host_response_rate</span>, <span class='st'>"%"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>100</span><span class='op'>)</span>
+
+<span class='va'>airbnb</span><span class='op'>$</span><span class='va'>host_acceptance_rate</span> <span class='op'>&lt;-</span>
+  <span class='op'>(</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'>str_remove_all</span><span class='op'>(</span><span class='va'>airbnb</span><span class='op'>$</span><span class='va'>host_acceptance_rate</span>, <span class='st'>"%"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>100</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
@@ -2233,20 +2249,6 @@ document.addEventListener('DOMContentLoaded', function() {
   <span class='fu'>unnest_tokens</span><span class='op'>(</span><span class='va'>word</span>, <span class='va'>airbnb_text</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code># A tibble: 5,408,725 x 1
-   word       
-   &lt;chr&gt;      
- 1 this       
- 2 two        
- 3 bedroom    
- 4 two        
- 5 bathroom   
- 6 beautifully
- 7 appointed  
- 8 home       
- 9 is         
-10 set        
-# ... with 5,408,715 more rows</code></pre>
 </div>
 <h2 id="create-a-corpus-and-tokenisation">Create a corpus and tokenisation</h2>
 <div class="layout-chunk" data-layout="l-body">
@@ -2264,21 +2266,22 @@ document.addEventListener('DOMContentLoaded', function() {
 <span class='co'>#remove punctuation</span>
 <span class='va'>airbnb_corpus_clean</span> <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>airbnb_corpus_clean</span>, <span class='va'>removePunctuation</span><span class='op'>)</span>
 <span class='co'>#remove common words that do not add value to sentiment analysis</span>
-<span class='va'>airbnb_corpus_clean</span> <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>airbnb_corpus_clean</span>, <span class='va'>removeWords</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>(</span><span class='fu'>stopwords</span><span class='op'>(</span><span class='st'>"english"</span><span class='op'>)</span><span class='op'>)</span>, <span class='st'>"%br"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>airbnb_corpus_clean</span> <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>airbnb_corpus_clean</span>, <span class='va'>removeWords</span>,
+                              <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>(</span><span class='fu'>stopwords</span><span class='op'>(</span><span class='st'>"english"</span><span class='op'>)</span><span class='op'>)</span>, <span class='st'>"%br"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'>#cut words to their root form</span>
 <span class='va'>airbnb_corpus_clean</span> <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>airbnb_corpus_clean</span>, <span class='va'>stemDocument</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
-#create the Document Term Matrix
+<h1 id="create-the-document-term-matrix">create the Document Term Matrix</h1>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>airbnb_corpus_dtm</span> <span class='op'>&lt;-</span> <span class='fu'>DocumentTermMatrix</span><span class='op'>(</span><span class='va'>airbnb_corpus_clean</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
-<p>#Creating the visualisations</p>
-<h2 id="wordcloud">Wordcloud</h2>
+<h1 id="creating-the-visualisations">Creating the visualisations</h1>
+<h3 id="wordcloud-of-words-most-commonly-appearing">Wordcloud of words most commonly appearing</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>sums</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colSums</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>airbnb_corpus_dtm</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
@@ -2293,10 +2296,9 @@ document.addEventListener('DOMContentLoaded', function() {
   colors<span class='op'>=</span><span class='fu'>brewer.pal</span><span class='op'>(</span><span class='fl'>8</span>, <span class='st'>"Dark2"</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="assignment-andy-wong_files/figure-html5/unnamed-chunk-12-1.png" width="624" /></p>
 </div>
 <p>Further analysis can be done by filtering on review scores to</p>
-<h2 id="topic-modelling-using-latent-dirichlet-allocation-lda-model">Topic modelling using Latent Dirichlet Allocation (LDA) model</h2>
+<h3 id="topic-modelling-using-latent-dirichlet-allocation-lda-model">Topic modelling using Latent Dirichlet Allocation (LDA) model</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>airbnb_lda</span> <span class='op'>&lt;-</span> <span class='fu'>LDA</span><span class='op'>(</span><span class='va'>airbnb_corpus_dtm</span>, k <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
@@ -2304,14 +2306,14 @@ document.addEventListener('DOMContentLoaded', function() {
 </code></pre>
 </div>
 </div>
-<h2 id="extracting-the-per-topic-per-word-probabilities-β-beta">extracting the per-topic-per-word probabilities β (beta)</h2>
+<strong>Extracting the per-topic-per-word probabilities β (beta)</strong>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>airbnb_topics</span> <span class='op'>&lt;-</span> <span class='fu'>tidy</span><span class='op'>(</span><span class='va'>airbnb_lda</span>, matrix <span class='op'>=</span> <span class='st'>"beta"</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
-<h2 id="visualise-the-topics">visualise the topics</h2>
+<strong>Visualising the topics</strong>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>## find the 10 most common terms within each topic</span>
@@ -2330,7 +2332,6 @@ document.addEventListener('DOMContentLoaded', function() {
   <span class='fu'>scale_y_reordered</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="assignment-andy-wong_files/figure-html5/unnamed-chunk-15-1.png" width="624" /></p>
 </div>
 <p>Deeper analysis can be done by filtering the review scores to show for example, reviews with a score of 90 and more, reviews with a score of a score of 10 and less, and both of these ranges to see what texts are common to both. This can be done easily in the Shiny app, using code similar to the below (but allowing the user to manipulate the values from the Shiny app):</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2346,7 +2347,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </code></pre>
 </div>
 </div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
