@@ -1,5 +1,30 @@
 [
   {
+    "path": "posts/2021-03-31-assignment-andy-wong/",
+    "title": "assignment-andy-wong",
+    "description": "A short description of the post.",
+    "author": [
+      {
+        "name": "Louelle TEO Fengmin",
+        "url": {}
+      },
+      {
+        "name": "Jason TEY Shou Heng",
+        "url": {}
+      },
+      {
+        "name": "WONG Kian Hoong (Andy)",
+        "url": {}
+      }
+    ],
+    "date": "2021-03-31",
+    "categories": [],
+    "contents": "\r\nDistill is a publication format for scientific and technical writing, native to the web.\r\nLearn more about using Distill at https://rstudio.github.io/distill.\r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2021-03-31T15:24:21+08:00",
+    "input_file": "assignment-andy-wong.utf8.md"
+  },
+  {
     "path": "posts/project-proposal/",
     "title": "Visual Analytics Project Proposal",
     "description": "Proposal for the project work for this course.",
