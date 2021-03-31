@@ -1,7 +1,7 @@
 ---
 title: "Visual Analytics Assignment"
 description: |
-  Lorem Ipsum
+  This assignment describes the text and sentiment analysis module of the visual analytics project.
 author:
   - name: Andy WONG 
     url: https://www.linkedin.com/in/andywongkh
