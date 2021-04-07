@@ -430,7 +430,7 @@ fviz_gap_stat(gap_stat)
 
 We will create a parallel plot to visualise the optimal cluster size and characteristics of each cluster.
 
-```{r fig.height=12, fig.width=12}
+```{r}
 # Add cluster to dataset
 airbnb.vic2$cluster <- k4$cluster
 airbnb.vic2$cluster <- as_factor(airbnb.vic2$cluster)
