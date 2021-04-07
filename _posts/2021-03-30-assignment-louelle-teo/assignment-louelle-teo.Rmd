@@ -8,6 +8,8 @@ date: 03-30-2021
 output:
   distill::distill_article:
     self_contained: false
+    toc: TRUE
+    toc_float: true
 ---
 
 
@@ -29,7 +31,13 @@ Testing and prototyping the proposed sub-module in R Markdown. The R Markdown do
 ------
 # Sketch of Proposed Visualisation
 
-```{r}
+```{r, echo=FALSE, fig.cap="Sketch for Proposed Visualisation", fig.align='center',layout="l-body-outset",dpi=300, fig.width=10, fig.height=6}
+knitr::include_graphics("images/sketch1.png")
+knitr::include_graphics("images/sketch2.png")
+knitr::include_graphics("images/sketch3.png")
+knitr::include_graphics("images/sketch4.png")
+knitr::include_graphics("images/sketch5.png")
+knitr::include_graphics("images/sketch6.png")
 ```
 
 # Installing and launching R packages
@@ -37,7 +45,8 @@ Testing and prototyping the proposed sub-module in R Markdown. The R Markdown do
 These are the list of packages that will be used for this assignment, in RStudio.
 
 ```{r}
-packages <- c("tidyverse", "plotly", "purrr", "dplyr", "gdata", "corrplot", "MASS", "biganalytics", "parallelPlot", "factoextra", "factoextra", "gridExtra", "cluster", "forcats")
+packages <- c("tidyverse", "plotly", "purrr", "dplyr", "gdata", "corrplot", "MASS", "biganalytics", 
+              "parallelPlot", "factoextra", "factoextra", "gridExtra", "cluster", "forcats")
 
 for (p in packages){
   if (!require(p,character.only=T)){
@@ -58,11 +67,17 @@ Both the Airbnb data set for Australia and Airbnb data set for the State of Vict
 ``` {r}
 airbnb <- read_csv("data/Airbnb.csv")
 airbnb.vic <- read_csv("data/Airbnb_victoria.csv")
-str(airbnb)
+str(airbnb, nchar.max=20)
 
 ```
 
-#Exploratory Data Analysis
+# Exploratory Data Analysis
+
+First, we will create some simple bar charts, boxplots, scatterplots and density plots to be able to explore the different variables in the data set. It will allow us to formulate hypothesis and explore different statistics models that could be developed after.
+
+Below are a few plots to be incorporated into the Shiny App. Users will be able to toggle different variables for the different charts to explore the data.
+
+Barchart allows us to visualise the Top States and top Local Government Area for the count of host and listings.
 
 ## Number of Hosts per State
 
@@ -78,7 +93,7 @@ unique_host_id_aus <- airbnb %>%
   dplyr::select(-hostcount)%>%
   arrange(desc(number.of.host))
   
-ggplot(unique_host_id_aus,aes(x=(reorder(region_parent_name,-number.of.host)),y=number.of.host))+
+b<-ggplot(unique_host_id_aus,aes(x=(reorder(region_parent_name,-number.of.host)),y=number.of.host))+
   geom_col() +
   labs(title= "Number of Hosts per State", x="State", y="Number of Hosts")+
   theme(legend.position="bottom", axis.text.x = element_text(angle = 90))
@@ -100,7 +115,7 @@ unique_host_id <- airbnb.vic %>%
   arrange(desc(number.of.host))%>%
   slice_head(n=10)
   
-ggplot(unique_host_id,aes(x=(reorder(region_name,-number.of.host)),y=number.of.host))+
+b1<-ggplot(unique_host_id,aes(x=(reorder(region_name,-number.of.host)),y=number.of.host))+
   geom_col() +
   labs(title= "Number of Hosts in Top 10 LGA", x="LGA", y="Number of Hosts")+
   theme(legend.position="bottom", axis.text.x = element_text(angle = 90))
@@ -120,7 +135,7 @@ unique_id_aus <- airbnb %>%
   dplyr::select(-idcount)%>%
   arrange(desc(number.of.listings))
   
-ggplot(unique_id_aus,aes(x=(reorder(region_parent_name,-number.of.listings)),y=number.of.listings))+
+b2<-ggplot(unique_id_aus,aes(x=(reorder(region_parent_name,-number.of.listings)),y=number.of.listings))+
   geom_col() +
   labs(title= "Number of Listings per State", x="State", y="Number of Airbnb Listings")+
   theme(legend.position="bottom", axis.text.x = element_text(angle = 90))
@@ -129,7 +144,7 @@ ggplot(unique_id_aus,aes(x=(reorder(region_parent_name,-number.of.listings)),y=n
 
 ## Top 10 LGA - Number of Airbnb Listings
 
-```{r}
+```{r fig.height=12, fig.width=16}
 unique_id <- airbnb.vic %>%
   dplyr::select(id, region_name) %>%
   unique() %>%
@@ -142,13 +157,21 @@ unique_id <- airbnb.vic %>%
   arrange(desc(number.of.listings))%>%
   slice_head(n=10)
   
-ggplot(unique_id,aes(x=(reorder(region_name,-number.of.listings)),y=number.of.listings))+
+b3<-ggplot(unique_id,aes(x=(reorder(region_name,-number.of.listings)),y=number.of.listings))+
   geom_col() +
   labs(title= "Number of Listings in the Top 10 LGA", x="LGA", y="Number of Airbnb Listings")+
   theme(legend.position="bottom", axis.text.x = element_text(angle = 90))
+
+grid.arrange(b, b1, b2, b3, nrow = 2)
   
 ```
+
+
 ## Boxplots of Prices in the Top 10 LGA (Airbnb Listings)
+
+We will plot Box plots to compare the prices in different states. We note that Morrington Penninsula has the most expensive prices in Australia.
+
+Next, we will plot different boxplots for the State of Victoria, and compare prices versus type of property type. We note that Entire House in Surf Coast is the priciest in Victoria.
 
 ```{r}
 
@@ -196,10 +219,15 @@ ggplot(eda_boxplot_propertytype, aes(x=property_type,y=price))+
 
 
 ```
-## Bivariate Plot - Review Scores vs Prices for Entire House
+# Scatter plot
+
+A Density plot is drawn up to identify where most of the reviews lie
+
+A Bivariate plot is plotted to compare the relationship between 2 variables. We have filtered it down towards review scores above 80, as the density plot has indicated that most of the reviews are in that particular range.
+
+## Density Plot of Review Scores for Entire House
 
 ``` {r fig.height=6, fig.width=12}
-#bivariate prices vs reviews
 
 unique_id2 <- airbnb.vic %>%
   dplyr::select(id, region_name) %>%
@@ -215,28 +243,40 @@ unique_id2 <- airbnb.vic %>%
 
 cities2<-unique_id2$region_name
 
-
-bivariateplot<- airbnb.vic%>%
+densityplot<- airbnb.vic%>%
   filter(region_name %in% cities2)%>%
   filter(property_type == c("Entire house","Entire apartment")) %>%
   dplyr::select(price,review_scores_rating,region_name,property_type)
 
-ggplot(bivariateplot,aes(review_scores_rating,price,color=region_name))+
-  geom_jitter()+
-  labs(title= "Review Scores vs Prices for Entire House", x="Review Scores", y="Prices")+ 
-  geom_smooth(method='lm', formula= y~x, se = FALSE)
-
-``` 
-## Density Plot of Review Scores for Entire House
-
-``` {r fig.height=6, fig.width=12}
-
-ggplot(bivariateplot,aes(review_scores_rating))+
+d1<-ggplot(densityplot,aes(review_scores_rating))+
   geom_density()+
   labs(title= "Density Plot of Review Scores for Entire House", x="Review Scores", y="")
 
 ``` 
+## Bivariate Plot - Review Scores vs Prices for Entire House
+
+``` {r fig.height=10, fig.width=12}
+#bivariate prices vs reviews
+
+bivariateplot<- airbnb.vic%>%
+  filter(region_name %in% cities2)%>%
+  filter(property_type == c("Entire house","Entire apartment")) %>%
+  dplyr::select(price,review_scores_rating,region_name,property_type)%>%
+  filter(review_scores_rating>80)
+
+d2<-ggplot(bivariateplot,aes(review_scores_rating,price,color=region_name))+
+  geom_jitter()+
+  labs(title= "Review Scores vs Prices for Entire House", x="Review Scores", y="Prices")+ 
+  geom_smooth(method='lm', formula= y~x, se = FALSE)+ 
+  theme(legend.position="bottom")
+
+grid.arrange(d1, d2, nrow = 2)
+
+``` 
+
 # Correlation Plot
+
+A correlation plot is drawn to choose variables with low correlation for the multilvariate linear regression.
 
 ``` {r fig.height=10, fig.width=10}
 #correlation plot
@@ -249,11 +289,10 @@ corrplot(airbnb.cor2,
          diag = FALSE,
          tl.col = "black",
          order = "hclust")
-
-
-
 ```
 # Multivariate Linear Regression
+
+A Multivariate Linear Regression is created with Backwards, forwards and both stepwise regression. Users will be able to choose their variables from the correlation plot, to run the regression.
 
 ``` {r}
 
@@ -290,7 +329,9 @@ summary(stepboth)
 
 # Clustering
 
-``` {r}
+We will perform kmeans clustering with different cluster sizes, and determine the optimal cluster sizes.
+
+``` {r fig.height=8, fig.width=12}
 airbnb.vic2 <- airbnb.vic %>%
   dplyr::select(id, price, bedrooms, beds, review_scores_rating)%>%
   na.omit()%>%
@@ -368,6 +409,7 @@ plot(k.values2, avg_sil_values,
      xlab = "Number of clusters K",
      ylab = "Average Silhouettes")
 
+
 #```
 
 ## Determining Optimal Clusters - Gap Method
@@ -386,7 +428,9 @@ fviz_gap_stat(gap_stat)
 
 # Parallel Plot
 
-```{r}
+We will create a parallel plot to visualise the optimal cluster size and characteristics of each cluster.
+
+```{r fig.height=12, fig.width=12}
 # Add cluster to dataset
 airbnb.vic2$cluster <- k4$cluster
 airbnb.vic2$cluster <- as_factor(airbnb.vic2$cluster)
