@@ -15,18 +15,19 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
-                      fig.retina = 3, 
+                      fig.retina = 3,
+                      fig.align='center',
+                      layout="l-body-outset",
                       message = FALSE,
                       warning = FALSE)
 ```
 
-Conducting literature review on how the analysis were performed before. The focus should be on identifying gaps whereby interactive web approach and visual Analytics techniques can be used to enhance user experience on using the analysis techniques.
+# Introduction
+Current Airbnb analytics (https://www.airdna.co/) in the market require a subscription, and these data, though free to access, does not become easily accessible to the masses who do not have data analytics experience. 
 
-Preparing the storyboard for the design of the sub-module.
+Therefore through this assignment, we aim to create a Shiny visual, where users are able to conduct Exploratory Data Analysis on their desired location and variable, to form a perspective on the current Airbnb market. 
 
-Extracting, wrangling and preparing the input data required to perform the analysis. The focus should be on exploring appropriate tidyverse methods
-
-Testing and prototyping the proposed sub-module in R Markdown. The R Markdown document must be in full working html report format. This link provides a useful example for your reference.
+Next, the Shiny will also contain Cluster Analysis, Geospatial Analysis, Text Analysis and Multivariate Linear Regression, so that users may have an informed decision on how to price their property, and ensure a good description write up to attract customers.
 
 ------
 # Sketch of Proposed Visualisation
@@ -77,7 +78,7 @@ First, we will create some simple bar charts, boxplots, scatterplots and density
 
 Below are a few plots to be incorporated into the Shiny App. Users will be able to toggle different variables for the different charts to explore the data.
 
-Barchart allows us to visualise the Top States and top Local Government Area for the count of host and listings.
+Bar chart allows us to visualise the Top States and top Local Government Area for the count of host and listings.
 
 ## Number of Hosts per State
 
