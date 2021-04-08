@@ -229,6 +229,7 @@ A Bivariate plot is plotted to compare the relationship between 2 variables. We 
 ## Density Plot of Review Scores for Entire House
 
 ``` {r fig.height=6, fig.width=12}
+#density plot
 
 unique_id2 <- airbnb.vic %>%
   dplyr::select(id, region_name) %>%
@@ -277,7 +278,7 @@ grid.arrange(d1, d2, nrow = 2)
 
 # Correlation Plot
 
-A correlation plot is drawn to choose variables with low correlation for the multilvariate linear regression.
+A correlation plot is drawn to choose variables with low correlation for the multivariate linear regression.
 
 ``` {r fig.height=10, fig.width=10}
 #correlation plot
@@ -294,6 +295,8 @@ corrplot(airbnb.cor2,
 # Multivariate Linear Regression
 
 A Multivariate Linear Regression is created with Backwards, forwards and both stepwise regression. Users will be able to choose their variables from the correlation plot, to run the regression.
+
+In this assignment, we will run the full variable set as an example, but in the Shiny, users will be able to choose the variables that will yield the best results. Target variables will be price and review_scores_ratings.
 
 ``` {r}
 
@@ -330,7 +333,9 @@ summary(stepboth)
 
 # Clustering
 
-We will perform kmeans clustering with different cluster sizes, and determine the optimal cluster sizes.
+We will perform kmeans clustering with different cluster sizes, and determine the optimal cluster sizes. In this assignment, we have chosen variables price, beds and review_scores_rating to view kmeans clustering.
+
+After conducting tests for optimal clusters, we conclude that cluster size of 4 is the most optimal. Users will be able to choose which cluster test they would like to perform to choose the best cluster size.
 
 ``` {r fig.height=8, fig.width=12}
 airbnb.vic2 <- airbnb.vic %>%
@@ -364,7 +369,7 @@ grid.arrange(p1, p2, p3, p4, p5, p6, nrow = 2)
 
 ```{r}
 
-###Determining Optimal Clusters - Elbow method
+# Determining Optimal Clusters - Elbow method
 
 set.seed(123)
 
@@ -388,9 +393,9 @@ plot(k.values1, wss_values,
 
 ## Determining Optimal Clusters - Silhouette Method
 
-#```{r}
+```{r}
 
-### Determining Optimal Clusters - Silhouette method
+# Determining Optimal Clusters - Silhouette method
 
 # function to compute average silhouette for k clusters
 avg_sil <- function(k) {
@@ -411,12 +416,13 @@ plot(k.values2, avg_sil_values,
      ylab = "Average Silhouettes")
 
 
-#```
+```
 
 ## Determining Optimal Clusters - Gap Method
 
-#```{r}
-###Determining Optimal Clusters - Gap Method
+```{r}
+
+#Determining Optimal Clusters - Gap Method
 # compute gap statistic
 set.seed(123)
 gap_stat <- clusGap(df, FUN = kmeans, nstart = 25,
@@ -425,7 +431,7 @@ gap_stat <- clusGap(df, FUN = kmeans, nstart = 25,
 print(gap_stat, method = "firstmax")
 fviz_gap_stat(gap_stat)
 
-#```
+```
 
 # Parallel Plot
 
@@ -439,4 +445,7 @@ airbnb.vic2$cluster <- as_factor(airbnb.vic2$cluster)
 # Draw Parallelplot
 parallelPlot(airbnb.vic2,refColumnDim = "cluster")
   
+```
+```{r, echo=FALSE, fig.cap="", fig.align='center',layout="l-body-outset",dpi=300, fig.width=10, fig.height=6}
+knitr::include_graphics("images/parallelplot.png")
 ```
