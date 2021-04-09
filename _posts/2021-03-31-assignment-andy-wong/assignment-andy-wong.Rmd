@@ -137,20 +137,20 @@ write.csv(airbnb, "data/Airbnb.csv")
 ```
 
 
-# 5.0 Prototyping
+# 5 - Prototyping
 ## Load Data
 
 ### Step 1: Read the data
 ```{r, warning = FALSE, message = FALSE}
 airbnb <- read_csv("data/Airbnb_victoria.csv")
-#Shiny app will allow the analyst to select the region of concern and also the range of review scores for analysis.
+# Shiny app will allow the analyst to select the region of concern and also the range of review scores for analysis.
 ```
-
-The first step in preparing unstructured textual data for analysis is to tokenise the data. Tokenisation is the process of breaking up words and phrases into units or 'tokens'. The output is a tibble of all words and phrases.
 
 ## Preparing the data
 
-### Step 2: Tokenize and create a tibble of text from 'description' column
+The first step in preparing unstructured textual data for analysis is to tokenise the data. Tokenisation is the process of breaking up words and phrases into units or 'tokens'. The output is a tibble of all words and phrases.
+
+### Step 2: Tokenize and create a tibble of text from _description_ column
 ```{r}
 airbnb_desc <- airbnb$description
 airbnb_text <- iconv(airbnb_desc, to = "UTF-8")
@@ -164,7 +164,7 @@ airbnb_tibble %>%
 The next step is to create a corpus. A corpus is a body of all texts included in the analysis.
 
 ```{r, warning = FALSE, message = FALSE}
-# creating the corpus
+# Create a corpus
 airbnb_corpus <- Corpus(VectorSource(airbnb_tibble))
 ```
 The next step is to clean the corpus. This includes removing white spaces, converting all texts to lower case (upper case and lower case words are considered different even when spelt the same), removing numbers and punctuation, and stopwords (common English words that do not add any value to the analysis such as 'a', 'the', 'it', etc).
@@ -172,18 +172,18 @@ The next step is to clean the corpus. This includes removing white spaces, conve
 The final cleaning step is to reduce all words to their root (e.g. 'swimming' to 'swim') in order to not skew the analysis.
 
 ```{r, warning = FALSE, message = FALSE}
-#remove white spaces between text
+# Remove white spaces between text
 airbnb_corpus_clean <- tm_map(airbnb_corpus, stripWhitespace)
-#transform all characters to lowercase
+# Transform all characters to lower case
 airbnb_corpus_clean <- tm_map(airbnb_corpus_clean, content_transformer(tolower))
-#remove numbers
+# Remove numbers
 airbnb_corpus_clean <- tm_map(airbnb_corpus_clean, removeNumbers)
-#remove punctuation
+# Remove punctuation
 airbnb_corpus_clean <- tm_map(airbnb_corpus_clean, removePunctuation)
-#remove common words that do not add value to sentiment analysis
+# Remove common words that do not add value to sentiment analysis
 airbnb_corpus_clean <- tm_map(airbnb_corpus_clean, removeWords,
                               c((stopwords("english")), "%bbr", "%br"))
-#cut words to their root form
+# Stem words to their root form
 airbnb_corpus_clean <- tm_map(airbnb_corpus_clean, stemDocument)
 ```
 
@@ -203,20 +203,20 @@ The first visualisation is a word cloud. A word cloud is a visual representation
 
 **Wordcloud of words most commonly appearing in the listing's description**</br>
 ```{r, warning = FALSE, message = FALSE}
-#creating the data frame that the word cloud will be built from.
+# Create the data frame from which the wordcloud will be built
 sums <- as.data.frame(colSums(as.matrix(airbnb_corpus_dtm)))
 sums <- rownames_to_column(sums) 
 colnames(sums) <- c("terms", "count")
 sums <- arrange(sums, desc(count))
 head <- sums
 
-#word cloud will show the most common terms used in the 'description' column
+# Wordcloud will show the most common terms used in the 'description' column
 wordcloud(words = head$terms, freq = head$count, min.freq = 100,
   max.words=1000, random.order=FALSE, rot.per=0.35, 
   colors=brewer.pal(8, "Dark2"))
 ```
 
-**Topic modelling using Latent Dirichlet Allocation (LDA) model**</br>
+**Topic modeling using Latent Dirichlet Allocation**</br>
 The next visualisation is a topic modeling technique. Topic modeling is an unsupervised machine learning technique that detects word and phrase patterns in documents and clusters them into groups known as topics.
 
 Latent Dirichlet Allocation (LDA) is one common topic modeling technique. The basic assumption of LDA is that similar topics make use of similar words (i.e. distributional hypothesis). The purpose of LDA is to map the corpus to topics covering a significant number of words in the documents in the corpus.
@@ -225,9 +225,7 @@ LDA assigns topics to arrangements of words for example, the best word for a top
 
 ```{r, warning = FALSE, message = FALSE}
 airbnb_lda <- LDA(airbnb_corpus_dtm, k = 3)
-#Shiny app will allow the analyst to determine number of topics (k) to appear.
-
-#airbnb_ctm <- CTM(airbnb_corpus_dtm, k = 2)
+# Shiny app will allow the analyst to determine number of topics (k) to appear.
 ```
 </br>
 _Extracting the per-topic-per-word probabilities β (beta)_
@@ -237,15 +235,15 @@ airbnb_topics <- tidy(airbnb_lda, matrix = "beta")
 </br>
 _Visualising the topics_
 ```{r, warning = FALSE, message = FALSE}
-## find the 10 most common terms within each topic
+# Display the 10 most common terms within each topic
 airbnb_top_terms <- airbnb_topics %>%
   group_by(topic) %>%
   top_n(10, beta) %>%
   ungroup() %>%
   arrange(topic, -beta)
-#Shiny app will allow the analyst to determine the top n number of words to list.
+# Shiny app will allow the analyst to determine the top n number of words to list.
 
-## visualising the output
+# Visualise the output
 airbnb_top_terms %>%
   mutate(term = reorder_within(term, beta, topic)) %>%
   ggplot(aes(beta, term, fill = factor(topic))) +
@@ -257,7 +255,7 @@ airbnb_top_terms %>%
 
 Thanks for visiting my blog!
 
-This post is a data visualisation assignment for the [MITB programme](https://scis.smu.edu.sg/master-it-business/about-mitb-main) at the Singapore Management University.
+This post is a data visualisation assignment for the [MITB programme](https://scis.smu.edu.sg/master-it-business/about-mitb-main) of the Singapore Management University.
 </br></br>
 <font size="2"> Distill is a publication format for scientific and technical writing, native to the web.</br>
 Learn more about using Distill at <https://rstudio.github.io/distill>. </font>
