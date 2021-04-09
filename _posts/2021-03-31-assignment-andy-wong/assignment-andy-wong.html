@@ -1688,7 +1688,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h3 id="step-5-create-the-visualisations">Step 5: Create the visualisations</h3>
 <p>After this, the visualisation can be prepared.</p>
 <p>The first visualisation is a word cloud. A word cloud is a visual representation of the frequency of words in the corpus. The more common the word, the larger it will appear.</p>
-<strong>Wordcloud of words most commonly appearing</strong>
+<strong>Wordcloud of words most commonly appearing</strong></br>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#creating the data frame that the word cloud will be built from.</span>
@@ -1706,7 +1706,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <p><img src="assignment-andy-wong_files/figure-html5/unnamed-chunk-13-1.png" width="624" /></p>
 </div>
-<p><strong>Topic modelling using Latent Dirichlet Allocation (LDA) model</strong> The next visualisation is called topic modelling. Topic modeling is an unsupervised machine learning technique that detects word and phrase patterns in documents, and clusters them into groups, called topics.</p>
+<p><strong>Topic modelling using Latent Dirichlet Allocation (LDA) model</strong></br> The next visualisation is called topic modelling. Topic modeling is an unsupervised machine learning technique that detects word and phrase patterns in documents, and clusters them into groups, called topics.</p>
 <p>Latent Dirichlet Allocation (LDA) is one common topic modelling technique. The basic assumption of LDA is that similar topics make use of similar words (distributional hypothesis). The purpose of LDA is to mapp the corpus to topics which cover a significant number of words in the documents in the corpus.</p>
 <p>What LDA does in order to map the documents to a list of topics is assign topics to arrangements of words, e.g. n-grams such as best player for a topic related to sports. This stems from the assumption that documents are written with arrangements of words and that those arrangements determine topics. Yet again, just like LSA, LDA also ignores syntactic information and treats documents as bags of words. It also assumes that all words in the document can be assigned a probability of belonging to a topic. That said, the goal of LDA is to determine the mixture of topics that a document contains.</p>
 <div class="layout-chunk" data-layout="l-body">

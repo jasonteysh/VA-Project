@@ -190,7 +190,7 @@ After this, the visualisation can be prepared.
 
 The first visualisation is a word cloud. A word cloud is a visual representation of the frequency of words in the corpus. The more common the word, the larger it will appear.
 
-**Wordcloud of words most commonly appearing**
+**Wordcloud of words most commonly appearing**</br>
 ```{r, warning = FALSE, message = FALSE}
 #creating the data frame that the word cloud will be built from.
 sums <- as.data.frame(colSums(as.matrix(airbnb_corpus_dtm)))
@@ -207,7 +207,7 @@ wordcloud(words = head$terms, freq = head$count, min.freq = 100,
 
 
 
-**Topic modelling using Latent Dirichlet Allocation (LDA) model**
+**Topic modelling using Latent Dirichlet Allocation (LDA) model**</br>
 The next visualisation is called topic modelling. Topic modeling is an unsupervised machine learning technique that detects word and phrase patterns in documents, and clusters them into groups, called topics.
 
 Latent Dirichlet Allocation (LDA) is one common topic modelling technique. The basic assumption of LDA is that similar topics make use of similar words (distributional hypothesis). The purpose of LDA is to mapp the corpus to topics which cover a significant number of words in the documents in the corpus.
