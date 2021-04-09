@@ -86,18 +86,18 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
 
   <!--radix_placeholder_meta_tags-->
-<title>Visual Analytics Project: Visual Analytics Assignment</title>
+<title>Visual Analytics Project: Assignment - Andy Wong</title>
 
 <meta property="description" itemprop="description" content="This assignment is about the text and sentiment analysis module of the visual analytics project."/>
 
 
 <!--  https://schema.org/Article -->
-<meta property="article:published" itemprop="datePublished" content="2021-11-04"/>
-<meta property="article:created" itemprop="dateCreated" content="2021-11-04"/>
+<meta property="article:published" itemprop="datePublished" content="2021-04-11"/>
+<meta property="article:created" itemprop="dateCreated" content="2021-04-11"/>
 <meta name="article:author" content="Andy WONG"/>
 
 <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-<meta property="og:title" content="Visual Analytics Project: Visual Analytics Assignment"/>
+<meta property="og:title" content="Visual Analytics Project: Assignment - Andy Wong"/>
 <meta property="og:type" content="article"/>
 <meta property="og:description" content="This assignment is about the text and sentiment analysis module of the visual analytics project."/>
 <meta property="og:locale" content="en_US"/>
@@ -105,14 +105,14 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 <!--  https://dev.twitter.com/cards/types/summary -->
 <meta property="twitter:card" content="summary"/>
-<meta property="twitter:title" content="Visual Analytics Project: Visual Analytics Assignment"/>
+<meta property="twitter:title" content="Visual Analytics Project: Assignment - Andy Wong"/>
 <meta property="twitter:description" content="This assignment is about the text and sentiment analysis module of the visual analytics project."/>
 
 <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Visual Analytics Assignment"]},{"type":"character","attributes":{},"value":["This assignment is about the text and sentiment analysis module of the visual analytics project."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Andy WONG"]},{"type":"character","attributes":{},"value":["https://www.linkedin.com/in/andywongkh"]}]}]},{"type":"character","attributes":{},"value":["11-4-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Assignment - Andy Wong"]},{"type":"character","attributes":{},"value":["This assignment is about the text and sentiment analysis module of the visual analytics project."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Andy WONG"]},{"type":"character","attributes":{},"value":["https://www.linkedin.com/in/andywongkh"]}]}]},{"type":"character","attributes":{},"value":["4-11-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -2065,7 +2065,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Visual Analytics Assignment","description":"This assignment is about the text and sentiment analysis module of the visual analytics project.","authors":[{"author":"Andy WONG","authorURL":"https://www.linkedin.com/in/andywongkh","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-11-04T00:00:00.000+08:00","citationText":"WONG, 2021"}
+{"title":"Assignment - Andy Wong","description":"This assignment is about the text and sentiment analysis module of the visual analytics project.","authors":[{"author":"Andy WONG","authorURL":"https://www.linkedin.com/in/andywongkh","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-04-11T00:00:00.000+08:00","citationText":"WONG, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2088,7 +2088,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Visual Analytics Assignment</h1>
+<h1>Assignment - Andy Wong</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
 <p><p>This assignment is about the text and sentiment analysis module of the visual analytics project.</p></p>
@@ -2097,7 +2097,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="d-byline">
   Andy WONG <a href="https://www.linkedin.com/in/andywongkh" class="uri">https://www.linkedin.com/in/andywongkh</a> 
   
-<br/>11-4-2021
+<br/>4-11-2021
 </div>
 
 <div class="d-article">
@@ -2122,18 +2122,14 @@ document.addEventListener('DOMContentLoaded', function() {
 </ul></li>
 <li><a href="#prototyping">5.0 Prototyping</a>
 <ul>
-<li><a href="#read-data">read data</a></li>
+<li><a href="#step-1-read-the-data">Step 1: Read the data</a></li>
 </ul></li>
 <li><a href="#preparing-the-data">Preparing the data</a>
 <ul>
-<li><a href="#tokenisation-to-create-a-tibble-of-text-from-description-column">tokenisation to create a tibble of text from ‘description’ column</a></li>
-<li><a href="#create-a-corpus">Create a corpus</a></li>
-</ul></li>
-<li><a href="#create-the-document-term-matrix">create the Document Term Matrix</a></li>
-<li><a href="#creating-the-visualisations">Creating the visualisations</a>
-<ul>
-<li><a href="#wordcloud-of-words-most-commonly-appearing">Wordcloud of words most commonly appearing</a></li>
-<li><a href="#topic-modelling-using-latent-dirichlet-allocation-lda-model">Topic modelling using Latent Dirichlet Allocation (LDA) model</a></li>
+<li><a href="#step-2-tokenisation-to-create-a-tibble-of-text-from-description-column">Step 2: Tokenisation to create a tibble of text from ‘description’ column</a></li>
+<li><a href="#step-3-create-the-corpus">Step 3: Create the corpus</a></li>
+<li><a href="#step-4-create-the-document-term-matrix">Step 4: Create the Document Term Matrix</a></li>
+<li><a href="#step-5-create-the-visualisations">Step 5: Create the visualisations</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -2237,7 +2233,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 <h1 id="prototyping">5.0 Prototyping</h1>
 <p>#Load Data</p>
-<h2 id="read-data">read data</h2>
+<h3 id="step-1-read-the-data">Step 1: Read the data</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>airbnb</span> <span class='op'>&lt;-</span> <span class='fu'>read_csv</span><span class='op'>(</span><span class='st'>"data/Airbnb_victoria.csv"</span><span class='op'>)</span>
@@ -2247,7 +2243,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 <p>The first step in preparing unstructured textual data for analysis is to tokenise the data. Tokenisation is the process of breaking up words and phrases into units or ‘tokens’. The output is a tibble of all words and phrases.</p>
 <h1 id="preparing-the-data">Preparing the data</h1>
-<h2 id="tokenisation-to-create-a-tibble-of-text-from-description-column">tokenisation to create a tibble of text from ‘description’ column</h2>
+<h3 id="step-2-tokenisation-to-create-a-tibble-of-text-from-description-column">Step 2: Tokenisation to create a tibble of text from ‘description’ column</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>airbnb_desc</span> <span class='op'>&lt;-</span> <span class='va'>airbnb</span><span class='op'>$</span><span class='va'>description</span>
@@ -2273,7 +2269,7 @@ document.addEventListener('DOMContentLoaded', function() {
 # ... with 5,408,715 more rows</code></pre>
 </div>
 <p>The next step is to create a corpus. A corpus is a body of all texts included in the analysis.</p>
-<h2 id="create-a-corpus">Create a corpus</h2>
+<h3 id="step-3-create-the-corpus">Step 3: Create the corpus</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># creating the corpus</span>
@@ -2302,17 +2298,17 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </div>
 <p>The next step is to create a document-term matrix. A document-term matrix is a matrix that consisting of the frequency of all the words that occur in the corpus.</p>
-<h1 id="create-the-document-term-matrix">create the Document Term Matrix</h1>
+<h3 id="step-4-create-the-document-term-matrix">Step 4: Create the Document Term Matrix</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>airbnb_corpus_dtm</span> <span class='op'>&lt;-</span> <span class='fu'>DocumentTermMatrix</span><span class='op'>(</span><span class='va'>airbnb_corpus_clean</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
-<h1 id="creating-the-visualisations">Creating the visualisations</h1>
+<h3 id="step-5-create-the-visualisations">Step 5: Create the visualisations</h3>
 <p>After this, the visualisation can be prepared.</p>
 <p>The first visualisation is a word cloud. A word cloud is a visual representation of the frequency of words in the corpus. The more common the word, the larger it will appear.</p>
-<h3 id="wordcloud-of-words-most-commonly-appearing">Wordcloud of words most commonly appearing</h3>
+<strong>Wordcloud of words most commonly appearing</strong>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#creating the data frame that the word cloud will be built from.</span>
@@ -2330,8 +2326,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 <p><img src="assignment-andy-wong_files/figure-html5/unnamed-chunk-13-1.png" width="624" /></p>
 </div>
-<h3 id="topic-modelling-using-latent-dirichlet-allocation-lda-model">Topic modelling using Latent Dirichlet Allocation (LDA) model</h3>
-<p>The next visualisation is called topic modelling. Topic modeling is an unsupervised machine learning technique that detects word and phrase patterns in documents, and clusters them into groups, called topics.</p>
+<p><strong>Topic modelling using Latent Dirichlet Allocation (LDA) model</strong> The next visualisation is called topic modelling. Topic modeling is an unsupervised machine learning technique that detects word and phrase patterns in documents, and clusters them into groups, called topics.</p>
 <p>Latent Dirichlet Allocation (LDA) is one common topic modelling technique. The basic assumption of LDA is that similar topics make use of similar words (distributional hypothesis). The purpose of LDA is to mapp the corpus to topics which cover a significant number of words in the documents in the corpus.</p>
 <p>What LDA does in order to map the documents to a list of topics is assign topics to arrangements of words, e.g. n-grams such as best player for a topic related to sports. This stems from the assumption that documents are written with arrangements of words and that those arrangements determine topics. Yet again, just like LSA, LDA also ignores syntactic information and treats documents as bags of words. It also assumes that all words in the document can be assigned a probability of belonging to a topic. That said, the goal of LDA is to determine the mixture of topics that a document contains.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2343,14 +2338,14 @@ document.addEventListener('DOMContentLoaded', function() {
 </code></pre>
 </div>
 </div>
-<strong>Extracting the per-topic-per-word probabilities β (beta)</strong>
+<em>Extracting the per-topic-per-word probabilities β (beta)</em>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>airbnb_topics</span> <span class='op'>&lt;-</span> <span class='fu'>tidy</span><span class='op'>(</span><span class='va'>airbnb_lda</span>, matrix <span class='op'>=</span> <span class='st'>"beta"</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
-<strong>Visualising the topics</strong>
+<em>Visualising the topics</em>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>## find the 10 most common terms within each topic</span>

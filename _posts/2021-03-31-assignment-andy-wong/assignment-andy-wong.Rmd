@@ -1,11 +1,11 @@
 ---
-title: "Visual Analytics Assignment"
+title: "Assignment - Andy Wong"
 description: |
   This assignment is about the text and sentiment analysis module of the visual analytics project.
 author:
   - name: Andy WONG 
     url: https://www.linkedin.com/in/andywongkh
-date: 11-4-2021
+date: 4-11-2021
 output:
   distill::distill_article:
     toc: true
@@ -131,7 +131,7 @@ write.csv(airbnb, "data/Airbnb.csv")
 # 5.0 Prototyping
 #Load Data
 
-## read data
+### Step 1: Read the data
 ```{r, warning = FALSE, message = FALSE}
 airbnb <- read_csv("data/Airbnb_victoria.csv")
 #Shiny app will allow the analyst to select the region of concern and also the range of review scores for analysis.
@@ -141,7 +141,7 @@ The first step in preparing unstructured textual data for analysis is to tokenis
 
 # Preparing the data
 
-## tokenisation to create a tibble of text from 'description' column
+### Step 2: Tokenisation to create a tibble of text from 'description' column
 ```{r}
 airbnb_desc <- airbnb$description
 airbnb_text <- iconv(airbnb_desc, to = "UTF-8")
@@ -151,7 +151,7 @@ airbnb_tibble %>%
 ```
 The next step is to create a corpus. A corpus is a body of all texts included in the analysis.
 
-## Create a corpus
+### Step 3: Create the corpus
 ```{r, warning = FALSE, message = FALSE}
 # creating the corpus
 airbnb_corpus <- Corpus(VectorSource(airbnb_tibble))
@@ -179,18 +179,18 @@ airbnb_corpus_clean <- tm_map(airbnb_corpus_clean, stemDocument)
 
 The next step is to create a document-term matrix. A document-term matrix is a matrix that consisting of the frequency of all the words that occur in the corpus.
 
-# create the Document Term Matrix
+### Step 4: Create the Document Term Matrix
 ```{r}
 airbnb_corpus_dtm <- DocumentTermMatrix(airbnb_corpus_clean)
 ```
 
-# Creating the visualisations
+### Step 5: Create the visualisations
 
 After this, the visualisation can be prepared.
 
 The first visualisation is a word cloud. A word cloud is a visual representation of the frequency of words in the corpus. The more common the word, the larger it will appear.
 
-### Wordcloud of words most commonly appearing
+**Wordcloud of words most commonly appearing**
 ```{r, warning = FALSE, message = FALSE}
 #creating the data frame that the word cloud will be built from.
 sums <- as.data.frame(colSums(as.matrix(airbnb_corpus_dtm)))
@@ -207,8 +207,7 @@ wordcloud(words = head$terms, freq = head$count, min.freq = 100,
 
 
 
-### Topic modelling using Latent Dirichlet Allocation (LDA) model
-
+**Topic modelling using Latent Dirichlet Allocation (LDA) model**
 The next visualisation is called topic modelling. Topic modeling is an unsupervised machine learning technique that detects word and phrase patterns in documents, and clusters them into groups, called topics.
 
 Latent Dirichlet Allocation (LDA) is one common topic modelling technique. The basic assumption of LDA is that similar topics make use of similar words (distributional hypothesis). The purpose of LDA is to mapp the corpus to topics which cover a significant number of words in the documents in the corpus.
@@ -222,12 +221,12 @@ airbnb_lda <- LDA(airbnb_corpus_dtm, k = 3)
 #airbnb_ctm <- CTM(airbnb_corpus_dtm, k = 2)
 ```
 
-**Extracting the per-topic-per-word probabilities β (beta)**
+_Extracting the per-topic-per-word probabilities β (beta)_
 ```{r, warning = FALSE, message = FALSE}
 airbnb_topics <- tidy(airbnb_lda, matrix = "beta")
 ```
 
-**Visualising the topics**
+_Visualising the topics_
 ```{r, warning = FALSE, message = FALSE}
 ## find the 10 most common terms within each topic
 airbnb_top_terms <- airbnb_topics %>%
