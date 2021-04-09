@@ -116,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["assignment-andy-wong_files/anchor-4.2.2/anchor.min.js","assignment-andy-wong_files/bowser-1.9.3/bowser.min.js","assignment-andy-wong_files/distill-2.2.21/template.v2.js","assignment-andy-wong_files/figure-html5/unnamed-chunk-12-1.png","assignment-andy-wong_files/figure-html5/unnamed-chunk-15-1.png","assignment-andy-wong_files/header-attrs-2.7/header-attrs.js","assignment-andy-wong_files/jquery-1.11.3/jquery.min.js","assignment-andy-wong_files/popper-2.6.0/popper.min.js","assignment-andy-wong_files/tippy-6.2.7/tippy-bundle.umd.min.js","assignment-andy-wong_files/tippy-6.2.7/tippy-light-border.css","assignment-andy-wong_files/tippy-6.2.7/tippy.css","assignment-andy-wong_files/tippy-6.2.7/tippy.umd.min.js","assignment-andy-wong_files/webcomponents-2.0.0/webcomponents.js","data/Airbnb_victoria.csv","images/textsketch.png"]}
+  {"type":"character","attributes":{},"value":["assignment-andy-wong_files/anchor-4.2.2/anchor.min.js","assignment-andy-wong_files/bowser-1.9.3/bowser.min.js","assignment-andy-wong_files/distill-2.2.21/template.v2.js","assignment-andy-wong_files/figure-html5/unnamed-chunk-12-1.png","assignment-andy-wong_files/figure-html5/unnamed-chunk-13-1.png","assignment-andy-wong_files/figure-html5/unnamed-chunk-15-1.png","assignment-andy-wong_files/figure-html5/unnamed-chunk-16-1.png","assignment-andy-wong_files/header-attrs-2.7/header-attrs.js","assignment-andy-wong_files/jquery-1.11.3/jquery.min.js","assignment-andy-wong_files/popper-2.6.0/popper.min.js","assignment-andy-wong_files/tippy-6.2.7/tippy-bundle.umd.min.js","assignment-andy-wong_files/tippy-6.2.7/tippy-light-border.css","assignment-andy-wong_files/tippy-6.2.7/tippy.css","assignment-andy-wong_files/tippy-6.2.7/tippy.umd.min.js","assignment-andy-wong_files/webcomponents-2.0.0/webcomponents.js","data/Airbnb_victoria.csv","images/textsketch.jpg"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1537,6 +1537,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p>Some examples of other text and sentiment analysis done on Airbnb data are as listed:</br> 1. <a href="https://medium.com/analytics-vidhya/airbnb-data-analysis-43554ec39832">Sentiment Analysis of Airbnb Boston Listing Reviews</a></br> 2. <a href="https://medium.com/analytics-vidhya/airbnb-data-analysis-43554ec39832">AirBNB Data Analysis</a></br> 3. <a href="https://www.lexjansen.com/scsug/2018/Gour-SCSUG_Paper.pdf">Text analysis and Sentiment analysis of AirBnb Users’ reviews using SAS Enterprise Miner</a></br> 4. <a href="https://medium.datadriveninvestor.com/making-models-airbnb-price-prediction-data-analysis-15b9af87c9d8">Airbnb Price Prediction: Data Analysis with Python | Making Models (I)</a></p>
 <p>This assignment attempts to create a visualisation of text and sentiment analysis of the accommodation’s descriptipn. The visualisation will allow the analyst to manipulate variables such as region in Australia, review score, number of topics.</p>
 <h1 id="storyboard">3.0 Storyboard</h1>
+<p>The text analysis module should display the wordcloud and topic model on separate panes. On the left-hand pane, the user will be able to customise controls such as the country’s region of interest, the rating score to be analysed, the number of clusters for topic modelline, and the number of words for each topic. Other customisations that could be included are size of wordcloud and colour scheme.</p>
 <p><img src="images/textsketch.jpg" style="width:100.0%" /></p>
 <h1 id="data-preparation">4.0 Data preparation</h1>
 <h3 id="step-1-load-the-required-r-packages">Step 1: Load the required R packages</h3>
@@ -1636,6 +1637,20 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <span class='fu'>unnest_tokens</span><span class='op'>(</span><span class='va'>word</span>, <span class='va'>airbnb_text</span><span class='op'>)</span>
 </code></pre>
 </div>
+<pre><code># A tibble: 5,408,725 x 1
+   word       
+   &lt;chr&gt;      
+ 1 this       
+ 2 two        
+ 3 bedroom    
+ 4 two        
+ 5 bathroom   
+ 6 beautifully
+ 7 appointed  
+ 8 home       
+ 9 is         
+10 set        
+# ... with 5,408,715 more rows</code></pre>
 </div>
 <p>The next step is to create a corpus. A corpus is a body of all texts included in the analysis.</p>
 <h2 id="create-a-corpus">Create a corpus</h2>
@@ -1693,6 +1708,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   colors<span class='op'>=</span><span class='fu'>brewer.pal</span><span class='op'>(</span><span class='fl'>8</span>, <span class='st'>"Dark2"</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
+<p><img src="assignment-andy-wong_files/figure-html5/unnamed-chunk-13-1.png" width="624" /></p>
 </div>
 <h3 id="topic-modelling-using-latent-dirichlet-allocation-lda-model">Topic modelling using Latent Dirichlet Allocation (LDA) model</h3>
 <p>The next visualisation is called topic modelling. Topic modeling is an unsupervised machine learning technique that detects word and phrase patterns in documents, and clusters them into groups, called topics.</p>
@@ -1734,6 +1750,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <span class='fu'>scale_y_reordered</span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
+<p><img src="assignment-andy-wong_files/figure-html5/unnamed-chunk-16-1.png" width="624" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -1764,20 +1781,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 </div>
 <p>Deeper analysis can be done by filtering the review scores to show for example, reviews with a score of 90 and more, reviews with a score of a score of 10 and less, and both of these ranges to see what texts are common to both. This can be done easily in the Shiny app, using code similar to the below (but allowing the user to manipulate the values from the Shiny app):</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#To filter the reviews with a score of 90 and more:</span>
-<span class='co'>#airbnb_filter_top &lt;- airbnb %&gt;% filter(review_scores_rating &gt;= '90')</span>
-
-<span class='co'>#To filter the reviews with a score of 10 and less:</span>
-<span class='co'>#airbnb_filter_bottom &lt;- airbnb %&gt;% filter(review_scores_rating &lt;= '10')</span>
-
-<span class='co'>#To filter the reviews of both ranges:</span>
-<span class='co'>#airbnb_filter_top_bottom &lt;- airbnb %&gt;% filter(review_scores_rating &gt;= '90' &amp; review_scores_rating &lt;= '10')</span>
-</code></pre>
-</div>
-</div>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

@@ -47,6 +47,8 @@ Some examples of other text and sentiment analysis done on Airbnb data are as li
 This assignment attempts to create a visualisation of text and sentiment analysis of the accommodation's descriptipn. The visualisation will allow the analyst to manipulate variables such as region in Australia, review score, number of topics.
 
 # 3.0 Storyboard
+The text analysis module should display the wordcloud and topic model on separate panes. On the left-hand pane, the user will be able to customise controls such as the country's region of interest, the rating score to be analysed, the number of clusters for topic modelline, and the number of words for each topic. Other customisations that could be included are size of wordcloud and colour scheme.
+
 ![](images/textsketch.jpg){width=100%}
 
 # 4.0 Data preparation
@@ -130,7 +132,7 @@ write.csv(airbnb, "data/Airbnb.csv")
 #Load Data
 
 ## read data
-```{r, warning = FALSE, message = FALSE, eval=FALSE}
+```{r, warning = FALSE, message = FALSE}
 airbnb <- read_csv("data/Airbnb_victoria.csv")
 #Shiny app will allow the analyst to select the region of concern and also the range of review scores for analysis.
 ```
@@ -140,7 +142,7 @@ The first step in preparing unstructured textual data for analysis is to tokenis
 # Preparing the data
 
 ## tokenisation to create a tibble of text from 'description' column
-```{r, eval=FALSE}
+```{r}
 airbnb_desc <- airbnb$description
 airbnb_text <- iconv(airbnb_desc, to = "UTF-8")
 airbnb_tibble <- tibble(airbnb_text)
@@ -150,7 +152,7 @@ airbnb_tibble %>%
 The next step is to create a corpus. A corpus is a body of all texts included in the analysis.
 
 ## Create a corpus
-```{r, warning = FALSE, message = FALSE, eval=FALSE}
+```{r, warning = FALSE, message = FALSE}
 # creating the corpus
 airbnb_corpus <- Corpus(VectorSource(airbnb_tibble))
 ```
@@ -159,7 +161,7 @@ The next step is to clean the corpus. This includes removing white spaces, conve
 
 The final step in cleaning is to reduce all words to their root (e.g. 'swimming' to 'swim') in order to not skew the analysis.
 
-```{r, warning = FALSE, message = FALSE, eval=FALSE}
+```{r, warning = FALSE, message = FALSE}
 #remove white spaces between text
 airbnb_corpus_clean <- tm_map(airbnb_corpus, stripWhitespace)
 #transform all characters to lowercase
@@ -178,7 +180,7 @@ airbnb_corpus_clean <- tm_map(airbnb_corpus_clean, stemDocument)
 The next step is to create a document-term matrix. A document-term matrix is a matrix that consisting of the frequency of all the words that occur in the corpus.
 
 # create the Document Term Matrix
-```{r, eval=FALSE}
+```{r}
 airbnb_corpus_dtm <- DocumentTermMatrix(airbnb_corpus_clean)
 ```
 
@@ -189,7 +191,7 @@ After this, the visualisation can be prepared.
 The first visualisation is a word cloud. A word cloud is a visual representation of the frequency of words in the corpus. The more common the word, the larger it will appear.
 
 ### Wordcloud of words most commonly appearing
-```{r, warning = FALSE, message = FALSE, eval=FALSE}
+```{r, warning = FALSE, message = FALSE}
 #creating the data frame that the word cloud will be built from.
 sums <- as.data.frame(colSums(as.matrix(airbnb_corpus_dtm)))
 sums <- rownames_to_column(sums) 
@@ -213,7 +215,7 @@ Latent Dirichlet Allocation (LDA) is one common topic modelling technique. The b
 
 What LDA does in order to map the documents to a list of topics is assign topics to arrangements of words, e.g. n-grams such as best player for a topic related to sports. This stems from the assumption that documents are written with arrangements of words and that those arrangements determine topics. Yet again, just like LSA, LDA also ignores syntactic information and treats documents as bags of words. It also assumes that all words in the document can be assigned a probability of belonging to a topic. That said, the goal of LDA is to determine the mixture of topics that a document contains.
 
-```{r, warning = FALSE, message = FALSE, eval=FALSE}
+```{r, warning = FALSE, message = FALSE}
 airbnb_lda <- LDA(airbnb_corpus_dtm, k = 3)
 #Shiny app will allow the analyst to determine number of topics (k) to appear.
 
@@ -221,12 +223,12 @@ airbnb_lda <- LDA(airbnb_corpus_dtm, k = 3)
 ```
 
 **Extracting the per-topic-per-word probabilities β (beta)**
-```{r, warning = FALSE, message = FALSE, eval=FALSE}
+```{r, warning = FALSE, message = FALSE}
 airbnb_topics <- tidy(airbnb_lda, matrix = "beta")
 ```
 
 **Visualising the topics**
-```{r, warning = FALSE, message = FALSE, eval=FALSE}
+```{r, warning = FALSE, message = FALSE}
 ## find the 10 most common terms within each topic
 airbnb_top_terms <- airbnb_topics %>%
   group_by(topic) %>%
@@ -270,14 +272,3 @@ airbnb_top_terms %>%
 ```
 
 Deeper analysis can be done by filtering the review scores to show for example, reviews with a score of 90 and more, reviews with a score of a score of 10 and less, and both of these ranges to see what texts are common to both. This can be done easily in the Shiny app, using code similar to the below (but allowing the user to manipulate the values from the Shiny app):
-
-```{r, warning = FALSE, message = FALSE, eval=FALSE}
-#To filter the reviews with a score of 90 and more:
-#airbnb_filter_top <- airbnb %>% filter(review_scores_rating >= '90')
-
-#To filter the reviews with a score of 10 and less:
-#airbnb_filter_bottom <- airbnb %>% filter(review_scores_rating <= '10')
-
-#To filter the reviews of both ranges:
-#airbnb_filter_top_bottom <- airbnb %>% filter(review_scores_rating >= '90' & review_scores_rating <= '10')
-```
