@@ -1,7 +1,7 @@
 ---
 title: "Visual Analytics Assignment"
 description: |
-  This assignment describes the text and sentiment analysis module of the visual analytics project.
+  This assignment is about the text and sentiment analysis module of the visual analytics project.
 author:
   - name: Andy WONG 
     url: https://www.linkedin.com/in/andywongkh
@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # The assignment
-[The assignment](https://wiki.smu.edu.sg/2021t2isss608/Assignment) is part of the bigger Shiny-based Visual Analytics Application (Shiny-VAA) project. Each team member is required to select a sub-module from the proposed Shiny-VAA and to complete the tasks below:
+[This assignment](https://wiki.smu.edu.sg/2021t2isss608/Assignment) is part of the bigger Shiny-based Visual Analytics Application (Shiny-VAA) project. Each team member is required to select a sub-module from the proposed Shiny-VAA and to complete the tasks below:
 
 1. Conducting literature review on how the analysis were performed before. The focus should be on identifying gaps whereby interactive web approach and visualanalytics techniques can be used to enhance user experience on using the analysis techniques.
 2. Preparing the storyboard for the design of the sub-module.
@@ -25,15 +25,29 @@ knitr::opts_chunk$set(echo = TRUE)
 4. Testing and prototyping the proposed sub-module in R Markdown. The R Markdown document must be in full working html report format. This link provides a useful example for your reference.
 
 # 1.0 Introduction
-Text analysis has been done on Airbnb data sets, but typically not in an interactive manner.
+[Airbnb](https://www.airbnb.com/) is an online marketplace platform for accomodation rental. [Founded in 2008](https://en.wikipedia.org/wiki/Airbnb) by Brian Chesky and Joe Gebbia who put an air mattress in their living room and offering a bed & breakfast service (thus "Airbnb"), Airbnb has grown to be one of the most popular short-term accomodation rental platforms in multiple countries around the world.
+
+With [millions of listings in 220 countries and over 100,000 cities](https://news.airbnb.com/2020-update/), Airbnb has a rich store of data from transactions between hosts and guests. Such data include structured data such as price, number of facilities (e.g. bedrooms, bathrooms), minimum and maximum number of nights' stay; and unstructured data such as description of the accommodation, and reviews by guests.
+
+This assignment focuses on analysis of unstructured data from Airbnb's online marketplace.
 
 # 2.0 Literature Review of current analysis of Airbnb listings.
-Text analysis has been done on Airbnb data sets, but typically not in an interactive manner. A large number of practitioners prefer to perform text analysis in Python like VADER (*V*alence *A*ware *D*ictionary and s*E*ntiment *R*easoner) for [sentiment analysis](https://www.researchgate.net/publication/333114485_Large-Scale_Sentiment_Analysis_on_Airbnb_Reviews_from_15_Cities), while R is commonly deemed to be more suitable for data analysis. The typical exploratory analysis conducted for text analytics, other than sentiment analysis, include correlations between accommodation facilities, correlation analysis on price versus actual value, word cloud presenting common terms used in listing reviews, It is usually reported as graphs and explained by the author, but does not allow the user to manipulate the graphs for customised analysis. Some examples [here](https://medium.com/analytics-vidhya/airbnb-data-analysis-43554ec39832) and [here](https://medium.datadriveninvestor.com/making-models-airbnb-price-prediction-data-analysis-15b9af87c9d8).
+Multiple attempts on text and semtiment analysis has been done on Airbnb data sets using analysis tools such as SAS Enterprise Miner, Python, and others. A large number of practitioners prefer to perform text analysis in Python using tools like VADER (*V*alence *A*ware *D*ictionary and s*E*ntiment *R*easoner) for [sentiment analysis](https://www.researchgate.net/publication/333114485_Large-Scale_Sentiment_Analysis_on_Airbnb_Reviews_from_15_Cities), while R is commonly deemed to be more suitable for data analysis.
 
-This assignment attempts to create a visualisation of text analysis of Airbnb listings, which will allow the user to manipulate variables such as te listing review score, and see common characteristics, and to be able to customise the view to his/her preference.
+Test analytics on Airbnb data typically consists of analysing user reviews to understand the correlation between words and phrases used in the reviews versus the rating given to the accomodation. Such analysis can reveal what kind of accomodation, facilities, and service standard guests expect from their accommodation and their hosts, what would be considered 'good' or 'bad', thus leading to a high or low rating.
+
+This assignment attempts to conduct text and sentiment analysis on the host's _description_ of the accommodation rather than the guest's review of their experience, and how that might correlate to a high or low rating. This perspective places greater emphasis on the host to emphasize the accommodation's strengths and unique features.
+
+Some examples of other text and sentiment analysis done on Airbnb data are as listed:</br>
+1. [Sentiment Analysis of Airbnb Boston Listing Reviews](https://medium.com/analytics-vidhya/airbnb-data-analysis-43554ec39832)</br>
+2. [AirBNB Data Analysis](https://medium.com/analytics-vidhya/airbnb-data-analysis-43554ec39832)</br>
+3. [Text analysis and Sentiment analysis of AirBnb Users’ reviews using SAS Enterprise Miner](https://www.lexjansen.com/scsug/2018/Gour-SCSUG_Paper.pdf)</br>
+4. [Airbnb Price Prediction: Data Analysis with Python | Making Models (I)](https://medium.datadriveninvestor.com/making-models-airbnb-price-prediction-data-analysis-15b9af87c9d8)
+
+This assignment attempts to create a visualisation of text and sentiment analysis of the accommodation's descriptipn. The visualisation will allow the analyst to manipulate variables such as region in Australia, review score, number of topics.
 
 # 3.0 Storyboard
-![](images/textsketch.png){width=100%}
+![](images/textsketch.jpg){width=100%}
 
 # 4.0 Data preparation
 
@@ -60,9 +74,7 @@ airbnb_raw <- read_csv("data/listings.csv")
 
 ### Step 3: Select the relevant columns of data
 
-
 Many of the columns are not relevant to the analysis. As such, only columns relevant to the analysis are selected.
-
 
 ```{r, eval=FALSE}
 airbnb <- select(airbnb_raw, c(1, 6, 7, 8, 10, 13, 14, 15, 16, 17, 18, 19, 23, 24, 25,
@@ -72,13 +84,15 @@ airbnb <- select(airbnb_raw, c(1, 6, 7, 8, 10, 13, 14, 15, 16, 17, 18, 19, 23, 2
                                72, 73, 74, 75, 76, 77, 80))
 ```
 
-### Step 4: Convert Date Variables from Character to Date Type
+
+### Step 4: Convert Date variables from Character to Date Type
 
 ```{r, eval=FALSE}
 airbnb$host_since <- as.Date(airbnb$host_since, format = '%d/%m/%Y')
 airbnb$first_review <- as.Date(airbnb$first_review, '%d/%m/%Y')
 airbnb$last_review <- as.Date(airbnb$last_review, '%d/%m/%Y')
 ```
+
 
 ### Step 5: Convert Rate variables from Character to Number Type
 
@@ -90,11 +104,13 @@ airbnb$host_acceptance_rate <-
   ((as.numeric(str_remove_all(airbnb$host_acceptance_rate, "%")))/100)
 ```
 
+
 ### Step 6: Convert Price variables from Character to Numeric type
 
 ```{r, eval=FALSE}
 airbnb$price <- as.numeric(gsub("\\$","", airbnb$price))
 ```
+
 
 ### Step 7: Replace String "N/A"s with NA
 
@@ -102,21 +118,27 @@ airbnb$price <- as.numeric(gsub("\\$","", airbnb$price))
 airbnb$host_response_time <- na_if(airbnb$host_response_time, "N/A")
 ```
 
+
 ### Step 8: Save cleaned dataset as "Airbnb.csv"
 
 ```{r, eval=FALSE}
 write.csv(airbnb, "data/Airbnb.csv")
 ```
 
+
 # 5.0 Prototyping
 #Load Data
 
-## read in Airbnb.csv
+## read data
 ```{r, warning = FALSE, message = FALSE, eval=FALSE}
 airbnb <- read_csv("data/Airbnb_victoria.csv")
+#Shiny app will allow the analyst to select the region of concern and also the range of review scores for analysis.
 ```
 
-# Preparing the data for airbnb
+The first step in preparing unstructured textual data for analysis is to tokenise the data. Tokenisation is the process of breaking up words and phrases into units or 'tokens'. The output is a tibble of all words and phrases.
+
+# Preparing the data
+
 ## tokenisation to create a tibble of text from 'description' column
 ```{r, eval=FALSE}
 airbnb_desc <- airbnb$description
@@ -125,13 +147,19 @@ airbnb_tibble <- tibble(airbnb_text)
 airbnb_tibble %>%
   unnest_tokens(word, airbnb_text)
 ```
+The next step is to create a corpus. A corpus is a body of all texts included in the analysis.
 
-## Create a corpus and tokenisation
+## Create a corpus
 ```{r, warning = FALSE, message = FALSE, eval=FALSE}
 # creating the corpus
 airbnb_corpus <- Corpus(VectorSource(airbnb_tibble))
+```
 
-# tokenisation
+The next step is to clean the corpus. This includes removing white spaces, converting all texts to lower case (upper case and lower case words are considered different even when spelt the same), removing numbers and punctuation, and stopwords (common English words that do not add any value to the analysis such as 'a', 'the', 'it', etc).
+
+The final step in cleaning is to reduce all words to their root (e.g. 'swimming' to 'swim') in order to not skew the analysis.
+
+```{r, warning = FALSE, message = FALSE, eval=FALSE}
 #remove white spaces between text
 airbnb_corpus_clean <- tm_map(airbnb_corpus, stripWhitespace)
 #transform all characters to lowercase
@@ -142,10 +170,12 @@ airbnb_corpus_clean <- tm_map(airbnb_corpus_clean, removeNumbers)
 airbnb_corpus_clean <- tm_map(airbnb_corpus_clean, removePunctuation)
 #remove common words that do not add value to sentiment analysis
 airbnb_corpus_clean <- tm_map(airbnb_corpus_clean, removeWords,
-                              c((stopwords("english")), "%br"))
+                              c((stopwords("english")), "%bbr", "%br"))
 #cut words to their root form
 airbnb_corpus_clean <- tm_map(airbnb_corpus_clean, stemDocument)
 ```
+
+The next step is to create a document-term matrix. A document-term matrix is a matrix that consisting of the frequency of all the words that occur in the corpus.
 
 # create the Document Term Matrix
 ```{r, eval=FALSE}
@@ -154,26 +184,40 @@ airbnb_corpus_dtm <- DocumentTermMatrix(airbnb_corpus_clean)
 
 # Creating the visualisations
 
+After this, the visualisation can be prepared.
+
+The first visualisation is a word cloud. A word cloud is a visual representation of the frequency of words in the corpus. The more common the word, the larger it will appear.
+
 ### Wordcloud of words most commonly appearing
 ```{r, warning = FALSE, message = FALSE, eval=FALSE}
+#creating the data frame that the word cloud will be built from.
 sums <- as.data.frame(colSums(as.matrix(airbnb_corpus_dtm)))
 sums <- rownames_to_column(sums) 
 colnames(sums) <- c("terms", "count")
 sums <- arrange(sums, desc(count))
 head <- sums
 
-#wordcloud will show the most common terms used in the 'description' column
+#word cloud will show the most common terms used in the 'description' column
 wordcloud(words = head$terms, freq = head$count, min.freq = 100,
   max.words=1000, random.order=FALSE, rot.per=0.35, 
   colors=brewer.pal(8, "Dark2"))
 ```
 
-Further analysis can be done by filtering on review scores to 
+
 
 ### Topic modelling using Latent Dirichlet Allocation (LDA) model
+
+The next visualisation is called topic modelling. Topic modeling is an unsupervised machine learning technique that detects word and phrase patterns in documents, and clusters them into groups, called topics.
+
+Latent Dirichlet Allocation (LDA) is one common topic modelling technique. The basic assumption of LDA is that similar topics make use of similar words (distributional hypothesis). The purpose of LDA is to mapp the corpus to topics which cover a significant number of words in the documents in the corpus.
+
+What LDA does in order to map the documents to a list of topics is assign topics to arrangements of words, e.g. n-grams such as best player for a topic related to sports. This stems from the assumption that documents are written with arrangements of words and that those arrangements determine topics. Yet again, just like LSA, LDA also ignores syntactic information and treats documents as bags of words. It also assumes that all words in the document can be assigned a probability of belonging to a topic. That said, the goal of LDA is to determine the mixture of topics that a document contains.
+
 ```{r, warning = FALSE, message = FALSE, eval=FALSE}
-airbnb_lda <- LDA(airbnb_corpus_dtm, k = 5)
-#> A LDA topic model with k topics.
+airbnb_lda <- LDA(airbnb_corpus_dtm, k = 3)
+#Shiny app will allow the analyst to determine number of topics (k) to appear.
+
+#airbnb_ctm <- CTM(airbnb_corpus_dtm, k = 2)
 ```
 
 **Extracting the per-topic-per-word probabilities β (beta)**
@@ -189,6 +233,7 @@ airbnb_top_terms <- airbnb_topics %>%
   top_n(10, beta) %>%
   ungroup() %>%
   arrange(topic, -beta)
+#Shiny app will allow the analyst to determine the top n number of words to list.
 
 ## visualising the output
 airbnb_top_terms %>%
@@ -197,6 +242,31 @@ airbnb_top_terms %>%
   geom_col(show.legend = FALSE) +
   facet_wrap(~ topic, scales = "free") +
   scale_y_reordered()
+```
+```{r}
+#library(tm)
+#library(ggplot2)
+#library(lsa)
+#library(scatterplot3d)
+#library(SnowballC)
+
+#view <- factor(rep(c("view 1", "view 2", "view 3"), each = 3))
+#view
+#df <- data.frame(airbnb_text)
+#df
+
+#td.mat <- as.matrix(airbnb_corpus_dtm)
+#td.mat
+
+#dist.mat <- dist(t(as.matrix(td.mat)))
+#dist.mat  # check distance matrix
+
+# MDS
+#fit <- cmdscale(dist.mat, eig = FALSE, k = 2)
+#points <- data.frame(x = fit$points[, 1], y = fit$points[, 2])
+#ggplot(points, aes(x = x, y = y)) + geom_point(data = points, aes(x = x, y = y, 
+#    color = df$view)) + geom_text(data = points, aes(x = x, y = y - 0.2, label = 
+#    row.names(df)))
 ```
 
 Deeper analysis can be done by filtering the review scores to show for example, reviews with a score of 90 and more, reviews with a score of a score of 10 and less, and both of these ranges to see what texts are common to both. This can be done easily in the Shiny app, using code similar to the below (but allowing the user to manipulate the values from the Shiny app):

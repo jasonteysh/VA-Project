@@ -88,7 +88,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_meta_tags-->
 <title>Visual Analytics Project: Visual Analytics Assignment</title>
 
-<meta property="description" itemprop="description" content="This assignment describes the text and sentiment analysis module of the visual analytics project."/>
+<meta property="description" itemprop="description" content="This assignment is about the text and sentiment analysis module of the visual analytics project."/>
 
 
 <!--  https://schema.org/Article -->
@@ -99,20 +99,20 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
 <meta property="og:title" content="Visual Analytics Project: Visual Analytics Assignment"/>
 <meta property="og:type" content="article"/>
-<meta property="og:description" content="This assignment describes the text and sentiment analysis module of the visual analytics project."/>
+<meta property="og:description" content="This assignment is about the text and sentiment analysis module of the visual analytics project."/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="Visual Analytics Project"/>
 
 <!--  https://dev.twitter.com/cards/types/summary -->
 <meta property="twitter:card" content="summary"/>
 <meta property="twitter:title" content="Visual Analytics Project: Visual Analytics Assignment"/>
-<meta property="twitter:description" content="This assignment describes the text and sentiment analysis module of the visual analytics project."/>
+<meta property="twitter:description" content="This assignment is about the text and sentiment analysis module of the visual analytics project."/>
 
 <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Visual Analytics Assignment"]},{"type":"character","attributes":{},"value":["This assignment describes the text and sentiment analysis module of the visual analytics project."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Andy WONG"]},{"type":"character","attributes":{},"value":["https://www.linkedin.com/in/andywongkh"]}]}]},{"type":"character","attributes":{},"value":["11-4-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Visual Analytics Assignment"]},{"type":"character","attributes":{},"value":["This assignment is about the text and sentiment analysis module of the visual analytics project."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Andy WONG"]},{"type":"character","attributes":{},"value":["https://www.linkedin.com/in/andywongkh"]}]}]},{"type":"character","attributes":{},"value":["11-4-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -2065,7 +2065,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Visual Analytics Assignment","description":"This assignment describes the text and sentiment analysis module of the visual analytics project.","authors":[{"author":"Andy WONG","authorURL":"https://www.linkedin.com/in/andywongkh","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-11-04T00:00:00.000+08:00","citationText":"WONG, 2021"}
+{"title":"Visual Analytics Assignment","description":"This assignment is about the text and sentiment analysis module of the visual analytics project.","authors":[{"author":"Andy WONG","authorURL":"https://www.linkedin.com/in/andywongkh","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-11-04T00:00:00.000+08:00","citationText":"WONG, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2091,7 +2091,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <h1>Visual Analytics Assignment</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>This assignment describes the text and sentiment analysis module of the visual analytics project.</p></p>
+<p><p>This assignment is about the text and sentiment analysis module of the visual analytics project.</p></p>
 </div>
 
 <div class="d-byline">
@@ -2114,7 +2114,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><a href="#step-1-load-the-required-r-packages">Step 1: Load the required R packages</a></li>
 <li><a href="#step-2-load-the-data">Step 2: Load the data</a></li>
 <li><a href="#step-3-select-the-relevant-columns-of-data">Step 3: Select the relevant columns of data</a></li>
-<li><a href="#step-4-convert-date-variables-from-character-to-date-type">Step 4: Convert Date Variables from Character to Date Type</a></li>
+<li><a href="#step-4-convert-date-variables-from-character-to-date-type">Step 4: Convert Date variables from Character to Date Type</a></li>
 <li><a href="#step-5-convert-rate-variables-from-character-to-number-type">Step 5: Convert Rate variables from Character to Number Type</a></li>
 <li><a href="#step-6-convert-price-variables-from-character-to-numeric-type">Step 6: Convert Price variables from Character to Numeric type</a></li>
 <li><a href="#step-7-replace-string-nas-with-na">Step 7: Replace String “N/A”s with NA</a></li>
@@ -2122,12 +2122,12 @@ document.addEventListener('DOMContentLoaded', function() {
 </ul></li>
 <li><a href="#prototyping">5.0 Prototyping</a>
 <ul>
-<li><a href="#read-in-airbnb.csv">read in Airbnb.csv</a></li>
+<li><a href="#read-data">read data</a></li>
 </ul></li>
-<li><a href="#preparing-the-data-for-airbnb">Preparing the data for airbnb</a>
+<li><a href="#preparing-the-data">Preparing the data</a>
 <ul>
 <li><a href="#tokenisation-to-create-a-tibble-of-text-from-description-column">tokenisation to create a tibble of text from ‘description’ column</a></li>
-<li><a href="#create-a-corpus-and-tokenisation">Create a corpus and tokenisation</a></li>
+<li><a href="#create-a-corpus">Create a corpus</a></li>
 </ul></li>
 <li><a href="#create-the-document-term-matrix">create the Document Term Matrix</a></li>
 <li><a href="#creating-the-visualisations">Creating the visualisations</a>
@@ -2139,7 +2139,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </nav>
 </div>
 <h1 id="the-assignment">The assignment</h1>
-<p><a href="https://wiki.smu.edu.sg/2021t2isss608/Assignment">The assignment</a> is part of the bigger Shiny-based Visual Analytics Application (Shiny-VAA) project. Each team member is required to select a sub-module from the proposed Shiny-VAA and to complete the tasks below:</p>
+<p><a href="https://wiki.smu.edu.sg/2021t2isss608/Assignment">This assignment</a> is part of the bigger Shiny-based Visual Analytics Application (Shiny-VAA) project. Each team member is required to select a sub-module from the proposed Shiny-VAA and to complete the tasks below:</p>
 <ol type="1">
 <li>Conducting literature review on how the analysis were performed before. The focus should be on identifying gaps whereby interactive web approach and visualanalytics techniques can be used to enhance user experience on using the analysis techniques.</li>
 <li>Preparing the storyboard for the design of the sub-module.</li>
@@ -2147,12 +2147,17 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>Testing and prototyping the proposed sub-module in R Markdown. The R Markdown document must be in full working html report format. This link provides a useful example for your reference.</li>
 </ol>
 <h1 id="introduction">1.0 Introduction</h1>
-<p>Text analysis has been done on Airbnb data sets, but typically not in an interactive manner.</p>
+<p><a href="https://www.airbnb.com/">Airbnb</a> is an online marketplace platform for accomodation rental. <a href="https://en.wikipedia.org/wiki/Airbnb">Founded in 2008</a> by Brian Chesky and Joe Gebbia who put an air mattress in their living room and offering a bed &amp; breakfast service (thus “Airbnb”), Airbnb has grown to be one of the most popular short-term accomodation rental platforms in multiple countries around the world.</p>
+<p>With <a href="https://news.airbnb.com/2020-update/">millions of listings in 220 countries and over 100,000 cities</a>, Airbnb has a rich store of data from transactions between hosts and guests. Such data include structured data such as price, number of facilities (e.g. bedrooms, bathrooms), minimum and maximum number of nights’ stay; and unstructured data such as description of the accommodation, and reviews by guests.</p>
+<p>This assignment focuses on analysis of unstructured data from Airbnb’s online marketplace.</p>
 <h1 id="literature-review-of-current-analysis-of-airbnb-listings.">2.0 Literature Review of current analysis of Airbnb listings.</h1>
-<p>Text analysis has been done on Airbnb data sets, but typically not in an interactive manner. A large number of practitioners prefer to perform text analysis in Python like VADER (<em>V</em>alence <em>A</em>ware <em>D</em>ictionary and s<em>E</em>ntiment <em>R</em>easoner) for <a href="https://www.researchgate.net/publication/333114485_Large-Scale_Sentiment_Analysis_on_Airbnb_Reviews_from_15_Cities">sentiment analysis</a>, while R is commonly deemed to be more suitable for data analysis. The typical exploratory analysis conducted for text analytics, other than sentiment analysis, include correlations between accommodation facilities, correlation analysis on price versus actual value, word cloud presenting common terms used in listing reviews, It is usually reported as graphs and explained by the author, but does not allow the user to manipulate the graphs for customised analysis. Some examples <a href="https://medium.com/analytics-vidhya/airbnb-data-analysis-43554ec39832">here</a> and <a href="https://medium.datadriveninvestor.com/making-models-airbnb-price-prediction-data-analysis-15b9af87c9d8">here</a>.</p>
-<p>This assignment attempts to create a visualisation of text analysis of Airbnb listings, which will allow the user to manipulate variables such as te listing review score, and see common characteristics, and to be able to customise the view to his/her preference.</p>
+<p>Multiple attempts on text and semtiment analysis has been done on Airbnb data sets using analysis tools such as SAS Enterprise Miner, Python, and others. A large number of practitioners prefer to perform text analysis in Python using tools like VADER (<em>V</em>alence <em>A</em>ware <em>D</em>ictionary and s<em>E</em>ntiment <em>R</em>easoner) for <a href="https://www.researchgate.net/publication/333114485_Large-Scale_Sentiment_Analysis_on_Airbnb_Reviews_from_15_Cities">sentiment analysis</a>, while R is commonly deemed to be more suitable for data analysis.</p>
+<p>Test analytics on Airbnb data typically consists of analysing user reviews to understand the correlation between words and phrases used in the reviews versus the rating given to the accomodation. Such analysis can reveal what kind of accomodation, facilities, and service standard guests expect from their accommodation and their hosts, what would be considered ‘good’ or ‘bad’, thus leading to a high or low rating.</p>
+<p>This assignment attempts to conduct text and sentiment analysis on the host’s <em>description</em> of the accommodation rather than the guest’s review of their experience, and how that might correlate to a high or low rating. This perspective places greater emphasis on the host to emphasize the accommodation’s strengths and unique features.</p>
+<p>Some examples of other text and sentiment analysis done on Airbnb data are as listed:</br> 1. <a href="https://medium.com/analytics-vidhya/airbnb-data-analysis-43554ec39832">Sentiment Analysis of Airbnb Boston Listing Reviews</a></br> 2. <a href="https://medium.com/analytics-vidhya/airbnb-data-analysis-43554ec39832">AirBNB Data Analysis</a></br> 3. <a href="https://www.lexjansen.com/scsug/2018/Gour-SCSUG_Paper.pdf">Text analysis and Sentiment analysis of AirBnb Users’ reviews using SAS Enterprise Miner</a></br> 4. <a href="https://medium.datadriveninvestor.com/making-models-airbnb-price-prediction-data-analysis-15b9af87c9d8">Airbnb Price Prediction: Data Analysis with Python | Making Models (I)</a></p>
+<p>This assignment attempts to create a visualisation of text and sentiment analysis of the accommodation’s descriptipn. The visualisation will allow the analyst to manipulate variables such as region in Australia, review score, number of topics.</p>
 <h1 id="storyboard">3.0 Storyboard</h1>
-<p><img src="images/textsketch.png" style="width:100.0%" /></p>
+<p><img src="images/textsketch.jpg" style="width:100.0%" /></p>
 <h1 id="data-preparation">4.0 Data preparation</h1>
 <h3 id="step-1-load-the-required-r-packages">Step 1: Load the required R packages</h3>
 <div class="layout-chunk" data-layout="l-body">
@@ -2188,7 +2193,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </code></pre>
 </div>
 </div>
-<h3 id="step-4-convert-date-variables-from-character-to-date-type">Step 4: Convert Date Variables from Character to Date Type</h3>
+<h3 id="step-4-convert-date-variables-from-character-to-date-type">Step 4: Convert Date variables from Character to Date Type</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>airbnb</span><span class='op'>$</span><span class='va'>host_since</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='va'>airbnb</span><span class='op'>$</span><span class='va'>host_since</span>, format <span class='op'>=</span> <span class='st'>'%d/%m/%Y'</span><span class='op'>)</span>
@@ -2231,14 +2236,16 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 <h1 id="prototyping">5.0 Prototyping</h1>
 <p>#Load Data</p>
-<h2 id="read-in-airbnb.csv">read in Airbnb.csv</h2>
+<h2 id="read-data">read data</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>airbnb</span> <span class='op'>&lt;-</span> <span class='fu'>read_csv</span><span class='op'>(</span><span class='st'>"data/Airbnb_victoria.csv"</span><span class='op'>)</span>
+<span class='co'>#Shiny app will allow the analyst to select the region of concern and also the range of review scores for analysis.</span>
 </code></pre>
 </div>
 </div>
-<h1 id="preparing-the-data-for-airbnb">Preparing the data for airbnb</h1>
+<p>The first step in preparing unstructured textual data for analysis is to tokenise the data. Tokenisation is the process of breaking up words and phrases into units or ‘tokens’. The output is a tibble of all words and phrases.</p>
+<h1 id="preparing-the-data">Preparing the data</h1>
 <h2 id="tokenisation-to-create-a-tibble-of-text-from-description-column">tokenisation to create a tibble of text from ‘description’ column</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2250,14 +2257,20 @@ document.addEventListener('DOMContentLoaded', function() {
 </code></pre>
 </div>
 </div>
-<h2 id="create-a-corpus-and-tokenisation">Create a corpus and tokenisation</h2>
+<p>The next step is to create a corpus. A corpus is a body of all texts included in the analysis.</p>
+<h2 id="create-a-corpus">Create a corpus</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># creating the corpus</span>
 <span class='va'>airbnb_corpus</span> <span class='op'>&lt;-</span> <span class='fu'>Corpus</span><span class='op'>(</span><span class='fu'>VectorSource</span><span class='op'>(</span><span class='va'>airbnb_tibble</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='co'># tokenisation</span>
-<span class='co'>#remove white spaces between text</span>
+</code></pre>
+</div>
+</div>
+<p>The next step is to clean the corpus. This includes removing white spaces, converting all texts to lower case (upper case and lower case words are considered different even when spelt the same), removing numbers and punctuation, and stopwords (common English words that do not add any value to the analysis such as ‘a’, ‘the’, ‘it’, etc).</p>
+<p>The final step in cleaning is to reduce all words to their root (e.g. ‘swimming’ to ‘swim’) in order to not skew the analysis.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#remove white spaces between text</span>
 <span class='va'>airbnb_corpus_clean</span> <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>airbnb_corpus</span>, <span class='va'>stripWhitespace</span><span class='op'>)</span>
 <span class='co'>#transform all characters to lowercase</span>
 <span class='va'>airbnb_corpus_clean</span> <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>airbnb_corpus_clean</span>, <span class='fu'>content_transformer</span><span class='op'>(</span><span class='va'>tolower</span><span class='op'>)</span><span class='op'>)</span>
@@ -2267,12 +2280,13 @@ document.addEventListener('DOMContentLoaded', function() {
 <span class='va'>airbnb_corpus_clean</span> <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>airbnb_corpus_clean</span>, <span class='va'>removePunctuation</span><span class='op'>)</span>
 <span class='co'>#remove common words that do not add value to sentiment analysis</span>
 <span class='va'>airbnb_corpus_clean</span> <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>airbnb_corpus_clean</span>, <span class='va'>removeWords</span>,
-                              <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>(</span><span class='fu'>stopwords</span><span class='op'>(</span><span class='st'>"english"</span><span class='op'>)</span><span class='op'>)</span>, <span class='st'>"%br"</span><span class='op'>)</span><span class='op'>)</span>
+                              <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>(</span><span class='fu'>stopwords</span><span class='op'>(</span><span class='st'>"english"</span><span class='op'>)</span><span class='op'>)</span>, <span class='st'>"%bbr"</span>, <span class='st'>"%br"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'>#cut words to their root form</span>
 <span class='va'>airbnb_corpus_clean</span> <span class='op'>&lt;-</span> <span class='fu'>tm_map</span><span class='op'>(</span><span class='va'>airbnb_corpus_clean</span>, <span class='va'>stemDocument</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
+<p>The next step is to create a document-term matrix. A document-term matrix is a matrix that consisting of the frequency of all the words that occur in the corpus.</p>
 <h1 id="create-the-document-term-matrix">create the Document Term Matrix</h1>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2281,28 +2295,35 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </div>
 <h1 id="creating-the-visualisations">Creating the visualisations</h1>
+<p>After this, the visualisation can be prepared.</p>
+<p>The first visualisation is a word cloud. A word cloud is a visual representation of the frequency of words in the corpus. The more common the word, the larger it will appear.</p>
 <h3 id="wordcloud-of-words-most-commonly-appearing">Wordcloud of words most commonly appearing</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>sums</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colSums</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>airbnb_corpus_dtm</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#creating the data frame that the word cloud will be built from.</span>
+<span class='va'>sums</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colSums</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>airbnb_corpus_dtm</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>sums</span> <span class='op'>&lt;-</span> <span class='fu'>rownames_to_column</span><span class='op'>(</span><span class='va'>sums</span><span class='op'>)</span> 
 <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>sums</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"terms"</span>, <span class='st'>"count"</span><span class='op'>)</span>
 <span class='va'>sums</span> <span class='op'>&lt;-</span> <span class='fu'>arrange</span><span class='op'>(</span><span class='va'>sums</span>, <span class='fu'>desc</span><span class='op'>(</span><span class='va'>count</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>head</span> <span class='op'>&lt;-</span> <span class='va'>sums</span>
 
-<span class='co'>#wordcloud will show the most common terms used in the 'description' column</span>
+<span class='co'>#word cloud will show the most common terms used in the 'description' column</span>
 <span class='fu'>wordcloud</span><span class='op'>(</span>words <span class='op'>=</span> <span class='va'>head</span><span class='op'>$</span><span class='va'>terms</span>, freq <span class='op'>=</span> <span class='va'>head</span><span class='op'>$</span><span class='va'>count</span>, min.freq <span class='op'>=</span> <span class='fl'>100</span>,
   max.words<span class='op'>=</span><span class='fl'>1000</span>, random.order<span class='op'>=</span><span class='cn'>FALSE</span>, rot.per<span class='op'>=</span><span class='fl'>0.35</span>, 
   colors<span class='op'>=</span><span class='fu'>brewer.pal</span><span class='op'>(</span><span class='fl'>8</span>, <span class='st'>"Dark2"</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
-<p>Further analysis can be done by filtering on review scores to</p>
 <h3 id="topic-modelling-using-latent-dirichlet-allocation-lda-model">Topic modelling using Latent Dirichlet Allocation (LDA) model</h3>
+<p>The next visualisation is called topic modelling. Topic modeling is an unsupervised machine learning technique that detects word and phrase patterns in documents, and clusters them into groups, called topics.</p>
+<p>Latent Dirichlet Allocation (LDA) is one common topic modelling technique. The basic assumption of LDA is that similar topics make use of similar words (distributional hypothesis). The purpose of LDA is to mapp the corpus to topics which cover a significant number of words in the documents in the corpus.</p>
+<p>What LDA does in order to map the documents to a list of topics is assign topics to arrangements of words, e.g. n-grams such as best player for a topic related to sports. This stems from the assumption that documents are written with arrangements of words and that those arrangements determine topics. Yet again, just like LSA, LDA also ignores syntactic information and treats documents as bags of words. It also assumes that all words in the document can be assigned a probability of belonging to a topic. That said, the goal of LDA is to determine the mixture of topics that a document contains.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>airbnb_lda</span> <span class='op'>&lt;-</span> <span class='fu'>LDA</span><span class='op'>(</span><span class='va'>airbnb_corpus_dtm</span>, k <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
-<span class='co'>#&gt; A LDA topic model with k topics.</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>airbnb_lda</span> <span class='op'>&lt;-</span> <span class='fu'>LDA</span><span class='op'>(</span><span class='va'>airbnb_corpus_dtm</span>, k <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+<span class='co'>#Shiny app will allow the analyst to determine number of topics (k) to appear.</span>
+
+<span class='co'>#airbnb_ctm &lt;- CTM(airbnb_corpus_dtm, k = 2)</span>
 </code></pre>
 </div>
 </div>
@@ -2322,6 +2343,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <span class='fu'>top_n</span><span class='op'>(</span><span class='fl'>10</span>, <span class='va'>beta</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>ungroup</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>arrange</span><span class='op'>(</span><span class='va'>topic</span>, <span class='op'>-</span><span class='va'>beta</span><span class='op'>)</span>
+<span class='co'>#Shiny app will allow the analyst to determine the top n number of words to list.</span>
 
 <span class='co'>## visualising the output</span>
 <span class='va'>airbnb_top_terms</span> <span class='op'>%&gt;%</span>
@@ -2330,6 +2352,34 @@ document.addEventListener('DOMContentLoaded', function() {
   <span class='fu'>geom_col</span><span class='op'>(</span>show.legend <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>facet_wrap</span><span class='op'>(</span><span class='op'>~</span> <span class='va'>topic</span>, scales <span class='op'>=</span> <span class='st'>"free"</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>scale_y_reordered</span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#library(tm)</span>
+<span class='co'>#library(ggplot2)</span>
+<span class='co'>#library(lsa)</span>
+<span class='co'>#library(scatterplot3d)</span>
+<span class='co'>#library(SnowballC)</span>
+
+<span class='co'>#view &lt;- factor(rep(c("view 1", "view 2", "view 3"), each = 3))</span>
+<span class='co'>#view</span>
+<span class='co'>#df &lt;- data.frame(airbnb_text)</span>
+<span class='co'>#df</span>
+
+<span class='co'>#td.mat &lt;- as.matrix(airbnb_corpus_dtm)</span>
+<span class='co'>#td.mat</span>
+
+<span class='co'>#dist.mat &lt;- dist(t(as.matrix(td.mat)))</span>
+<span class='co'>#dist.mat  # check distance matrix</span>
+
+<span class='co'># MDS</span>
+<span class='co'>#fit &lt;- cmdscale(dist.mat, eig = FALSE, k = 2)</span>
+<span class='co'>#points &lt;- data.frame(x = fit$points[, 1], y = fit$points[, 2])</span>
+<span class='co'>#ggplot(points, aes(x = x, y = y)) + geom_point(data = points, aes(x = x, y = y, </span>
+<span class='co'>#    color = df$view)) + geom_text(data = points, aes(x = x, y = y - 0.2, label = </span>
+<span class='co'>#    row.names(df)))</span>
 </code></pre>
 </div>
 </div>
