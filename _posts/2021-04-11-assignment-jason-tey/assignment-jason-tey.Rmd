@@ -873,7 +873,7 @@ colorsNLi <- c("#fddbc7","#f4a582","#d6604d","#b2182b","#2166ac","#4393c3","#92c
 
 And finally, we plot out the LISA clusters and outliers  
 
-```{r, results='markup'}
+```{r, results='hide', eval=FALSE}
 tmap_mode("view")
 tm_shape(aust_sf_clean2,) +
   tm_fill("quad",
@@ -897,9 +897,11 @@ tm_shape(aust_sf_clean2,) +
 ```
 
 
-When zoomed in to the Victoria state boundary (see below), it is not surprising that these areas highlighted are also areas that have shown up earlier when we plotted the p-value, since insignificant values are eliminated in both viz.  
-
 <img src="C:\ISSS608 Visualization Analytics\VA Project\_posts\2021-04-11-assignment-jason-tey\media\pic5.PNG">  
+
+*<Note: screen grab of the interactive viz is used for the blog post to reduce run time - actual interactive viz can be accessed via Github link provided at the start of assignment>*
+
+When zoomed in to the Victoria state boundary, it is not surprising that these areas highlighted are also areas that have shown up earlier when we plotted the p-value, since insignificant values are eliminated in both viz.  
 
 Both the cluster viz as well as the p-value viz also showed similar areas turning up as significant as the earlier Getis-Ord G's Z-score viz.  
 
