@@ -1,9 +1,10 @@
 ---
 title: "Assignment - Jason Tey"
 description: |
-  This post presents a literature review, recommendations, and prototype of proposed modules to fill existing gaps in analytical tools by enhancing user experience using a web-based application.
+  This post presents a literature review, recommendations, and prototype of proposed sub-modules to fill existing gaps in analytical tools by enhancing user experience using a web-based application. This assignment is part of a broader project that aims to develop the web-based Shiny application. 
   
-  This post constitutes part of the assessment for credit towards the Singapore Management Univerisity module ISSS608 Visual Analytics and Application, AY2020/2021 Term 2. 
+  This post constitutes part of the assessment for credit towards the Singapore Management Univerisity module ISSS608 Visual Analytics and Application, AY2020/2021 Term 2.  
+  
 author:
   - name: Jason Tey
     url: {https://jason-tey.netlify.app/}
@@ -25,6 +26,8 @@ knitr::opts_chunk$set(echo = TRUE, results='hide', message=FALSE, error=FALSE, w
 
 This section outlines the objective of this project and provides a literature review on how analysis are currently performed, what the existing gaps are, and recommends enhancements to better user experience on using the analysis techniques.  
 
+All codes and data used in this write-up can be found on this [GitHub repository](https://github.com/jasonteysh/VA-Project/tree/main/_posts/2021-04-11-assignment-jason-tey). An updated link to the final web-based Shiny application that this projects is a constituent part to will also be made available at a later date.   
+
 ## 1.1 Objective
 
 This post forms part of a larger visual analytics project that aims to develop a web-based application to enhance user experience in employing analysis techniques. The analytics project aims to develop user-friendly analytical tools in the following areas:  
@@ -45,13 +48,13 @@ The data offered by Inside Airbnb are split into several different data sets - t
 
 There are currently a number of analyses that has been conducted on the Airbnb dataset. While most of them are focused on one particular country, given that the datasets made available by Inside Airbnb are rather consistent across different geographical space, it is reasonable to assume that the analytical methodologies adopted by these other studies can be easily replicated and reproduced with data from other countries.  
 
-One of most prominent and recent study on Airbnb data is by Steve Deane from Stratos, who wrote a [blogpost in January 2021](https://www.stratosjets.com/blog/airbnb-statistics/) on the topic (which also inspired this project). In his post, Deane provides descriptive statistics (e.g. total number of hosts, most popular destination, number of guests) focusing on the global distribution with a slight inclination towards the United States of America. While some of the statistics were provided, Deane's analysis is heavily weighted towards the economic aspects of Airbnb (e.g. whether Airbnb affects property values and rents - "Airbnb effect", whether Airbnb is cheaper than hotels, and economic impact of Airbnb in each country).  However, Deane does not provide any higher level data analysis beyond the descriptive ones. He did presented one segment explaining the factors that host should consider when purchasing a property to use as an Airbnb - reflecting some form of explanatory analysis (and perhaps even predictive) but the content was scarce with no elaboration on how these factors were derived. The major 'flaw', though, remains the fact that Deane's blogpost is heavy on qualitative write-up with minimal (or no) meaningful visualization of the statistics he has quoted.  
+One of most prominent and recent study on Airbnb data is by Steve Deane from Stratos, who wrote a [blogpost in January 2021](https://www.stratosjets.com/blog/airbnb-statistics/) on the topic (which also inspired this project). In his post, Deane provides descriptive statistics (e.g. total number of hosts, most popular destination, number of guests) focusing on the global distribution with a slight inclination towards the United States of America. While some of the statistics were provided, Deane's analysis is heavily weighted towards the economic aspects of Airbnb (e.g. whether Airbnb affects property values and rents - "Airbnb effect", whether Airbnb is cheaper than hotels, and economic impact of Airbnb in each country).  However, Deane does not provide any higher level data analysis beyond the descriptive ones. He did presented one segment explaining the factors that host should consider when purchasing a property to use as an Airbnb - reflecting some form of explanatory analysis (and perhaps even predictive) but the content was scarce with no elaboration on how these factors were derived. The major 'flaw', though, remains the fact that Deane's blog post is heavy on qualitative write-up with minimal (or no) meaningful visualization of the statistics he has quoted.  
 
-Several blogposts on medium.com provided basic guides on data analysis on the Airbnb dataset. [Kwon et. al. (2018)](https://medium.com/@jkwonhalla/airbnb-listings-data-analysis-with-r-e2c6001147a6#:~:text=%20Airbnb%20Listings%20Data%20Analysis%20with%20R%20%28Analyses%29,from%20applying%20LDA%20to%20the%20three-class...%20More%20), [Chen (2019)](https://medium.com/analytics-vidhya/how-to-analyze-airbnb-performance-data-in-the-right-way-b83f3dad1458), and [Gedik (2020)](https://medium.com/@emrebilgehangedik/seattle-airbnb-listings-analysis-d88c839596f8) are some recent examples.  
+Several blog posts on medium.com provided basic guides on data analysis on the Airbnb dataset. [Kwon et. al. (2018)](https://medium.com/@jkwonhalla/airbnb-listings-data-analysis-with-r-e2c6001147a6#:~:text=%20Airbnb%20Listings%20Data%20Analysis%20with%20R%20%28Analyses%29,from%20applying%20LDA%20to%20the%20three-class...%20More%20), [Chen (2019)](https://medium.com/analytics-vidhya/how-to-analyze-airbnb-performance-data-in-the-right-way-b83f3dad1458), and [Gedik (2020)](https://medium.com/@emrebilgehangedik/seattle-airbnb-listings-analysis-d88c839596f8) are some recent examples.  
 
-Kwon et. al. (2018) used the Inside Airbnb listing data from Austin, Texas with around 12,ooo listings, and utilized the numerical features to apply Linear Discriminant Analysis, Outliers were detected and removed using the Cook's distance before a Box-Cox transformation was conducted to normalize the data, and the dependent variable (review score) binned to wrangle into categorical data type. Backward Elimination, Ordinal Logistic Regression, and LASSO Regression methods were employed to conduct explanatory analysis - with all three models turning number of bathrooms as significant predictor for customer ratings. Principal Component Analysis was then conducted with no good result after the model fail to meaningfully provide separation of classes (three classes). The Latent Discriminant Analysis was then conducted on each of the three classes resulted from the PCA. The study concluded that number of listings by hosts and having more bathrooms are crucial in securing higher review score. The advantage of this study is the depth, with detailed discussion on the methodology and results. However, the analysis focuses only on predictive/explanatory model, and is one-dimensional, studying only one dependent variable. The study does not offer interactive features to allow other forms of data exploration (e.g. other clustering methods, geographical influence) or changing of dependent variable (e.g. to examine factors affecting price of listing).  
+Kwon et. al. (2018) used the Inside Airbnb listing data from Austin, Texas with around 12,000 listings, and utilized the numerical features to apply Linear Discriminant Analysis, Outliers were detected and removed using the Cook's distance before a Box-Cox transformation was conducted to normalize the data, and the dependent variable (review score) binned to wrangle into categorical data type. Backward Elimination, Ordinal Logistic Regression, and LASSO Regression methods were employed to conduct explanatory analysis - with all three models turning number of bathrooms as significant predictor for customer ratings. Principal Component Analysis was then conducted with no good result after the model fail to meaningfully provide separation of classes (three classes). The Latent Discriminant Analysis was then conducted on each of the three classes resulted from the PCA. The study concluded that number of listings by hosts and having more bathrooms are crucial in securing higher review score. The advantage of this study is the depth, with detailed discussion on the methodology and results. However, the analysis focuses only on predictive/explanatory model, and is one-dimensional, studying only one dependent variable. The study does not offer interactive features to allow other forms of data exploration (e.g. other clustering methods, geographical influence) or changing of dependent variable (e.g. to examine factors affecting price of listing).  
 
-Chen (2019) on the other hand provides an analysis that emphasized on the geographical distribution of listings, and provided more data visualizations (playing to the advantage of using Tableau) that allow viewers to make quick noticeable trends. Chen analysed the 2019 New York City listing data with the objective to predict future Airbnb performance in the city. However, while a predictive model was envisioned, there was little predictive analysis going on in her study - a greater emphasis was placed on qualitative inferences made via the visualization without proper data analytics methodologies. Chen was also limited in her methods of data visualization - for example, when presenting the geospatial distribution of areas by price, she had used a proportional dot map, without a convincing argument of its strength as compared to other visualization methods (such as a choropleth). In fact, the proportional size between the different dots are difficult to be differentiated based on her viz. There are also major flaws with other visualization choice (e.g. showing Average Price by Locations with equal-length bar differentiated by colors on a continuous scale), and the usefulness of some of the viz is also questionable (why might we be interested to know who are the Top 10 Busy Host, and indeed, what is the definition of 'business' here). All in all, while Chen presented some simple visualization to expose the potential of data viz using the Airbnb data, more is left desired from the analysis.  
+Chen (2019) on the other hand provides an analysis that emphasized on the geographical distribution of listings, and provided more data visualizations (playing to the advantage of using Tableau) that allow viewers to make quick noticeable trends. Chen analyzed the 2019 New York City listing data with the objective to predict future Airbnb performance in the city. However, while a predictive model was envisioned, there was little predictive analysis going on in her study - a greater emphasis was placed on qualitative inferences made via the visualization without proper data analytics methodologies. Chen was also limited in her methods of data visualization - for example, when presenting the geospatial distribution of areas by price, she had used a proportional dot map, without a convincing argument of its strength as compared to other visualization methods (such as a choropleth). In fact, the proportional size between the different dots are difficult to be differentiated based on her viz. There are also major flaws with other visualization choice (e.g. showing Average Price by Locations with equal-length bar differentiated by colors on a continuous scale), and the usefulness of some of the viz is also questionable (why might we be interested to know who are the Top 10 Busy Host, and indeed, what is the definition of 'business' here). All in all, while Chen presented some simple visualization to expose the potential of data viz using the Airbnb data, more is left desired from the analysis.  
 
 Comparatively, Gedik (2020) did a fair job in answering the questions set out by his objective. Using the Seattle listing dataset (via Kaggle), he aimed to find out the common amenities, and top features attracting guests and higher prices. In a Question-and-Answer format, Gedik presented visualizations to help answer each of the question he asked in a simple and succinct manner. In his third question, Gedik also presented the result table of a linear regression model he had ran, showing that property_type_Boat has the largest effect on price of listing. Gedik's post, however, suffers from the limitation of scarce discussion in the technical methodology aspect. Similar to earlier studies, there is also no interactivity offered to allow viewers autonomy in changing parameters.  
 
@@ -73,7 +76,7 @@ Taking in all the existing literature availble on the topic, the following gaps 
 | S/N | Gaps | Elaboration                                                              |
 |-----|-------|-------------------|
 | 1   | Lack of coordinated in-depth analysis | All of the studies discussed earlier focused on single dimensional aspect of the dataset - for example, Kwon (2018) on predicting ratings, Chen (2019) on visualizing the data, and Gedik (2020) on identifying common amenities potentially useful in predicting demand and price. The only attempt at merging the analyses into a centralised platform to be used for thematic analysis is Gupta's. Notwithstanding the fact that his Shiny apps are hosted on separate io pages, Gupta's analyses are also disjointed in content. Gupta started off providing descriptive analysis of Airbnb in New York, then transited to a Shiny for property locator, then more exploratory analysis on geospatial and categortical distribution, before transiting to temporal and text analysis - throughout his study, there is no one common theme that links the different methodologies and discussion together. A more concerted and systematic organization of the analysis and the tools used is needed.|
-| 2   | No provision of analytical tool to help viewers do the analysis themselves| Across all the studies examined, including Gupta's Shiny app, there are no provision of analytical tool that can allow users to change certain parameters to tweak the analyses to their own objective/preference. For example, in Kwon's predictive modelling, there is no way to change the methods or predictor that is included, or perhaps even to change the dependent variable of interest. In Chen's visualization, there is also no way to change the variable presented, say from her original price-as-size, to examine ratings using size or even colors on the viz. Similarly, Gedik does not offer any tools in this aspect. Gupta, while offering a wide range of analytical methods and even offering Shiny app, also surprisingly fell short in this area - for example, in his text analytics app, while user can change the word query, they are unable to, say, focus on reviews with more than a 4-star ratings to find out common words associated with higher ratings. |
+| 2   | No provision of analytical tool to help viewers do the analysis themselves| Across all the studies examined, including Gupta's Shiny app, there are no provision of analytical tool that can allow users to change certain parameters to tweak the analyses to their own objective/preference. For example, in Kwon's predictive modeling, there is no way to change the methods or predictor that is included, or perhaps even to change the dependent variable of interest. In Chen's visualization, there is also no way to change the variable presented, say from her original price-as-size, to examine ratings using size or even colors on the viz. Similarly, Gedik does not offer any tools in this aspect. Gupta, while offering a wide range of analytical methods and even offering Shiny app, also surprisingly fell short in this area - for example, in his text analytics app, while user can change the word query, they are unable to, say, focus on reviews with more than a 4-star ratings to find out common words associated with higher ratings. |
 | 3   | Lack of Interactivity| Another gap that is found across all study and one of the most major flaw considering the wealth of information provided by the datasets. None of the study offered options to, for example, zoom in on a particular sub-region, or to filter out whether a hosts is a superhost, or to subset data based on a range of prices. These are useful features that could tremendously enhance the usefulness of the analysis |
 
 **Proposed Enhancements**
@@ -227,7 +230,7 @@ airbnb$host_response_time <- na_if(airbnb$host_response_time, "N/A")
 write.csv(airbnb, "data/Airbnb.csv")
 ```
 
-This preliminary cleaned *Airbnb.csv* file is then distributed to all team members for further wrangling to suit the needs of respective sub-modules. For example, text analytics will require tokenization of character strings, geospatial requires joining with spatial files to form geospatial dataframes, and predictive analytics requires further coorelation analysis before deciding on predictors to retain.  
+This preliminary cleaned *Airbnb.csv* file is then distributed to all team members for further wrangling to suit the needs of respective sub-modules. For example, text analytics will require tokenization of character strings, geospatial requires joining with spatial files to form geospatial dataframes, and predictive analytics requires further correlation analysis before deciding on predictors to retain.  
 
 For the purpose of this assignment, the data wrangling process from Step 5 below onwards will focus on creating spatial simple features and other processing methods for the geospatial visualization and analysis sub-modules.  
 
@@ -406,7 +409,7 @@ tm_shape(vic_sf_clean) +
 
 While cleaner and more tidy. this version sacrifices the intuitive observation on areas with large number of listings that we get from the dot density with proportional symbol version. The key limitation of proportional symbol maps is also made obvious in this iteration - it is difficult to make a fair judgement on the relative size of the dots visually.  
 
-Given the visual practicality and in consideration of the data we have on hand in this use case, dot density, dot density with proprtional symbol, and proportional symbol maps are all suboptimal in creating accurate and effective visual analysis.  
+Given the visual practicality and in consideration of the data we have on hand in this use case, dot density, dot density with proportional symbol, and proportional symbol maps are all sub-optimal in creating accurate and effective visual analysis.  
 
 We next move on to explore Cartograms.  
 
@@ -667,7 +670,7 @@ tm_shape(vic_sf_clean)+
 ***Average Response Rate***  
 
 
-Other than continuous raw data, rate variables such as average acceptance and response rates can also be ploted on the Choropleth, as with the example below for the latter.  
+Other than continuous raw data, rate variables such as average acceptance and response rates can also be plotted on the Choropleth, as with the example below for the latter.  
 
 ```{r, results='markup'}
 tmap_mode("plot")
@@ -690,18 +693,18 @@ To conclude this sub-section, there is hence a need for interactivity in the web
 
 ## 4.2: Testing and Prototyping Sub-module 2 - Geospatial Analysis  
  
-In the geospatial visualization above, we noticed some of the variables of interest such as the median price (around Melbourne bay area) and average ratings (in Central Victoria) appears to have some apparent clusters of high values. On the other hand, we also idenfitied some outliers such as the number of listings at the Mornington Peninsular and response rate in West Wimmera.  
+In the geospatial visualization above, we noticed some of the variables of interest such as the median price (around Melbourne bay area) and average ratings (in Central Victoria) appears to have some apparent clusters of high values. On the other hand, we also idenfified some outliers such as the number of listings at the Mornington Peninsular and response rate in West Wimmera.  
 
 How do we exactly justify whether these clusters and outliers are really there, statistically speaking? That is, how can we be sure that what appears to be a cluster of high values or outlier of apparent high value in low value areas are not due to randomness in the geospatial distribution of these variables? That is the thesis statement for this section - geospatial cluster and outlier analysis.  
 
 A more in-depth discussion on the theoretical aspect of this topic can be found in Section 2.2 above. In this section, we will be prototyping both the Getis-Ord's G z-score plots and the Anselin's Local Moran's I plots, using the *spdep* package. However, before we dive straight into the derivation of the spatial association indicators, we will first need to define the '***neighbors***' that we need to consider when analyzing clusters and outliers.  
 
 
-### 4.2.1 patial Weights: Choice of Neighborhood  
+### 4.2.1 Spatial Weights: Choice of Neighborhood  
 
 There are several methods to deriving this neighbor list that would be needed subsequently to derive the spatial weight for spatial association analysis. Broadly speaking, there are two types of neighborhoods:  
 
-1. **Contiguity-based neighborhood**, which considers neighboring polygons to be those that are in contact with a subject polygon. Using the international chess board as an analogy, two sub categories are considered, a) Queen's case - which considers all immediate neighbors in all direction, and b) Rook's case - which considers neigbors that share a line segment. The ***poly2nb*** function from the **spdep** package provides the calculation of these contiguity-based neighborhood spatial weights.  
+1. **Contiguity-based neighborhood**, which considers neighboring polygons to be those that are in contact with a subject polygon. Using the international chess board as an analogy, two sub categories are considered, a) Queen's case - which considers all immediate neighbors in all direction, and b) Rook's case - which considers neighbors that share a line segment. The ***poly2nb*** function from the **spdep** package provides the calculation of these contiguity-based neighborhood spatial weights.  
 
 2. **Distance-based neighborhood**, which are constraints driven, considering neighbors as those within a given proximity threshold from a polygon centroid. Similarly, two sub categories are considered in this paper, a) K-nearest neighbors - which selects the k number of neighbors closest to the centroid of subject polygon, and b) Distance - which, as the name suggests, selects all neighbors within a pre-determined set of minimum (typically 0) and maximum distance. ***knn2b*** together with ***knearneigh*** as well as ***dnearneigh*** functions from the same spdep package are used to derive these neighbor lists.  
 
@@ -709,6 +712,11 @@ We start first with the Contiguity-based cases: the code is a simple one-liner. 
 
 ```{r}
 queencontiguity <- poly2nb(aust_sf_clean2,row.names = aust_sf_clean$LGA_CODE20)
+
+```
+
+```{r, results='hide', eval=FALSE}
+# this code chunk is not ran as we will not be using the Rook's Contiguity for illustration in this paper 
 rookcontiguity <- poly2nb(aust_sf_clean2,queen=F, row.names = aust_sf_clean$LGA_CODE20)
 ```
 
@@ -718,7 +726,10 @@ For K-nearest neighbor, we have the flexibility to select the value of K - i.e. 
 
 For Distance neighbor, we similarly have flexibility, but in this case, to select the minimum (typically 0) and maximum distance to consider as neighbors. In this iteration, we chose 100 (km). Similarly, we turn the longlat to True.  
 
-```{r}
+```{r, results='hide', eval=FALSE}
+
+# this code chunk is not ran as we will not be using these neighbor list methods for illustration in this paper 
+
 aust_clean_proj <- st_transform(aust_sf_clean2,CRS("+init=epsg:3395"))
 aust_centroids <- st_centroid(aust_clean_proj)
 
@@ -769,6 +780,7 @@ From the map above, we observe that there are some statistically significant clu
 
 Note: Z-score of +/- 1.65 corresponds to 90% confidence level, 1.96 to 95%, and 2.58 to 99%.  
 
+
 ### 4.2.3 Local Moran's I 
 
 Similar to the calculation of Getis-Ord's G, the derivation of the Local Moran's I is also rather straightforward, with similar structure involved but this time using the ***localmoran*** function call instead. However, the resulting data from this function is slightly different, with several columns returning.  
@@ -777,11 +789,11 @@ Similar to the calculation of Getis-Ord's G, the derivation of the Local Moran's
 aust_sf_clean2$lmoran <- localmoran(aust_sf_clean2$median_price, nb2listw(queencontiguity, zero.policy = T))
 ```
 
-The first sub-column returns the local Moran statistic value for each polygon;  
-The second  returns expectation of local Moran statistics (or the mean);  
-The third the variance of local Moran statistics;
-The fourth the standard deviation; and 
-Lastly the fifth the p-value  
+- The first sub-column returns the local Moran statistic value for each polygon;  
+- The second  returns expectation of local Moran statistics (or the mean);  
+- The third the variance of local Moran statistics; 
+- The fourth the standard deviation; and 
+- Lastly the fifth the p-value  
 
 We can similarly plot the local Moran's I statistics by extracting the first sub-column of the returned results. Values of I usually range from −1 to +1. Values significantly below -1/(N-1) indicate negative spatial autocorrelation and values significantly above -1/(N-1) indicate positive spatial autocorrelation, where N refers to the number of spatial units (in this case, 469). More simply, we can plot the p-value that has been returned (fifth sub-columns) to find areas where there are spatial autocorrelation.  
 
@@ -814,4 +826,105 @@ Lastly, we calculate the lagged local Moran's I, or *lag_lm* - which takes the d
 
 Positive deviations are in quadrant 3 and 4, while negative ones are in 1 and 2; positive lag_lm are in 2 and 4, while the negative ones in 1 and 3 - statistically insiginificant areas (at the 90% confidence level) are assigned quadrant 0.  
 
-We also create a corresponding character variable that will be useful in categorising the clusters and outliers. 
+We also create a corresponding character variable that will be useful in categorizing the clusters and outliers.  
+
+
+```{r}
+quad <- vector(mode='numeric',length = nrow(aust_sf_clean2$lmoran))
+dev <- aust_sf_clean2$median_price - mean(aust_sf_clean2$median_price)
+lag_lm <- aust_sf_clean2$lmoran[,1] - aust_sf_clean2$lmoran[,2]
+
+quad[dev >0 & lag_lm>0] <- 4
+quad[dev >0 & lag_lm<0] <- 3
+quad[dev <0 & lag_lm>0] <- 2
+quad[dev <0 & lag_lm<0] <- 1
+quad[aust_sf_clean2$lmoran[,5] > 0.10] <- 0
+
+qText <- vector(mode = "character", length = nrow(aust_sf_clean2$lmoran))
+qText[quad==0] <- "Insignificant"
+qText[quad==1] <- "Low-Low"
+qText[quad==2] <- "Low-High"
+qText[quad==3] <- "High-Low"
+qText[quad==4] <- "High-High"
+```
+
+
+We next map the new variables we have created back into the dataframe    
+
+```{r}
+aust_sf_clean2$dev <- dev
+aust_sf_clean2$lag_lm <- lag_lm
+aust_sf_clean2$quad <- quad
+aust_sf_clean2$qText <- qText
+```
+
+Just before we plot, we also create some color palettes based on their Hex codes (credits to seniors from the ISSS608 module for which this paper constitutes part of the grade for, for the codes below)    
+
+```{r}
+legend <- c("Insignificant","Low-Low", "Low-High", "High-Low", "High-High")
+colorsRd <- c("#ffffff","#fcae91","#fb6a4a","#de2d26","#a50f15")
+colorsBu <- c("#ffffff","#bdd7e7","#6baed6","#3182bd","#08519c")
+colorsBu4 <- c("#bdd7e7","#6baed6","#3182bd","#08519c")
+colorsNBu <- c("#08519c","#3182bd","#6baed6","#bdd7e7","#ffffff")
+colorsLi <- c("#ffffff","#08519c","#6baed6","#fb6a4a","#a50f15")
+colorsNLi <- c("#fddbc7","#f4a582","#d6604d","#b2182b","#2166ac","#4393c3","#92c5de","#d1e5f0")
+```
+
+
+And finally, we plot out the LISA clusters and outliers  
+
+```{r, results='markup'}
+tmap_mode("view")
+tm_shape(aust_sf_clean2,) +
+  tm_fill("quad",
+          title="LISA Cluster & Outlier plot",
+          style="cat",
+          n=5,
+          palette=colorsLi,
+          midpoint=NA,
+          labels=legend,
+          id="LGA_NAME20",
+          popup.vars=c("Deviation:"="dev","Local Moran's I"="lag_lm","Quadrant:"="qText"),
+          alpha=0.8,
+          legend.format=list(digits=2)
+          ) +
+  tm_borders(alpha=0.8) +
+  tm_view(view.legend.position=c("right","top"),
+          control.position=c("left","bottom"),
+          colorNA="Black"
+          ) 
+
+```
+
+
+When zoomed in to the Victoria state boundary (see below), it is not surprising that these areas highlighted are also areas that have shown up earlier when we plotted the p-value, since insignificant values are eliminated in both viz.  
+
+<img src="C:\ISSS608 Visualization Analytics\VA Project\_posts\2021-04-11-assignment-jason-tey\media\pic5.PNG">  
+
+Both the cluster viz as well as the p-value viz also showed similar areas turning up as significant as the earlier Getis-Ord G's Z-score viz.  
+
+When comparing to the actual raw median price focusing on the Victoria state (see below), the areas marked Low-Low (dark blue) on the local Moran's viz are indeed areas where median prices are relatively lower (e.g. areas slightly north of the Melbourne bay area). Light blue Low-High areas also corresponds to neighborhoods of low median prices that see High median price outliers (e.g. Surf Coast area, Alpine, Mansfield etc.).  
+
+```{r, results='hide', eval=FALSE}
+tmap_mode("view")
+tm_shape(vic_sf_clean2)+
+  tm_polygons("median_price",
+              style='fisher',
+              palette='RdPu')
+```
+
+<img src="C:\ISSS608 Visualization Analytics\VA Project\_posts\2021-04-11-assignment-jason-tey\media\pic6.PNG">  
+
+*<Note: screen grab of the interactive viz is used for the blog post to reduce run time - actual interactive viz can be accessed via Github link provided at the start of assignment>*
+
+The two visualizations above are complementary to one another - put together, the choropleth with raw data shows the distribution of variable of interest as-is, while the cluster/outlier LISA plot highlights areas with interesting patterns to pay special attention to.  
+
+# 5: Finalized Concept for Sub-Module on Web-Based Application 
+
+As a conclusion to the series of discussion above, it is proposed to have the geospatial visualization of a Choropleth map visualizing raw data to be placed alongside another visualization highlighting clusters/outliers identified based on geospatial analysis adopting local indicators of spatial association. Statistical values such as the Getis-Ord's G z-score and the Local Moran's I and its p-values can be subsumed under the choropleth to allow toggling to switch out the raw data and display these statistics instead  - this will come in handy when we want to compare p-value (i.e. statistical significance) with actual cluster/outlier interpretations (in another words, how confident are we of the identified clusters/outliers).  
+
+There should also be filters other interactive tools to allow users to switch out parameters according to their analytical needs (e.g. change classification methods for visualizing raw data; change neighbor spatial weight for geo-cluster analysis).  
+
+Put together, the finalized module should look as follows:
+
+<img src="C:\ISSS608 Visualization Analytics\VA Project\_posts\2021-04-11-assignment-jason-tey\media\concept.jpg">
