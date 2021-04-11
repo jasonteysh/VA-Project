@@ -1,5 +1,5 @@
 ---
-title: "Assignment"
+title: "Assignment - Jason Tey"
 description: |
   This post presents a literature review, recommendations, and prototype of proposed modules to fill existing gaps in analytical tools by enhancing user experience using a web-based application.
   
@@ -239,7 +239,7 @@ Next, long string variables (e.g. description, house rules) that are more releva
 
 ```{r}
 airbnb_sf <- st_as_sf(airbnb,coords = c("longitude","latitude"), crs=4326)
-aust_sf <- select(airbnb_sf, c(2,7,10:15,17:18,22,24:25,27:36,41:52,54:63))
+aust_sf <- select(airbnb_sf, c(1:2,5:6,9:14,16:24,26:28,35,40,43:45,53,58:63))
 ```
 
 **Step 6: Download & Import Local Government Area (LGA) boundaries Polygon**  
@@ -321,7 +321,39 @@ We keep the file size even smaller, by extracting just the LGA name, median pric
 # Second-level further cleaning to remove rows where median price (variable of interes) is NA 
 aust_sf_clean2 <- aust_sf_clean[!is.na(aust_sf_clean$median_price),]
 vic_sf_clean2 <- filter(aust_sf_clean2, (aust_sf_clean2$STE_CODE16=="2"))
-vic_median_price <-  select(vic_sf_clean2, c(2,7,10))
+vic_median_price <-  select(vic_sf_clean2, c(2,7,12))
 
 ```
+
+# 4: Testing and Prototyping
+
+## 4.1: Sub-module 1 - Geospatial Visualization  
+
+### 4.1.1: Dot Density Maps  
+
+Dot density maps, as discussed, is one of the main go-to geospatial visualization, where each occurrence of the variable of interest can be presented by a dot on the map (or in some cases, each dot can also represent a thousand, a million, or any arbitrary value). In this case, while our variable of interest is price, dot density map, on its own, is not suitable for plotting a continuous numerical variable. What we can do here, is to plot out the instance where there is a price listed - or, more simply, location of each Airbnb listing. We then add on other information, including price, as a "tooltip" to appear when we hover over.  
+
+***tmap***, being one of the most commonly used packages, offers a simple programmatic approach to plotting various geospatial visualization using coding structure and language consistent with the [grammar of graphics](https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448).  
+
+To plot a simple dot density mapping each listing, we run the code chunk below. The code chunk below can be broken down as such:  
+
+1. First, we define the tmap to be in "view" mode - which allows interactivity, instead of a static viz in the "plot" mode. This allows us to click on each dot to extract more information via the pop-ups.  
+2. Secondly, we define the base shape of the map to take on the  *vic_sf* simple feature ('sf') object. 
+3. Thirdly, we define the visualization approach for the data point - in this case, for each data point in the *vic_sf* object, we instruct R to put a dot on the corresponding geospatial coordinates corresponded on the map. For each dot, we dictate the color to be *Rausch* (hex code: #FF5A5F) which is the official color of [Airbnb](https://usbrandcolors.com/airbnb-colors/), size to be 0.1, transparency 0.3, and have some useful data in the pop-up when we click on each dot. 
+4. And finally, we add in a command to ask R to use the OpenStreetMap as the basemap for this viz 
+
+
+```{r, results='hide', eval=FALSE}
+
+tmap_mode("view")
+tm_shape(vic_sf) + 
+  tm_dots(col='#FF5A5F', size=0.1, alpha=0.3,
+          popup.vars=c("Name"="name", "LGA"="region_name","Price"="price"))+
+    tm_basemap("OpenStreetMap")
+
+```
+
+<img src="C:\ISSS608 Visualization Analytics\VA Project\_posts\2021-04-11-assignment-jason-tey\media\pic1.PNG">  
+
+*<Note: screen grab of the interactive viz is used for the blog post to reduce run time - actual interactive viz can be accessed via Github link provided at the start of assignment>*
 
