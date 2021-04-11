@@ -45,9 +45,24 @@ knitr::include_graphics("images/sketch6.png")
 
 These are the list of packages that will be used for this assignment, in RStudio.
 
+- biganalytics: https://cran.r-project.org/web/packages/biganalytics/index.html
+- cluster: https://cran.r-project.org/web/packages/cluster/cluster.pdf
+- corrplot: https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html
+- dplyr: https://cran.r-project.org/web/packages/dplyr/index.html
+- factoextra: https://cran.r-project.org/web/packages/factoextra/index.html
+- forcats: https://cran.r-project.org/web/packages/forcats/index.html
+- gridExtra: https://cran.r-project.org/web/packages/gridExtra/index.html
+- gdata: https://cran.r-project.org/web/packages/gdata/index.html
+- tidyverse: https://cran.r-project.org/web/packages/tidyverse/index.html
+- parallelPlot: https://cran.r-project.org/web/packages/parallelPlot/index.html
+- plotly: https://cran.r-project.org/web/packages/plotly/index.html
+- purrr: https://cran.r-project.org/web/packages/purrr/index.html
+- MASS: https://cran.r-project.org/web/packages/MASS/index.html
+
+
 ```{r}
 packages <- c("tidyverse", "plotly", "purrr", "dplyr", "gdata", "corrplot", "MASS", "biganalytics", 
-              "parallelPlot", "factoextra", "factoextra", "gridExtra", "cluster", "forcats")
+              "parallelPlot", "factoextra", "gridExtra", "cluster", "forcats")
 
 for (p in packages){
   if (!require(p,character.only=T)){
@@ -222,9 +237,13 @@ ggplot(eda_boxplot_propertytype, aes(x=property_type,y=price))+
 ```
 # Scatter plot
 
-A Density plot is drawn up to identify where most of the reviews lie
+A Density plot is drawn up to identify where most of the reviews lie. It gives us a representation of the distribution of a numeric variable.
+
+Users in the shiny will be able to toggle different variables such as prices, beds, bedrooms etc.
 
 A Bivariate plot is plotted to compare the relationship between 2 variables. We have filtered it down towards review scores above 80, as the density plot has indicated that most of the reviews are in that particular range.
+
+Users in the shiny will be able to toggle the range of the x-axis using a slider. They will also be able to choose the different variables of x and y axis in the Shiny.
 
 ## Density Plot of Review Scores for Entire House
 
@@ -278,7 +297,14 @@ grid.arrange(d1, d2, nrow = 2)
 
 # Correlation Plot
 
-A correlation plot is drawn to choose variables with low correlation for the multivariate linear regression.
+A correlation plot is drawn to choose variables with low correlation for the multivariate linear regression. In this assignment, we have used method - ellipse, and order hclust.
+
+Users in the Shiny will be able to use different Methods and Orders.
+
+VISUALIZATION METHODS: There are seven visualization methods (parameter method) in corrplot package, named "circle", "square", "ellipse", "number", "shade", "color", "pie".
+
+REORDER A CORRELATION MATRIX: The correlation matrix can be reordered according to the correlation coefficient. This is important to identify the hidden structure and pattern in the matrix. There are four methods in corrplot (parameter order), named "AOE", "FPC", "hclust", "alphabet".
+
 
 ``` {r fig.height=10, fig.width=10}
 #correlation plot
@@ -336,6 +362,8 @@ summary(stepboth)
 We will perform kmeans clustering with different cluster sizes, and determine the optimal cluster sizes. In this assignment, we have chosen variables price, beds and review_scores_rating to view kmeans clustering.
 
 After conducting tests for optimal clusters, we conclude that cluster size of 4 is the most optimal. Users will be able to choose which cluster test they would like to perform to choose the best cluster size.
+
+Users in the Shiny will be able to choose between different optimisation cluster methods such as Elbow Method, Sillhoutte Method and Gap Method.
 
 ``` {r fig.height=8, fig.width=12}
 airbnb.vic2 <- airbnb.vic %>%
@@ -441,11 +469,12 @@ We will create a parallel plot to visualise the optimal cluster size and charact
 # Add cluster to dataset
 airbnb.vic2$cluster <- k4$cluster
 airbnb.vic2$cluster <- as_factor(airbnb.vic2$cluster)
-
-# Draw Parallelplot
-parallelPlot(airbnb.vic2,refColumnDim = "cluster")
-  
 ```
 ```{r, echo=FALSE, fig.cap="", fig.align='center',layout="l-body-outset",dpi=300, fig.width=10, fig.height=6}
 knitr::include_graphics("images/parallelplot.png")
+```
+```{r}
+# Draw Parallelplot
+parallelPlot(airbnb.vic2,refColumnDim = "cluster")
+  
 ```
