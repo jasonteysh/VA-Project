@@ -2080,7 +2080,6 @@ function init_posts_list() {
 
       // mark posts that match the category visible
       var page_category = window.location.hash.replace(/^#category:/, "");
-      page_category = decodeURIComponent(page_category)
       var posts = $('.post-metadata').map(function(idx, script) {
         var metadata = $.parseJSON($(script).html());
         var post = null;
@@ -2096,7 +2095,7 @@ function init_posts_list() {
       set_posts_visible(posts, true);
 
       // mark the hash active
-      $('.categories li>a[href="' + decodeURIComponent(window.location.hash) + '"]').addClass('active');
+      $('.categories li>a[href="' + window.location.hash + '"]').addClass('active');
 
       // update the list_caption
       var list_caption = $('.posts-list-caption');
@@ -2162,7 +2161,7 @@ function init_posts_list() {
 <a href="posts/2021-03-31-assignment-andy-wong/" class="post-preview">
 <script class="post-metadata" type="text/json">{"categories":[]}</script>
 <div class="metadata">
-<div class="publishedDate">April 10, 2021</div>
+<div class="publishedDate">April 11, 2021</div>
 <div class="dt-authors">
 <div class="dt-author">Andy WONG</div>
 </div>
@@ -2174,6 +2173,23 @@ function init_posts_list() {
 <h2>Assignment - Andy Wong</h2>
 <div class="dt-tags"></div>
 <p>This assignment is about the text and sentiment analysis module of the visual analytics project.</p>
+</div>
+</a>
+<a href="posts/2021-04-11-assignment-jason-tey/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":[]}</script>
+<div class="metadata">
+<div class="publishedDate">April 10, 2021</div>
+<div class="dt-authors">
+<div class="dt-author">Jason Tey</div>
+</div>
+</div>
+<div class="thumbnail"></div>
+<div class="description">
+<h2>Assignment</h2>
+<div class="dt-tags"></div>
+<p>This post presents a literature review, recommendations, and prototype of proposed modules to fill existing gaps in analytical tools by enhancing user experience using a web-based application.
+
+This post constitutes part of the assessment for credit towards the Singapore Management Univerisity module ISSS608 Visual Analytics and Application, AY2020/2021 Term 2.</p>
 </div>
 </a>
 <a href="posts/2021-03-30-assignment-louelle-teo/" class="post-preview">
@@ -2235,7 +2251,7 @@ reading what we have to say!</p>
 <a href="#">More articles &raquo;</a>
 </div>
 </div>
-<!--/radix_placeholder_article_listing-->
+<!--/radix_placeholder_article_listing-->
 
 <div class="d-title">
 <h1>Visual Analytics Project</h1>
