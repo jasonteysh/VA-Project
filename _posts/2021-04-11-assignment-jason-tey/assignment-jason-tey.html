@@ -1473,6 +1473,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <li><a href="#testing-and-prototyping-sub-module-2---geospatial-analysis">4.2: Testing and Prototyping Sub-module 2 - Geospatial Analysis</a>
 <ul>
 <li><a href="#patial-weights-choice-of-neighborhood">4.2.1 patial Weights: Choice of Neighborhood</a></li>
+<li><a href="#local-getis-ords-g">4.2.2 Local Getis-Ord’s G</a></li>
+<li><a href="#local-morans-i">4.2.3 Local Moran’s I</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -2108,7 +2110,104 @@ We keep the file size even smaller, by extracting just the LGA name, median pric
 <li><p><strong>Distance-based neighborhood</strong>, which are constraints driven, considering neighbors as those within a given proximity threshold from a polygon centroid. Similarly, two sub categories are considered in this paper, a) K-nearest neighbors - which selects the k number of neighbors closest to the centroid of subject polygon, and b) Distance - which, as the name suggests, selects all neighbors within a pre-determined set of minimum (typically 0) and maximum distance. <strong><em>knn2b</em></strong> together with <strong><em>knearneigh</em></strong> as well as <strong><em>dnearneigh</em></strong> functions from the same spdep package are used to derive these neighbor lists.</p></li>
 </ol>
 <p>We start first with the Contiguity-based cases: the code is a simple one-liner. Where <em>queen</em> equals to True, the Queen’s case is considered; and when False, the Rook’s.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='va'>queencontiguity</span> <span class='op'>&lt;-</span> <span class='fu'>poly2nb</span><span class='op'>(</span><span class='va'>aust_sf_clean2</span>,row.names <span class='op'>=</span> <span class='va'>aust_sf_clean</span><span class='op'>$</span><span class='va'>LGA_CODE20</span><span class='op'>)</span>
+<span class='va'>rookcontiguity</span> <span class='op'>&lt;-</span> <span class='fu'>poly2nb</span><span class='op'>(</span><span class='va'>aust_sf_clean2</span>,queen<span class='op'>=</span><span class='cn'>F</span>, row.names <span class='op'>=</span> <span class='va'>aust_sf_clean</span><span class='op'>$</span><span class='va'>LGA_CODE20</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Next, in order to derive the Distance-based cases, we first need to establish the centroid of each polygon. The first line of code maps the existing sf dataframe to a projected map layer. the function <strong><em>st_centroid</em></strong> then calculates the centroid for each of the projected polygons. With this centroid, we now similarly require a straightforward one-liner code to generate the neighbor lists.</p>
+<p>For K-nearest neighbor, we have the flexibility to select the value of K - i.e. how many of the closest neighbors to consider. In this iteration, we chose 8. Having the longlat switch to True will ensure that we consider the spherical radius of the geo-surrounding instead of straight-line distances.</p>
+<p>For Distance neighbor, we similarly have flexibility, but in this case, to select the minimum (typically 0) and maximum distance to consider as neighbors. In this iteration, we chose 100 (km). Similarly, we turn the longlat to True.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='va'>aust_clean_proj</span> <span class='op'>&lt;-</span> <span class='fu'>st_transform</span><span class='op'>(</span><span class='va'>aust_sf_clean2</span>,<span class='fu'>CRS</span><span class='op'>(</span><span class='st'>"+init=epsg:3395"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>aust_centroids</span> <span class='op'>&lt;-</span> <span class='fu'>st_centroid</span><span class='op'>(</span><span class='va'>aust_clean_proj</span><span class='op'>)</span>
+
+<span class='va'>knearest</span> <span class='op'>&lt;-</span> <span class='fu'>knn2nb</span><span class='op'>(</span><span class='fu'>knearneigh</span><span class='op'>(</span><span class='va'>aust_centroids</span>, <span class='fl'>8</span>, longlat <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>distnearest</span> <span class='op'>&lt;-</span> <span class='fu'>dnearneigh</span><span class='op'>(</span><span class='va'>aust_centroids</span>, <span class='fl'>0</span>, <span class='fl'>100</span>, longlat <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>We are now ready to explore the various measures of spatial autocorrelation.</p>
+<h3 id="local-getis-ords-g">4.2.2 Local Getis-Ord’s G</h3>
+<p>As discussed in Section 2.2, <strong>G</strong> provides a statistical interpretation of whether a Hot or Cold spot exists in the context of its surrounding. G’s z-score are interpreted as with any z-score from statistical hypothesis testing - for example, an absolute z-score of more than 2.58 reflects a statistical significance at the 99% confidence level. Putting it in layman terms, when a G’s z-score of more than 2.58 is returned, we can reject the null hypothesis (that there are no hot/cold spot clusters) with 99% confidence, in favour of the alternative hypothesis, and conclude that there are indeed hot/cold spot clusters.</p>
+<p>The derivation of the Local G z-score is, surprisingly, rather straightforward, as shown in the one-liner code below.the <strong><em>localG</em></strong> function takes in a variable of interest (in this case median price) from a sf dataframe, along with a neighbor list of with spatial weight (in this case, we use the queen’s contiguity case).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='va'>aust_sf_clean2</span><span class='op'>$</span><span class='va'>g</span> <span class='op'>&lt;-</span> <span class='fu'>localG</span><span class='op'>(</span><span class='va'>aust_sf_clean2</span><span class='op'>$</span><span class='va'>median_price</span>, <span class='fu'>nb2listw</span><span class='op'>(</span><span class='fu'>include.self</span><span class='op'>(</span><span class='va'>queencontiguity</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Next, we plot out the G values on a Choropleth to identify areas where there are statistically significant hot/cold spots. We first define the colors we want to use (‘<em>col</em>’), along with the bins to spread the color (‘<em>pal</em>’)</p>
+<p>We then run the plot out the g values as we did previously for the Choropleth, and in this case, we specifically define the breaks of class to correspond the z-score with different statistical significance level.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='fu'>tmap_mode</span><span class='op'>(</span><span class='st'>"plot"</span><span class='op'>)</span>
+<span class='fu'>tm_shape</span><span class='op'>(</span><span class='va'>aust_sf_clean2</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_polygons</span><span class='op'>(</span><span class='st'>"g"</span>,
+              style<span class='op'>=</span><span class='st'>'fixed'</span>,
+              breaks<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>aust_sf_clean2</span><span class='op'>$</span><span class='va'>g</span><span class='op'>)</span>, <span class='op'>-</span><span class='fl'>2.58</span>, <span class='op'>-</span><span class='fl'>1.96</span>, <span class='op'>-</span><span class='fl'>1.65</span>, <span class='fl'>1.65</span>, <span class='fl'>1.96</span>, <span class='fl'>2.58</span>, <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>aust_sf_clean2</span><span class='op'>$</span><span class='va'>g</span><span class='op'>)</span><span class='op'>)</span>,
+              palette<span class='op'>=</span><span class='fu'>diverge_hcl</span><span class='op'>(</span><span class='fl'>12</span>,h<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>180</span>,<span class='fl'>330</span><span class='op'>)</span>,c<span class='op'>=</span><span class='fl'>59</span>,l<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>75</span>,<span class='fl'>95</span><span class='op'>)</span><span class='op'>)</span>,
+              legend.hist<span class='op'>=</span><span class='cn'>T</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_layout</span><span class='op'>(</span>frame <span class='op'>=</span> <span class='cn'>F</span>, 
+            main.title<span class='op'>=</span><span class='st'>"Choropleth Map for Getis-Ord's G* Z-score"</span>,
+            main.title.size <span class='op'>=</span> <span class='fl'>1</span>,
+            main.title.position <span class='op'>=</span> <span class='st'>"center"</span>,
+            legend.outside <span class='op'>=</span> <span class='cn'>T</span>,
+            legend.hist.width <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="assignment-jason-tey_files/figure-html5/unnamed-chunk-34-1.png" width="624" /></p>
+<pre><code>[1] &quot;#97DDD4&quot; &quot;#C3E5E0&quot; &quot;#E0EDEA&quot; &quot;#EFEFEF&quot; &quot;#F2DFEB&quot; &quot;#F6C4E1&quot;
+[7] &quot;#F79CD4&quot;</code></pre>
+</div>
+<p>From the map above, we observe that there are some statistically significant clusters around North-West Australia, Melbourne, and Sydney area. Given a null hypothesis that there is no clustering and observed pattern could be due to complete spatial randomness, the interpretation of the map is as follows:</p>
+<ul>
+<li>For areas where <strong><em>z-score is larger than 1.65</em></strong>, we reject the null hypothesis: the spatial distribution of high values in the dataset is more spatially clustered than would be expected if underlying spatial processes were truly random.</li>
+<li>For areas where <strong><em>z-score is smaller than -1.65</em></strong>, we reject the null hypothesis: the spatial distribution of low values in the dataset is more spatially clustered than would be expected if underlying spatial processes were truly random.</li>
+</ul>
+<p>Note: Z-score of +/- 1.65 corresponds to 90% confidence level, 1.96 to 95%, and 2.58 to 99%.</p>
+<h3 id="local-morans-i">4.2.3 Local Moran’s I</h3>
+<p>Similar to the calculation of Getis-Ord’s G, the derivation of the Local Moran’s I is also rather straightforward, with similar structure involved but this time using the <strong><em>localmoran</em></strong> function call instead. However, the resulting data from this function is slightly different, with several columns returning.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='va'>aust_sf_clean2</span><span class='op'>$</span><span class='va'>lmoran</span> <span class='op'>&lt;-</span> <span class='fu'>localmoran</span><span class='op'>(</span><span class='va'>aust_sf_clean2</span><span class='op'>$</span><span class='va'>median_price</span>, <span class='fu'>nb2listw</span><span class='op'>(</span><span class='va'>queencontiguity</span>, zero.policy <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>The first sub-column returns the local Moran statistic value for each polygon;<br />
+The second returns expectation of local Moran statistics (or the mean);<br />
+The third the variance of local Moran statistics; The fourth the standard deviation; and Lastly the fifth the p-value</p>
+<p>We can similarly plot the local Moran’s I statistics by extracting the first sub-column of the returned results. Values of I usually range from −1 to +1. Values significantly below -1/(N-1) indicate negative spatial autocorrelation and values significantly above -1/(N-1) indicate positive spatial autocorrelation, where N refers to the number of spatial units (in this case, 469). More simply, we can plot the p-value that has been returned (fifth sub-columns) to find areas where there are spatial autocorrelation.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='va'>aust_sf_clean2</span><span class='op'>$</span><span class='va'>I_p</span> <span class='op'>&lt;-</span><span class='va'>aust_sf_clean2</span><span class='op'>$</span><span class='va'>lmoran</span><span class='op'>[</span>,<span class='fl'>5</span><span class='op'>]</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='fu'>tmap_mode</span><span class='op'>(</span><span class='st'>"view"</span><span class='op'>)</span>
+<span class='fu'>tm_shape</span><span class='op'>(</span><span class='va'>aust_sf_clean2</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_polygons</span><span class='op'>(</span><span class='st'>"I_p"</span>,
+              style<span class='op'>=</span><span class='st'>'fixed'</span>,
+              breaks<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>0.01</span>,<span class='fl'>0.05</span>,<span class='fl'>0.1</span>,<span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>aust_sf_clean2</span><span class='op'>$</span><span class='va'>I_p</span>,na.rm <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span><span class='op'>)</span>,
+              palette<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#7C0177"</span>, <span class='st'>"#CC218E"</span>, <span class='st'>"#F779A7"</span>, <span class='st'>"#FFFFFF"</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p><img src="media/pic4.PNG"></p>
+<p><em>&lt;Note: screen grab of the interactive viz is used for the blog post to reduce run time - actual interactive viz can be accessed via Github link provided at the start of assignment&gt;</em></p>
+<p>Taking a zoomed-in to look at the Victoria state, we see areas of statistical significance (i.e. where null hypothesis of there being no spatial autocorrelation is rejected) just north of the Melbourne bay area (and also the Sydney area at the top-right fringe of the screen grab).</p>
+<p>However, what is more interesting for the results from local Moran’s I is to find out the areas where there are clusters of high/low values (“High-High” and “Low”-“Low” respectively), and outliers in high/low areas (“Low-High” and “High-Low” respectively). We hence conduct the following further data wrangling.</p>
+<p>First we create an empty numeric variable <em>quad</em> that will later take in values of the quadrant that each area is categorized into.<br />
+Next, we calculate the <em>dev</em> or deviation of each area’s median price from the mean of all the median price - if positive, the area is considered above average, and vice versa.<br />
+Lastly, we calculate the lagged local Moran’s I, or <em>lag_lm</em> - which takes the difference between the local Moran’s I for each area, and the expectation of local Moran’s I (i.e. average). That is, if positive, the corresponding area’s local Moran’s I is higher than expectation, and vice versa (note: I that is more negative indicates negative spatial autocorrelation, and vice versa).</p>
+<p>Positive deviations are in quadrant 3 and 4, while negative ones are in 1 and 2; positive lag_lm are in 2 and 4, while the negative ones in 1 and 3 - statistically insiginificant areas (at the 90% confidence level) are assigned quadrant 0.</p>
+<p>We also create a corresponding character variable that will be useful in categorising the clusters and outliers.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

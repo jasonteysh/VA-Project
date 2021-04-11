@@ -707,3 +707,111 @@ There are several methods to deriving this neighbor list that would be needed su
 
 We start first with the Contiguity-based cases: the code is a simple one-liner. Where *queen* equals to True, the Queen's case is considered; and when False, the Rook's.  
 
+```{r}
+queencontiguity <- poly2nb(aust_sf_clean2,row.names = aust_sf_clean$LGA_CODE20)
+rookcontiguity <- poly2nb(aust_sf_clean2,queen=F, row.names = aust_sf_clean$LGA_CODE20)
+```
+
+Next, in order to derive the Distance-based cases, we first need to establish the centroid of each polygon. The first line of code maps the existing sf dataframe to a projected map layer. the function ***st_centroid*** then calculates the centroid for each of the projected polygons. With this centroid, we now similarly require a straightforward one-liner code to generate the neighbor lists.  
+
+For K-nearest neighbor, we have the flexibility to select the value of K - i.e. how many of the closest neighbors to consider. In this iteration, we chose 8. Having the longlat switch to True will ensure that we consider the spherical radius of the geo-surrounding instead of straight-line distances.  
+
+For Distance neighbor, we similarly have flexibility, but in this case, to select the minimum (typically 0) and maximum distance to consider as neighbors. In this iteration, we chose 100 (km). Similarly, we turn the longlat to True.  
+
+```{r}
+aust_clean_proj <- st_transform(aust_sf_clean2,CRS("+init=epsg:3395"))
+aust_centroids <- st_centroid(aust_clean_proj)
+
+knearest <- knn2nb(knearneigh(aust_centroids, 8, longlat = TRUE))
+distnearest <- dnearneigh(aust_centroids, 0, 100, longlat = TRUE)
+
+```
+
+
+We are now ready to explore the various measures of spatial autocorrelation.  
+
+
+### 4.2.2 Local Getis-Ord's G
+
+As discussed in Section 2.2, **G** provides a statistical interpretation of whether a Hot or Cold spot exists in the context of its surrounding. G's z-score are interpreted as with any z-score from statistical hypothesis testing - for example, an absolute z-score of more than 2.58 reflects a statistical significance at the 99% confidence level. Putting it in layman terms, when a G's z-score of more than 2.58 is returned, we can reject the null hypothesis (that there are no hot/cold spot clusters) with 99% confidence, in favour of the alternative hypothesis, and conclude that there are indeed hot/cold spot clusters.  
+
+The derivation of the Local G z-score is, surprisingly, rather straightforward, as shown in the one-liner code below.the ***localG*** function takes in a variable of interest (in this case median price) from a sf dataframe, along with a neighbor list of with spatial weight (in this case, we use the queen's contiguity case).  
+
+```{r}
+aust_sf_clean2$g <- localG(aust_sf_clean2$median_price, nb2listw(include.self(queencontiguity)))
+```
+
+Next, we plot out the G values on a Choropleth to identify areas where there are statistically significant hot/cold spots. We first define the colors we want to use ('*col*'), along with the bins to spread the color ('*pal*')  
+
+We then run the plot out the g values as we did previously for the Choropleth, and in this case, we specifically define the breaks of class to correspond the z-score with different statistical significance level.  
+
+```{r, results='markup'}
+
+tmap_mode("plot")
+tm_shape(aust_sf_clean2)+
+  tm_polygons("g",
+              style='fixed',
+              breaks=c(min(aust_sf_clean2$g), -2.58, -1.96, -1.65, 1.65, 1.96, 2.58, max(aust_sf_clean2$g)),
+              palette=diverge_hcl(12,h=c(180,330),c=59,l=c(75,95)),
+              legend.hist=T)+
+  tm_layout(frame = F, 
+            main.title="Choropleth Map for Getis-Ord's G* Z-score",
+            main.title.size = 1,
+            main.title.position = "center",
+            legend.outside = T,
+            legend.hist.width = 1)
+```
+
+From the map above, we observe that there are some statistically significant clusters around North-West Australia, Melbourne, and Sydney area. Given a null hypothesis that there is no clustering and observed pattern could be due to complete spatial randomness, the interpretation of the map is as follows:  
+
+- For areas where ***z-score is larger than 1.65***, we reject the null hypothesis: the spatial distribution of high values in the dataset is more spatially clustered than would be expected if underlying spatial processes were truly random.
+- For areas where ***z-score is smaller than -1.65***, we reject the null hypothesis: the spatial distribution of low values in the dataset is more spatially clustered than would be expected if underlying spatial processes were truly random. 
+
+Note: Z-score of +/- 1.65 corresponds to 90% confidence level, 1.96 to 95%, and 2.58 to 99%.  
+
+### 4.2.3 Local Moran's I 
+
+Similar to the calculation of Getis-Ord's G, the derivation of the Local Moran's I is also rather straightforward, with similar structure involved but this time using the ***localmoran*** function call instead. However, the resulting data from this function is slightly different, with several columns returning.  
+
+```{r}
+aust_sf_clean2$lmoran <- localmoran(aust_sf_clean2$median_price, nb2listw(queencontiguity, zero.policy = T))
+```
+
+The first sub-column returns the local Moran statistic value for each polygon;  
+The second  returns expectation of local Moran statistics (or the mean);  
+The third the variance of local Moran statistics;
+The fourth the standard deviation; and 
+Lastly the fifth the p-value  
+
+We can similarly plot the local Moran's I statistics by extracting the first sub-column of the returned results. Values of I usually range from −1 to +1. Values significantly below -1/(N-1) indicate negative spatial autocorrelation and values significantly above -1/(N-1) indicate positive spatial autocorrelation, where N refers to the number of spatial units (in this case, 469). More simply, we can plot the p-value that has been returned (fifth sub-columns) to find areas where there are spatial autocorrelation.  
+
+```{r}
+aust_sf_clean2$I_p <-aust_sf_clean2$lmoran[,5]
+```
+
+
+```{r, results='hide', eval=FALSE}
+
+tmap_mode("view")
+tm_shape(aust_sf_clean2)+
+  tm_polygons("I_p",
+              style='fixed',
+              breaks=c(0,0.01,0.05,0.1,max(aust_sf_clean2$I_p,na.rm = T)),
+              palette=c("#7C0177", "#CC218E", "#F779A7", "#FFFFFF"))
+```
+
+<img src="C:\ISSS608 Visualization Analytics\VA Project\_posts\2021-04-11-assignment-jason-tey\media\pic4.PNG">  
+
+*<Note: screen grab of the interactive viz is used for the blog post to reduce run time - actual interactive viz can be accessed via Github link provided at the start of assignment>*
+
+Taking a zoomed-in to look at the Victoria state, we see areas of statistical significance (i.e. where null hypothesis of there being no spatial autocorrelation is rejected) just north of the Melbourne bay area (and also the Sydney area at the top-right fringe of the screen grab).  
+
+However, what is more interesting for the results from local Moran's I is to find out the areas where there are clusters of high/low values ("High-High" and "Low"-"Low" respectively), and outliers in high/low areas ("Low-High" and "High-Low" respectively). We hence conduct the following further data wrangling.  
+
+First we create an empty numeric variable *quad* that will later take in values of the quadrant that each area is categorized into.  
+Next, we calculate the *dev* or deviation of each area's median price from the mean of all the median price - if positive, the area is considered above average, and vice versa.  
+Lastly, we calculate the lagged local Moran's I, or *lag_lm* - which takes the difference between the local Moran's I for each area, and the expectation of local Moran's I (i.e. average). That is, if positive, the corresponding area's local Moran's I is higher than expectation, and vice versa (note: I that is more negative indicates negative spatial autocorrelation, and vice versa). 
+
+Positive deviations are in quadrant 3 and 4, while negative ones are in 1 and 2; positive lag_lm are in 2 and 4, while the negative ones in 1 and 3 - statistically insiginificant areas (at the 90% confidence level) are assigned quadrant 0.  
+
+We also create a corresponding character variable that will be useful in categorising the clusters and outliers. 
