@@ -525,3 +525,185 @@ In view of the above discussion, it can be concluded that a plain Choropleth wou
 #### Classification Methods - Converting Continuous Numerical Data to Discrete Class Intervals with Different Styles  
 
 ***Pretty***  
+
+In earlier iterations, we have used the "pretty" style, as with the default of the tmap package. The "pretty" style rounds breaks into whole numbers where possible and spaces them out evenly (and hence "pretty"). We have seen that each class that was derived are indeed evenly spaced out e.g. 50-100, 100-150, etc. However, this would mean that the *data points*, if not evenly distributed across the classes, will not be even.  
+
+To examine this, we can have a view of the distribution by plotting a histogram of the variable's distribution (in this case, median price of each LGA), and coloring each bar by their class. Good thing is, tmap actually allows us to plot a miniature version of this histogram along the legend, using the *legend.hist* command (we also shift the legend to outside the map to prevent overlap, and adjust the width of the histogram width for easier viewing).  
+
+Further, tmap also allows user to dictate the number of classes to be split. in this case, we can try a new class number by including the '*n*' parameter (e.g. 4 classes are dictated in the case below).  
+
+```{r, results='markup'}
+tmap_mode("plot")
+tm_shape(vic_sf_clean)+
+  tm_polygons("median_price",
+              style='pretty',
+              n=4,
+              palette='RdPu',
+              legend.hist=T)+
+  tm_layout(frame = F, 
+            main.title='Choropleth Map for Median Price of Listings Average Ratings in each LGA',
+            main.title.size = 1,
+            main.title.position = "center",
+            legend.outside = T,
+            legend.hist.width = 1)
+```
+
+From the viz above, we see that classes are break rather evenly, but the distribution of the data points are less even, with many falling within the 100-200 range and very few in the 300-400 range.  
+
+Of course, 'pretty' is not the only classification method. Another similar style is '*fixed*', where the breaks can be manually determine, and a label included to overwrite default labels.  
+
+***Fixed***  
+
+```{r, results='markup'}
+tmap_mode("plot")
+tm_shape(vic_sf_clean)+
+  tm_polygons("median_price",
+              style='fixed',
+              breaks=c(0,125,175,245,275,400),
+              labels=c("low","medium-low","medium","medium-high","high"),
+              palette='RdPu',
+              legend.hist=T)+
+  tm_layout(frame = F, 
+            main.title='Choropleth Map for Median Price of Listings Average Ratings in each LGA',
+            main.title.size = 1,
+            main.title.position = "center",
+            legend.outside = T,
+            legend.hist.width = 1)
+```
+
+
+In the viz above, we tried to manually segment the classes at their natural breaks (i.e. where there are gaps in their distribution as evident in the histogram, we split them). There is also another style, "*jenks*" that creates classes based on natural breaks using algorithm that maximizes differences between each class.  
+
+***Jenks' Natural Breaks***  
+
+```{r, results='markup'}
+tmap_mode("plot")
+tm_shape(vic_sf_clean)+
+  tm_polygons("median_price",
+              style='jenks',
+              palette='RdPu',
+              legend.hist=T)+
+  tm_layout(frame = F, 
+            main.title='Choropleth Map for Median Price of Listings Average Ratings in each LGA',
+            main.title.size = 1,
+            main.title.position = "center",
+            legend.outside = T,
+            legend.hist.width = 1)
+```
+
+The results are rather similar to the manual natural breaks used, though there are some "misclassed" data points in the fourth class (appears to subsumed one data point that would have been more 'natural' with the third class). Though not perfect, this style is useful to identify natural breaks especially for cases where the data set is large and 'breaks' are less visibly obvious. There is another similar yet different style using the "*fisher*" algorithm that maximized homogeneity (i.e. minimizes variance within group).  
+
+***Fisher's Algorithm***  
+
+```{r, results='markup'}
+tmap_mode("plot")
+tm_shape(vic_sf_clean)+
+  tm_polygons("median_price",
+              style='fisher',
+              palette='RdPu',
+              legend.hist=T)+
+  tm_layout(frame = F, 
+            main.title='Choropleth Map for Median Price of Listings Average Ratings in each LGA',
+            main.title.size = 1,
+            main.title.position = "center",
+            legend.outside = T,
+            legend.hist.width = 1)
+```
+
+In this case, Fisher's algorithm pretty much does as well in identifying natural breaks as the manual method. There are many more classification methods available in the tmap package, such as quantile, equal, and sd breaks; breaks based on various clustering analysis such as hierarchical, k-means, and bagged; breaks based on logarithm scale; and even option to present the choropleth in a continuous scale. [Nowosad (2020)](https://dev.to/jakub_nowosad/map-coloring-the-color-scale-styles-available-in-the-tmap-package-hp3#:~:text=%20Discrete%20maps%20%201%20Pretty.%20When%20the,clustering.%20%205%20k-means%20clustering.%20%20More%20) presents a quick summary of the various methods and links to papers that futher substantiates the theory behind these classification methodologies.  
+
+In the conduct of a geospatial analysis and visualization, there would be different circumstances where certain classification method would be more appropriate and/or applicable than another. There could even be situations where different methods would need to be compared with each other. To ensure a holistic and robust geospatial analysis, there is a need to offer autonomy for user to change these parameters during their analysis. While it may be tedious to run individual lines of codes separately, interactivity introduced in the web-based application that allows user to toggle between the different classification methods at the click of a button would exponentially enhance the usability of the application.  
+
+Hence, it is critical to include this interactivity in the final Shiny application.  
+
+
+#### Switching Variables of Interest - Interactivity Requirements  
+
+We move on to discuss another aspect of variability - variable of interest.  
+
+As informed earlier, the main prototyping used median price for each LGA as the main variable of interest. In the complicated choropleth with proportional symbol in the section immediately above, we also explore including other variables that might be of interest. While including them as additional dimensions within the choropleth map complicates and clutters the limited real estate on the viz, we can easily change the input variable to plot out our choropleth easily (in fact, with just a change to one line of code). As with the above, we explore the distribution of average ratings for all listings within each LGA below, where we changed the first argument of the tm_polygons command from "median_price" to "average_rating"  
+
+***Average Rating***  
+
+```{r, results='markup'}
+tmap_mode("plot")
+tm_shape(vic_sf_clean)+
+  tm_polygons("average_rating",
+              style='pretty',
+              palette='RdPu',
+              legend.hist=T)+
+  tm_layout(frame = FALSE,
+            main.title='Choropleth Map for Average Ratings of All Listings in each LGA',
+            main.title.size = 1,
+            main.title.position = "center",
+            legend.outside = T,
+            legend.hist.width = 1)
+```
+
+From the viz, it is immediately obvious that average ratings are very heavily skewed to the right, with all LGAs having a ratings of more than 90, and the most common ratings between 94-98. There also appears to be a cluster of higher ratings in central Victoria.  
+
+***Number of Listings***  
+
+We had earlier started off the discussion for this section talking about the count of listings and its geographical spread visualized using the dot density map. Now, we revisit this variable. With the Choropleth, it is now neater and easier to distill the actual numbers even within the cluttered bay area around Melbourne. In this case, though, we are unable to use the 'pretty' style, as many the distribution has an extremely long right-tail, with one extreme outlier at Mornington Peninsular with more than 6000 listing in this one LGA alone.  
+
+Thinking back, it was audacious thinking we can map 6000 dots altogether in that one small area using the dot density map.  
+
+```{r, results='markup'}
+tmap_mode("plot")
+tm_shape(vic_sf_clean)+
+  tm_polygons("listing_count",
+              style='fisher',
+              palette='RdPu',
+              legend.hist=T)+
+  tm_layout(frame = FALSE,
+            main.title='Choropleth Map for Total Number of Listings in each LGA',
+            main.title.size = 1,
+            main.title.position = "center",
+            legend.outside = T,
+            legend.hist.width = 1)
+```
+
+
+***Average Response Rate***  
+
+
+Other than continuous raw data, rate variables such as average acceptance and response rates can also be ploted on the Choropleth, as with the example below for the latter.  
+
+```{r, results='markup'}
+tmap_mode("plot")
+tm_shape(vic_sf_clean)+
+  tm_polygons("average_response_rate",
+              style='fisher',
+              palette='RdPu',
+              legend.hist=T)+
+  tm_layout(frame = FALSE,
+            main.title='Choropleth Map for Average Response Rates of all Listings in each LGA',
+            main.title.size = 1,
+            main.title.position = "center",
+            legend.outside = T,
+            legend.hist.width = 1)
+```
+
+Similarly, we found an outlier in Western Victoria (West Wimmera) where response rates appears suspisciously lower than surrounding LGAs.  
+
+To conclude this sub-section, there is hence a need for interactivity in the web-based application to be developed in order to support more diverse and robust analytical usage. 
+
+## 4.2: Testing and Prototyping Sub-module 2 - Geospatial Analysis  
+ 
+In the geospatial visualization above, we noticed some of the variables of interest such as the median price (around Melbourne bay area) and average ratings (in Central Victoria) appears to have some apparent clusters of high values. On the other hand, we also idenfitied some outliers such as the number of listings at the Mornington Peninsular and response rate in West Wimmera.  
+
+How do we exactly justify whether these clusters and outliers are really there, statistically speaking? That is, how can we be sure that what appears to be a cluster of high values or outlier of apparent high value in low value areas are not due to randomness in the geospatial distribution of these variables? That is the thesis statement for this section - geospatial cluster and outlier analysis.  
+
+A more in-depth discussion on the theoretical aspect of this topic can be found in Section 2.2 above. In this section, we will be prototyping both the Getis-Ord's G z-score plots and the Anselin's Local Moran's I plots, using the *spdep* package. However, before we dive straight into the derivation of the spatial association indicators, we will first need to define the '***neighbors***' that we need to consider when analyzing clusters and outliers.  
+
+
+### 4.2.1 patial Weights: Choice of Neighborhood  
+
+There are several methods to deriving this neighbor list that would be needed subsequently to derive the spatial weight for spatial association analysis. Broadly speaking, there are two types of neighborhoods:  
+
+1. **Contiguity-based neighborhood**, which considers neighboring polygons to be those that are in contact with a subject polygon. Using the international chess board as an analogy, two sub categories are considered, a) Queen's case - which considers all immediate neighbors in all direction, and b) Rook's case - which considers neigbors that share a line segment. The ***poly2nb*** function from the **spdep** package provides the calculation of these contiguity-based neighborhood spatial weights.  
+
+2. **Distance-based neighborhood**, which are constraints driven, considering neighbors as those within a given proximity threshold from a polygon centroid. Similarly, two sub categories are considered in this paper, a) K-nearest neighbors - which selects the k number of neighbors closest to the centroid of subject polygon, and b) Distance - which, as the name suggests, selects all neighbors within a pre-determined set of minimum (typically 0) and maximum distance. ***knn2b*** together with ***knearneigh*** as well as ***dnearneigh*** functions from the same spdep package are used to derive these neighbor lists.  
+
+We start first with the Contiguity-based cases: the code is a simple one-liner. Where *queen* equals to True, the Queen's case is considered; and when False, the Rook's.  
+

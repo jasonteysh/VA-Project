@@ -2076,6 +2076,10 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><a href="#choropleth-map">4.1.4: Choropleth Map</a></li>
 <li><a href="#further-discussion-and-prototyping-of-choropleth-map">4.1.5: Further Discussion and Prototyping of Choropleth Map</a></li>
 </ul></li>
+<li><a href="#testing-and-prototyping-sub-module-2---geospatial-analysis">4.2: Testing and Prototyping Sub-module 2 - Geospatial Analysis</a>
+<ul>
+<li><a href="#patial-weights-choice-of-neighborhood">4.2.1 patial Weights: Choice of Neighborhood</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </nav>
@@ -2538,7 +2542,179 @@ We keep the file size even smaller, by extracting just the LGA name, median pric
 <h3 id="further-discussion-and-prototyping-of-choropleth-map">4.1.5: Further Discussion and Prototyping of Choropleth Map</h3>
 <h4 id="classification-methods---converting-continuous-numerical-data-to-discrete-class-intervals-with-different-styles">Classification Methods - Converting Continuous Numerical Data to Discrete Class Intervals with Different Styles</h4>
 <p><strong><em>Pretty</em></strong></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>In earlier iterations, we have used the “pretty” style, as with the default of the tmap package. The “pretty” style rounds breaks into whole numbers where possible and spaces them out evenly (and hence “pretty”). We have seen that each class that was derived are indeed evenly spaced out e.g. 50-100, 100-150, etc. However, this would mean that the <em>data points</em>, if not evenly distributed across the classes, will not be even.</p>
+<p>To examine this, we can have a view of the distribution by plotting a histogram of the variable’s distribution (in this case, median price of each LGA), and coloring each bar by their class. Good thing is, tmap actually allows us to plot a miniature version of this histogram along the legend, using the <em>legend.hist</em> command (we also shift the legend to outside the map to prevent overlap, and adjust the width of the histogram width for easier viewing).</p>
+<p>Further, tmap also allows user to dictate the number of classes to be split. in this case, we can try a new class number by including the ‘<em>n</em>’ parameter (e.g. 4 classes are dictated in the case below).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='fu'>tmap_mode</span><span class='op'>(</span><span class='st'>"plot"</span><span class='op'>)</span>
+<span class='fu'>tm_shape</span><span class='op'>(</span><span class='va'>vic_sf_clean</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_polygons</span><span class='op'>(</span><span class='st'>"median_price"</span>,
+              style<span class='op'>=</span><span class='st'>'pretty'</span>,
+              n<span class='op'>=</span><span class='fl'>4</span>,
+              palette<span class='op'>=</span><span class='st'>'RdPu'</span>,
+              legend.hist<span class='op'>=</span><span class='cn'>T</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_layout</span><span class='op'>(</span>frame <span class='op'>=</span> <span class='cn'>F</span>, 
+            main.title<span class='op'>=</span><span class='st'>'Choropleth Map for Median Price of Listings Average Ratings in each LGA'</span>,
+            main.title.size <span class='op'>=</span> <span class='fl'>1</span>,
+            main.title.position <span class='op'>=</span> <span class='st'>"center"</span>,
+            legend.outside <span class='op'>=</span> <span class='cn'>T</span>,
+            legend.hist.width <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="assignment-jason-tey_files/figure-html5/unnamed-chunk-24-1.png" width="624" /></p>
+<pre><code>[1] &quot;#FCDEDB&quot; &quot;#FAACB8&quot; &quot;#EE579D&quot; &quot;#AE017E&quot;</code></pre>
+</div>
+<p>From the viz above, we see that classes are break rather evenly, but the distribution of the data points are less even, with many falling within the 100-200 range and very few in the 300-400 range.</p>
+<p>Of course, ‘pretty’ is not the only classification method. Another similar style is ‘<em>fixed</em>’, where the breaks can be manually determine, and a label included to overwrite default labels.</p>
+<p><strong><em>Fixed</em></strong></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='fu'>tmap_mode</span><span class='op'>(</span><span class='st'>"plot"</span><span class='op'>)</span>
+<span class='fu'>tm_shape</span><span class='op'>(</span><span class='va'>vic_sf_clean</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_polygons</span><span class='op'>(</span><span class='st'>"median_price"</span>,
+              style<span class='op'>=</span><span class='st'>'fixed'</span>,
+              breaks<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>125</span>,<span class='fl'>175</span>,<span class='fl'>245</span>,<span class='fl'>275</span>,<span class='fl'>400</span><span class='op'>)</span>,
+              labels<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"low"</span>,<span class='st'>"medium-low"</span>,<span class='st'>"medium"</span>,<span class='st'>"medium-high"</span>,<span class='st'>"high"</span><span class='op'>)</span>,
+              palette<span class='op'>=</span><span class='st'>'RdPu'</span>,
+              legend.hist<span class='op'>=</span><span class='cn'>T</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_layout</span><span class='op'>(</span>frame <span class='op'>=</span> <span class='cn'>F</span>, 
+            main.title<span class='op'>=</span><span class='st'>'Choropleth Map for Median Price of Listings Average Ratings in each LGA'</span>,
+            main.title.size <span class='op'>=</span> <span class='fl'>1</span>,
+            main.title.position <span class='op'>=</span> <span class='st'>"center"</span>,
+            legend.outside <span class='op'>=</span> <span class='cn'>T</span>,
+            legend.hist.width <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="assignment-jason-tey_files/figure-html5/unnamed-chunk-25-1.png" width="624" /></p>
+<pre><code>[1] &quot;#FDE4E1&quot; &quot;#FBBEBE&quot; &quot;#F87EA9&quot; &quot;#DB3196&quot; &quot;#99017B&quot;</code></pre>
+</div>
+<p>In the viz above, we tried to manually segment the classes at their natural breaks (i.e. where there are gaps in their distribution as evident in the histogram, we split them). There is also another style, “<em>jenks</em>” that creates classes based on natural breaks using algorithm that maximizes differences between each class.</p>
+<p><strong><em>Jenks’ Natural Breaks</em></strong></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='fu'>tmap_mode</span><span class='op'>(</span><span class='st'>"plot"</span><span class='op'>)</span>
+<span class='fu'>tm_shape</span><span class='op'>(</span><span class='va'>vic_sf_clean</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_polygons</span><span class='op'>(</span><span class='st'>"median_price"</span>,
+              style<span class='op'>=</span><span class='st'>'jenks'</span>,
+              palette<span class='op'>=</span><span class='st'>'RdPu'</span>,
+              legend.hist<span class='op'>=</span><span class='cn'>T</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_layout</span><span class='op'>(</span>frame <span class='op'>=</span> <span class='cn'>F</span>, 
+            main.title<span class='op'>=</span><span class='st'>'Choropleth Map for Median Price of Listings Average Ratings in each LGA'</span>,
+            main.title.size <span class='op'>=</span> <span class='fl'>1</span>,
+            main.title.position <span class='op'>=</span> <span class='st'>"center"</span>,
+            legend.outside <span class='op'>=</span> <span class='cn'>T</span>,
+            legend.hist.width <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="assignment-jason-tey_files/figure-html5/unnamed-chunk-26-1.png" width="624" /></p>
+<pre><code>[1] &quot;#FDE4E1&quot; &quot;#FBBEBE&quot; &quot;#F87EA9&quot; &quot;#DB3196&quot; &quot;#99017B&quot;</code></pre>
+</div>
+<p>The results are rather similar to the manual natural breaks used, though there are some “misclassed” data points in the fourth class (appears to subsumed one data point that would have been more ‘natural’ with the third class). Though not perfect, this style is useful to identify natural breaks especially for cases where the data set is large and ‘breaks’ are less visibly obvious. There is another similar yet different style using the “<em>fisher</em>” algorithm that maximized homogeneity (i.e. minimizes variance within group).</p>
+<p><strong><em>Fisher’s Algorithm</em></strong></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='fu'>tmap_mode</span><span class='op'>(</span><span class='st'>"plot"</span><span class='op'>)</span>
+<span class='fu'>tm_shape</span><span class='op'>(</span><span class='va'>vic_sf_clean</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_polygons</span><span class='op'>(</span><span class='st'>"median_price"</span>,
+              style<span class='op'>=</span><span class='st'>'fisher'</span>,
+              palette<span class='op'>=</span><span class='st'>'RdPu'</span>,
+              legend.hist<span class='op'>=</span><span class='cn'>T</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_layout</span><span class='op'>(</span>frame <span class='op'>=</span> <span class='cn'>F</span>, 
+            main.title<span class='op'>=</span><span class='st'>'Choropleth Map for Median Price of Listings Average Ratings in each LGA'</span>,
+            main.title.size <span class='op'>=</span> <span class='fl'>1</span>,
+            main.title.position <span class='op'>=</span> <span class='st'>"center"</span>,
+            legend.outside <span class='op'>=</span> <span class='cn'>T</span>,
+            legend.hist.width <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="assignment-jason-tey_files/figure-html5/unnamed-chunk-27-1.png" width="624" /></p>
+<pre><code>[1] &quot;#FDE4E1&quot; &quot;#FBBEBE&quot; &quot;#F87EA9&quot; &quot;#DB3196&quot; &quot;#99017B&quot;</code></pre>
+</div>
+<p>In this case, Fisher’s algorithm pretty much does as well in identifying natural breaks as the manual method. There are many more classification methods available in the tmap package, such as quantile, equal, and sd breaks; breaks based on various clustering analysis such as hierarchical, k-means, and bagged; breaks based on logarithm scale; and even option to present the choropleth in a continuous scale. <a href="https://dev.to/jakub_nowosad/map-coloring-the-color-scale-styles-available-in-the-tmap-package-hp3#:~:text=%20Discrete%20maps%20%201%20Pretty.%20When%20the,clustering.%20%205%20k-means%20clustering.%20%20More%20">Nowosad (2020)</a> presents a quick summary of the various methods and links to papers that futher substantiates the theory behind these classification methodologies.</p>
+<p>In the conduct of a geospatial analysis and visualization, there would be different circumstances where certain classification method would be more appropriate and/or applicable than another. There could even be situations where different methods would need to be compared with each other. To ensure a holistic and robust geospatial analysis, there is a need to offer autonomy for user to change these parameters during their analysis. While it may be tedious to run individual lines of codes separately, interactivity introduced in the web-based application that allows user to toggle between the different classification methods at the click of a button would exponentially enhance the usability of the application.</p>
+<p>Hence, it is critical to include this interactivity in the final Shiny application.</p>
+<h4 id="switching-variables-of-interest---interactivity-requirements">Switching Variables of Interest - Interactivity Requirements</h4>
+<p>We move on to discuss another aspect of variability - variable of interest.</p>
+<p>As informed earlier, the main prototyping used median price for each LGA as the main variable of interest. In the complicated choropleth with proportional symbol in the section immediately above, we also explore including other variables that might be of interest. While including them as additional dimensions within the choropleth map complicates and clutters the limited real estate on the viz, we can easily change the input variable to plot out our choropleth easily (in fact, with just a change to one line of code). As with the above, we explore the distribution of average ratings for all listings within each LGA below, where we changed the first argument of the tm_polygons command from “median_price” to “average_rating”</p>
+<p><strong><em>Average Rating</em></strong></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='fu'>tmap_mode</span><span class='op'>(</span><span class='st'>"plot"</span><span class='op'>)</span>
+<span class='fu'>tm_shape</span><span class='op'>(</span><span class='va'>vic_sf_clean</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_polygons</span><span class='op'>(</span><span class='st'>"average_rating"</span>,
+              style<span class='op'>=</span><span class='st'>'pretty'</span>,
+              palette<span class='op'>=</span><span class='st'>'RdPu'</span>,
+              legend.hist<span class='op'>=</span><span class='cn'>T</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_layout</span><span class='op'>(</span>frame <span class='op'>=</span> <span class='cn'>FALSE</span>,
+            main.title<span class='op'>=</span><span class='st'>'Choropleth Map for Average Ratings of All Listings in each LGA'</span>,
+            main.title.size <span class='op'>=</span> <span class='fl'>1</span>,
+            main.title.position <span class='op'>=</span> <span class='st'>"center"</span>,
+            legend.outside <span class='op'>=</span> <span class='cn'>T</span>,
+            legend.hist.width <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="assignment-jason-tey_files/figure-html5/unnamed-chunk-28-1.png" width="624" /></p>
+<pre><code>[1] &quot;#FDE4E1&quot; &quot;#FBBEBE&quot; &quot;#F87EA9&quot; &quot;#DB3196&quot; &quot;#99017B&quot;</code></pre>
+</div>
+<p>From the viz, it is immediately obvious that average ratings are very heavily skewed to the right, with all LGAs having a ratings of more than 90, and the most common ratings between 94-98. There also appears to be a cluster of higher ratings in central Victoria.</p>
+<p><strong><em>Number of Listings</em></strong></p>
+<p>We had earlier started off the discussion for this section talking about the count of listings and its geographical spread visualized using the dot density map. Now, we revisit this variable. With the Choropleth, it is now neater and easier to distill the actual numbers even within the cluttered bay area around Melbourne. In this case, though, we are unable to use the ‘pretty’ style, as many the distribution has an extremely long right-tail, with one extreme outlier at Mornington Peninsular with more than 6000 listing in this one LGA alone.</p>
+<p>Thinking back, it was audacious thinking we can map 6000 dots altogether in that one small area using the dot density map.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='fu'>tmap_mode</span><span class='op'>(</span><span class='st'>"plot"</span><span class='op'>)</span>
+<span class='fu'>tm_shape</span><span class='op'>(</span><span class='va'>vic_sf_clean</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_polygons</span><span class='op'>(</span><span class='st'>"listing_count"</span>,
+              style<span class='op'>=</span><span class='st'>'fisher'</span>,
+              palette<span class='op'>=</span><span class='st'>'RdPu'</span>,
+              legend.hist<span class='op'>=</span><span class='cn'>T</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_layout</span><span class='op'>(</span>frame <span class='op'>=</span> <span class='cn'>FALSE</span>,
+            main.title<span class='op'>=</span><span class='st'>'Choropleth Map for Total Number of Listings in each LGA'</span>,
+            main.title.size <span class='op'>=</span> <span class='fl'>1</span>,
+            main.title.position <span class='op'>=</span> <span class='st'>"center"</span>,
+            legend.outside <span class='op'>=</span> <span class='cn'>T</span>,
+            legend.hist.width <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="assignment-jason-tey_files/figure-html5/unnamed-chunk-29-1.png" width="624" /></p>
+<pre><code>[1] &quot;#FDE4E1&quot; &quot;#FBBEBE&quot; &quot;#F87EA9&quot; &quot;#DB3196&quot; &quot;#99017B&quot;</code></pre>
+</div>
+<p><strong><em>Average Response Rate</em></strong></p>
+<p>Other than continuous raw data, rate variables such as average acceptance and response rates can also be ploted on the Choropleth, as with the example below for the latter.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='fu'>tmap_mode</span><span class='op'>(</span><span class='st'>"plot"</span><span class='op'>)</span>
+<span class='fu'>tm_shape</span><span class='op'>(</span><span class='va'>vic_sf_clean</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_polygons</span><span class='op'>(</span><span class='st'>"average_response_rate"</span>,
+              style<span class='op'>=</span><span class='st'>'fisher'</span>,
+              palette<span class='op'>=</span><span class='st'>'RdPu'</span>,
+              legend.hist<span class='op'>=</span><span class='cn'>T</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_layout</span><span class='op'>(</span>frame <span class='op'>=</span> <span class='cn'>FALSE</span>,
+            main.title<span class='op'>=</span><span class='st'>'Choropleth Map for Average Response Rates of all Listings in each LGA'</span>,
+            main.title.size <span class='op'>=</span> <span class='fl'>1</span>,
+            main.title.position <span class='op'>=</span> <span class='st'>"center"</span>,
+            legend.outside <span class='op'>=</span> <span class='cn'>T</span>,
+            legend.hist.width <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="assignment-jason-tey_files/figure-html5/unnamed-chunk-30-1.png" width="624" /></p>
+<pre><code>[1] &quot;#FDE4E1&quot; &quot;#FBBEBE&quot; &quot;#F87EA9&quot; &quot;#DB3196&quot; &quot;#99017B&quot;</code></pre>
+</div>
+<p>Similarly, we found an outlier in Western Victoria (West Wimmera) where response rates appears suspisciously lower than surrounding LGAs.</p>
+<p>To conclude this sub-section, there is hence a need for interactivity in the web-based application to be developed in order to support more diverse and robust analytical usage.</p>
+<h2 id="testing-and-prototyping-sub-module-2---geospatial-analysis">4.2: Testing and Prototyping Sub-module 2 - Geospatial Analysis</h2>
+<p>In the geospatial visualization above, we noticed some of the variables of interest such as the median price (around Melbourne bay area) and average ratings (in Central Victoria) appears to have some apparent clusters of high values. On the other hand, we also idenfitied some outliers such as the number of listings at the Mornington Peninsular and response rate in West Wimmera.</p>
+<p>How do we exactly justify whether these clusters and outliers are really there, statistically speaking? That is, how can we be sure that what appears to be a cluster of high values or outlier of apparent high value in low value areas are not due to randomness in the geospatial distribution of these variables? That is the thesis statement for this section - geospatial cluster and outlier analysis.</p>
+<p>A more in-depth discussion on the theoretical aspect of this topic can be found in Section 2.2 above. In this section, we will be prototyping both the Getis-Ord’s G z-score plots and the Anselin’s Local Moran’s I plots, using the <em>spdep</em> package. However, before we dive straight into the derivation of the spatial association indicators, we will first need to define the ‘<strong><em>neighbors</em></strong>’ that we need to consider when analyzing clusters and outliers.</p>
+<h3 id="patial-weights-choice-of-neighborhood">4.2.1 patial Weights: Choice of Neighborhood</h3>
+<p>There are several methods to deriving this neighbor list that would be needed subsequently to derive the spatial weight for spatial association analysis. Broadly speaking, there are two types of neighborhoods:</p>
+<ol type="1">
+<li><p><strong>Contiguity-based neighborhood</strong>, which considers neighboring polygons to be those that are in contact with a subject polygon. Using the international chess board as an analogy, two sub categories are considered, a) Queen’s case - which considers all immediate neighbors in all direction, and b) Rook’s case - which considers neigbors that share a line segment. The <strong><em>poly2nb</em></strong> function from the <strong>spdep</strong> package provides the calculation of these contiguity-based neighborhood spatial weights.</p></li>
+<li><p><strong>Distance-based neighborhood</strong>, which are constraints driven, considering neighbors as those within a given proximity threshold from a polygon centroid. Similarly, two sub categories are considered in this paper, a) K-nearest neighbors - which selects the k number of neighbors closest to the centroid of subject polygon, and b) Distance - which, as the name suggests, selects all neighbors within a pre-determined set of minimum (typically 0) and maximum distance. <strong><em>knn2b</em></strong> together with <strong><em>knearneigh</em></strong> as well as <strong><em>dnearneigh</em></strong> functions from the same spdep package are used to derive these neighbor lists.</p></li>
+</ol>
+<p>We start first with the Contiguity-based cases: the code is a simple one-liner. Where <em>queen</em> equals to True, the Queen’s case is considered; and when False, the Rook’s.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
