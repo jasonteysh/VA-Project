@@ -2071,6 +2071,10 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><a href="#sub-module-1---geospatial-visualization">4.1: Sub-module 1 - Geospatial Visualization</a>
 <ul>
 <li><a href="#dot-density-maps">4.1.1: Dot Density Maps</a></li>
+<li><a href="#proportional-symbol-map">4.1.2: Proportional Symbol Map</a></li>
+<li><a href="#cartogram">4.1.3: Cartogram</a></li>
+<li><a href="#choropleth-map">4.1.4: Choropleth Map</a></li>
+<li><a href="#further-discussion-and-prototyping-of-choropleth-map">4.1.5: Further Discussion and Prototyping of Choropleth Map</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -2397,6 +2401,143 @@ We keep the file size even smaller, by extracting just the LGA name, median pric
 </div>
 <p><img src="media/pic1.PNG"></p>
 <p><em>&lt;Note: screen grab of the interactive viz is used for the blog post to reduce run time - actual interactive viz can be accessed via Github link provided at the start of assignment&gt;</em></p>
+<p>From the dot density map above, we see a larger cluster of listing around the coastal area, in particular around the Melbourne area (note that while State and Local Government Area are available as pop-ups when clicked on a particular point, Melbourne, in this instance, is not an LGA and will not appear). Another observation, if zoomed in enough, is that other than major city centers, listings also tend to be more prevalent along major highways (appear as red lines on the OpenStreetMap) and fringes of national parks (green patches on the OpenStreetMap)</p>
+<p>Using the dot density map, we can easily and quickly visualize where the listings congregate in an area - in this case, the state of Victoria.</p>
+<p>However, one major flaw (that has also been discussed earlier) become obvious: the viz appears over crowded and very cluttered - even with a 30% transparency, the overlapping of data makes actual dot representation inaccurate as some dots are covered. This makes counting of dots near impossible - that is, if anyone even bothered to try.</p>
+<h3 id="proportional-symbol-map">4.1.2: Proportional Symbol Map</h3>
+<p>Proportion can be added to onto the dot density plot as we see above, to allow price - a continuous variable and our variable of interest - to enter as the size of the bubbles. In this case, we can continue to use the <a href="https://cran.r-project.org/web/packages/tmap/vignettes/tmap-getstarted.html#interactive-maps">tmap package</a>, but instead of a <em>tm_dot</em> layer for dot density, we use <em>tm_bubbles</em> to include size in each bubble.</p>
+<p>From there, we just have to change the <strong><em>size</em></strong> parameter to the “price” variable in order to have the proportion of the dots to represent price of each listing.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='fu'>tmap_mode</span><span class='op'>(</span><span class='st'>"view"</span><span class='op'>)</span>
+<span class='fu'>tm_shape</span><span class='op'>(</span><span class='va'>vic_sf</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>tm_bubbles</span><span class='op'>(</span>col<span class='op'>=</span><span class='st'>'#FF5A5F'</span>, size<span class='op'>=</span><span class='st'>"price"</span>, alpha<span class='op'>=</span><span class='fl'>0.3</span>,
+          popup.vars<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"State"</span><span class='op'>=</span><span class='st'>"region_parent_name"</span>,<span class='st'>"LGA"</span><span class='op'>=</span><span class='st'>"region_name"</span>,<span class='st'>"Price"</span><span class='op'>=</span><span class='st'>"price"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span>
+    <span class='fu'>tm_basemap</span><span class='op'>(</span><span class='st'>"OpenStreetMap"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p><img src="media/pic2.PNG"></p>
+<p><em>&lt;Note: screen grab of the interactive viz is used for the blog post to reduce run time - actual interactive viz can be accessed via Github link provided at the start of assignment&gt;</em></p>
+<p>We observe that the issue of over-crowding is even more pronounced in this viz - adding on price as the proportion for the dot symbols is in no way meaningful since the dots are too closely aggregated together. One possible solution is to separate dots manually - but given the large number of data points, it would not be practically feasible.</p>
+<p>Another plausible get-around is to use the LGA-aggregated sf dataframe to plot out the median price for each LGA.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='fu'>tmap_mode</span><span class='op'>(</span><span class='st'>"view"</span><span class='op'>)</span>
+<span class='fu'>tm_shape</span><span class='op'>(</span><span class='va'>vic_sf_clean</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>tm_bubbles</span><span class='op'>(</span>col<span class='op'>=</span><span class='st'>'#FF5A5F'</span>, size<span class='op'>=</span><span class='st'>"median_price"</span>, alpha<span class='op'>=</span><span class='fl'>0.3</span>,
+          popup.vars<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"State"</span><span class='op'>=</span><span class='st'>"STE_NAME16"</span>,<span class='st'>"LGA"</span><span class='op'>=</span><span class='st'>"LGA_NAME20"</span>,<span class='st'>"Price"</span><span class='op'>=</span><span class='st'>"median_price"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_basemap</span><span class='op'>(</span><span class='st'>"OpenStreetMap"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p><img src="media/pic3.PNG"></p>
+<p><em>&lt;Note: screen grab of the interactive viz is used for the blog post to reduce run time - actual interactive viz can be accessed via Github link provided at the start of assignment&gt;</em></p>
+<p>While cleaner and more tidy. this version sacrifices the intuitive observation on areas with large number of listings that we get from the dot density with proportional symbol version. The key limitation of proportional symbol maps is also made obvious in this iteration - it is difficult to make a fair judgement on the relative size of the dots visually.</p>
+<p>Given the visual practicality and in consideration of the data we have on hand in this use case, dot density, dot density with proprtional symbol, and proportional symbol maps are all suboptimal in creating accurate and effective visual analysis.</p>
+<p>We next move on to explore Cartograms.</p>
+<h3 id="cartogram">4.1.3: Cartogram</h3>
+<p>Unlike the earlier two viz types that has been explored, Cartograms require a separate package - <strong><em>“cartogram”</em></strong> - to help create the visualization. The <a href="https://cran.r-project.org/web/packages/cartogram/cartogram.pdf">cartogram package</a> also offers both the contiguous and non-contiguous viz, and requires the base mapping from <em>tmap</em> to map out the cartogram created using the package.</p>
+<p>We first explore the <strong>contiguous cartogram</strong>. Before we proceed to create the cartogram, we first need to transform the second-level cleaned LGA-aggregated sf dataframe onto a map layer using an EPSG that projects the data coordinates. Only with this projected map layer, <em>vic_price_cart</em>, can we then proceed to create the cartogram. Creation of the cartogram is a simple one-liner - see <em>vic_cart</em> object below using the <em>cartogram_cont</em> command from the cartogram package (we set a max iteration of 5 for this trial run but it can easily be adjusted if need be).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='co'># transform sf into sf with projections </span>
+<span class='va'>vic_price_cart</span> <span class='op'>&lt;-</span> <span class='fu'>st_transform</span><span class='op'>(</span><span class='va'>vic_median_price</span>,<span class='fu'>CRS</span><span class='op'>(</span><span class='st'>"+init=epsg:3395"</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'># Creating contiguous cartogram</span>
+<span class='va'>vic_cart</span> <span class='op'>&lt;-</span> <span class='fu'>cartogram_cont</span><span class='op'>(</span><span class='va'>vic_price_cart</span>, <span class='st'>"median_price"</span>, itermax <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Thereafter, we plot the cartogram using the tmap package codes. <em>(Note, we disable to ‘view’ mode and use ‘plot’ for the rest of the iterations in this section to save space).</em> In the tmap plot, we use the distorted contiguous cartogram map layer as the base shape, add on polygons which takes the median price variable as the color for the polygons, and adopt the “pretty’” style for the classification methods (more on this in later segment), and use the “RdPu” palette for the colors where darker shades of purple corresponds to a higher median price for the LGA. Lastly, we add on a tm_layout command to format the displayed viz, adding a title (and arranging its position), removing a frame for the map, and fixing the legend to the top right.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='fu'>tmap_mode</span><span class='op'>(</span><span class='st'>'plot'</span><span class='op'>)</span>
+<span class='fu'>tm_shape</span><span class='op'>(</span><span class='va'>vic_cart</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'>tm_polygons</span><span class='op'>(</span><span class='st'>"median_price"</span>, style <span class='op'>=</span> <span class='st'>"pretty"</span>, palette<span class='op'>=</span><span class='st'>'RdPu'</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>tm_layout</span><span class='op'>(</span>frame <span class='op'>=</span> <span class='cn'>FALSE</span>,
+            main.title<span class='op'>=</span><span class='st'>'Contiguous Cartogram for Median Price of Listings in each LGA'</span>,
+            main.title.size <span class='op'>=</span> <span class='fl'>1</span>,
+            main.title.position <span class='op'>=</span> <span class='st'>"center"</span>,
+            legend.position <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"right"</span>, <span class='st'>"top"</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="assignment-jason-tey_files/figure-html5/unnamed-chunk-19-1.png" width="624" /></p>
+</div>
+<p>The distorted contiguous catogram above ’<em>inflates</em>’LGAs where median prices are proportionately larger than their geographic size, and <em>deflates</em> LGA for the opposite. In the above map, it is observed that areas around the bay area near Melbourne are having inflated areas (this is despite the fact that many of their median prices are not exceptionally high relative to other LGAs with deeper shades of purple).</p>
+<p>However, as noted earlier in Section 2, there is no easy way in contiguous cartogram to know which of the LGAs has a larger distortion relative to another LGA, especially if viewers are not entirely familiar with the original shape and size of the geographical area. Without prior knowledge of how the LGAs are spread out in the Victoria state, it is difficult to draw immediate insights from the cartogram above, and even if viewers are familiar, comparison of proportionate distortion is challenging.</p>
+<p>We next try out a non-contiguous cartogram prototype, where we have a base map, and the LGA outline overlay is deflated proportional to the median price of the area. Similarly, we start first by creating a non-contiguous cartogram polygons using the cartogram package, this time using the <em>cartogram_ncont</em> command.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='co'># Non-contiguous cartogram</span>
+<span class='va'>vic_ncont</span> <span class='op'>&lt;-</span> <span class='fu'>cartogram_ncont</span><span class='op'>(</span><span class='va'>vic_price_cart</span>, <span class='st'>"median_price"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Similar to the contiguous version, we use the tmap package to run the map layers, except this time round, we set the base map of Victoria as the outline with borders, then include the non-contiguous polygons we have created above as the shape, then let the median price take color within the non-contiguous polygons. The rest of the set up remains the same.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='fu'>tmap_mode</span><span class='op'>(</span><span class='st'>'plot'</span><span class='op'>)</span>
+<span class='fu'>tm_shape</span><span class='op'>(</span><span class='va'>vic_price_cart</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'>tm_borders</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>tm_shape</span><span class='op'>(</span><span class='va'>vic_ncont</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'>tm_polygons</span><span class='op'>(</span><span class='st'>"median_price"</span>, style <span class='op'>=</span> <span class='st'>"pretty"</span>, palette<span class='op'>=</span><span class='st'>'RdPu'</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>tm_layout</span><span class='op'>(</span>frame <span class='op'>=</span> <span class='cn'>FALSE</span>,
+            main.title<span class='op'>=</span><span class='st'>'Non-Contiguous Cartogram for Median Price of Listings in each LGA'</span>,
+            main.title.size <span class='op'>=</span> <span class='fl'>1</span>,
+            main.title.position <span class='op'>=</span> <span class='st'>"center"</span>,
+            legend.position <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"right"</span>, <span class='st'>"top"</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="assignment-jason-tey_files/figure-html5/unnamed-chunk-21-1.png" width="624" /></p>
+</div>
+<p>Observations are similar to the contiguous version, but this time we do not have to depend on inherent knowledge of the original boundaries, shapes, and sizes of the LGAs within Victoria. However, the issue of comparability and data extraction remains. While knowing the median price proportional to the geographical size of the LGA may be interesting, it is (as discussed in Section 2), perhaps a gimmick at best and worse, a distraction from other more useful information (imagine viewers start spending unnecessary amount of time trying to compare the proportion of the cartogram polygons).</p>
+<p>While fun, the cartogram may not be the best package to use and the two versions of visualization above may not be the best option for clear display of information.</p>
+<p>We next shift our attention to the wildly popular Choropleth.</p>
+<h3 id="choropleth-map">4.1.4: Choropleth Map</h3>
+<p>Plotting out a Choropleth map is actually rather straightforward - we have in fact already dabbled with it earlier as part of the cartogram creation process. Same thing, we use tm_shape to map out the underlying base map, then we add on a tm_polygons layer, with median price as the variable and keeping other format settings similar to what we had done earlier.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='fu'>tmap_mode</span><span class='op'>(</span><span class='st'>"plot"</span><span class='op'>)</span>
+<span class='fu'>tm_shape</span><span class='op'>(</span><span class='va'>vic_sf_clean</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_polygons</span><span class='op'>(</span><span class='st'>"median_price"</span>,
+              style<span class='op'>=</span><span class='st'>'pretty'</span>,
+              palette<span class='op'>=</span><span class='st'>'RdPu'</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_layout</span><span class='op'>(</span>frame <span class='op'>=</span> <span class='cn'>FALSE</span>,
+            main.title<span class='op'>=</span><span class='st'>'Choropleth Map for Median Price of Listings in each LGA'</span>,
+            main.title.size <span class='op'>=</span> <span class='fl'>1</span>,
+            main.title.position <span class='op'>=</span> <span class='st'>"center"</span>,
+            legend.position <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"right"</span>, <span class='st'>"top"</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="assignment-jason-tey_files/figure-html5/unnamed-chunk-22-1.png" width="624" /></p>
+</div>
+<p>With the Choropleth, we have a neater and tidier visualization of the median price of each LGA, and hence, lesser distraction than the cartogram iterations.</p>
+<p>In fact, it is possible to combined proportional symbols onto a choropleth to include another dimension of analysis into the viz. We simply have to add in a tm_symbol layer, as we did below, adding average rating for listings within the LGA, corresponding to the size of the square. Indeed, we can even include other categorical or numerical (with small number of value classes) by assigning them to the shape or color parameters to present even multi-dimensional information.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre><code><span class='fu'>tmap_mode</span><span class='op'>(</span><span class='st'>"plot"</span><span class='op'>)</span>
+<span class='fu'>tm_shape</span><span class='op'>(</span><span class='va'>vic_sf_clean</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_polygons</span><span class='op'>(</span><span class='st'>"median_price"</span>,
+              style<span class='op'>=</span><span class='st'>'pretty'</span>,
+              palette<span class='op'>=</span><span class='st'>'RdPu'</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_symbols</span><span class='op'>(</span>size<span class='op'>=</span><span class='st'>"average_rating"</span>,
+             shape<span class='op'>=</span><span class='fl'>22</span>,
+             alpha<span class='op'>=</span><span class='fl'>0.3</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>tm_layout</span><span class='op'>(</span>frame <span class='op'>=</span> <span class='cn'>FALSE</span>,
+            main.title<span class='op'>=</span><span class='st'>'Choropleth Map for Median Price of Listings \n with Proportional Symbols for Average Ratings in each LGA'</span>,
+            main.title.size <span class='op'>=</span> <span class='fl'>1</span>,
+            main.title.position <span class='op'>=</span> <span class='st'>"center"</span>,
+            legend.position <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"right"</span>, <span class='st'>"top"</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="assignment-jason-tey_files/figure-html5/unnamed-chunk-23-1.png" width="624" /></p>
+</div>
+<p>However, as evident above, the problem of overcrowding and difficulty in comparison and extracting of precise information resurfaces in this iteration. Having more may really mean less in this case: having more data ink that are unhelpful in fact reduces readability.</p>
+<p>In view of the above discussion, it can be concluded that a plain Choropleth would make the best geographical visualization of the variable of interest.</p>
+<h3 id="further-discussion-and-prototyping-of-choropleth-map">4.1.5: Further Discussion and Prototyping of Choropleth Map</h3>
+<h4 id="classification-methods---converting-continuous-numerical-data-to-discrete-class-intervals-with-different-styles">Classification Methods - Converting Continuous Numerical Data to Discrete Class Intervals with Different Styles</h4>
+<p><strong><em>Pretty</em></strong></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->

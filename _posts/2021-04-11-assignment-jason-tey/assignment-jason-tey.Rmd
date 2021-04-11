@@ -357,3 +357,171 @@ tm_shape(vic_sf) +
 
 *<Note: screen grab of the interactive viz is used for the blog post to reduce run time - actual interactive viz can be accessed via Github link provided at the start of assignment>*
 
+From the dot density map above, we see a larger cluster of listing around the coastal area, in particular around the Melbourne area (note that while State and Local Government Area are available as pop-ups when clicked on a particular point, Melbourne, in this instance, is not an LGA and will not appear). Another observation, if zoomed in enough, is that other than major city centers, listings also  tend to be more prevalent along major highways (appear as red lines on the OpenStreetMap) and fringes of national parks (green patches on the OpenStreetMap)  
+
+Using the dot density map, we can easily and quickly visualize where the listings congregate in an area - in this case, the state of Victoria. 
+
+However, one major flaw (that has also been discussed earlier) become obvious: the viz appears over crowded and very cluttered - even with a 30% transparency, the overlapping of data makes actual dot representation inaccurate as some dots are covered. This makes counting of dots near impossible - that is, if anyone even bothered to try.  
+
+
+### 4.1.2: Proportional Symbol Map  
+
+Proportion can be added to onto the dot density plot as we see above, to allow price - a continuous variable and our variable of interest - to enter as the size of the bubbles. In this case, we can continue to use the [tmap package](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-getstarted.html#interactive-maps), but instead of a *tm_dot* layer for dot density, we use *tm_bubbles* to include size in each bubble.  
+
+From there, we just have to change the ***size*** parameter to the "price" variable in order to have the proportion of the dots to represent price of each listing.  
+
+```{r, results='hide', eval=FALSE}
+
+tmap_mode("view")
+tm_shape(vic_sf) +
+  tm_bubbles(col='#FF5A5F', size="price", alpha=0.3,
+          popup.vars=c("State"="region_parent_name","LGA"="region_name","Price"="price"))+
+    tm_basemap("OpenStreetMap")
+
+
+```
+
+<img src="C:\ISSS608 Visualization Analytics\VA Project\_posts\2021-04-11-assignment-jason-tey\media\pic2.PNG">  
+
+*<Note: screen grab of the interactive viz is used for the blog post to reduce run time - actual interactive viz can be accessed via Github link provided at the start of assignment>*
+
+We observe that the issue of over-crowding is even more pronounced in this viz - adding on price as the proportion for the dot symbols is in no way meaningful since the dots are too closely aggregated together. One possible solution is to separate dots manually - but given the large number of data points, it would not be practically feasible.  
+
+Another plausible get-around is to use the LGA-aggregated sf dataframe to plot out the median price for each LGA.  
+
+```{r, results='hide', eval=FALSE}
+
+tmap_mode("view")
+tm_shape(vic_sf_clean) +
+  tm_bubbles(col='#FF5A5F', size="median_price", alpha=0.3,
+          popup.vars=c("State"="STE_NAME16","LGA"="LGA_NAME20","Price"="median_price"))+
+  tm_basemap("OpenStreetMap")
+
+
+```
+
+<img src="C:\ISSS608 Visualization Analytics\VA Project\_posts\2021-04-11-assignment-jason-tey\media\pic3.PNG">   
+
+*<Note: screen grab of the interactive viz is used for the blog post to reduce run time - actual interactive viz can be accessed via Github link provided at the start of assignment>*  
+
+While cleaner and more tidy. this version sacrifices the intuitive observation on areas with large number of listings that we get from the dot density with proportional symbol version. The key limitation of proportional symbol maps is also made obvious in this iteration - it is difficult to make a fair judgement on the relative size of the dots visually.  
+
+Given the visual practicality and in consideration of the data we have on hand in this use case, dot density, dot density with proprtional symbol, and proportional symbol maps are all suboptimal in creating accurate and effective visual analysis.  
+
+We next move on to explore Cartograms.  
+
+
+### 4.1.3: Cartogram  
+
+Unlike the earlier two viz types that has been explored, Cartograms require a separate package - ***"cartogram"*** - to help create the visualization. The [cartogram package](https://cran.r-project.org/web/packages/cartogram/cartogram.pdf) also offers both the contiguous and non-contiguous viz, and requires the base mapping from *tmap* to map out the cartogram created using the package.   
+
+We first explore the **contiguous cartogram**. Before we proceed to create the cartogram, we first need to transform the second-level cleaned LGA-aggregated sf dataframe onto a map layer using an EPSG that projects the data coordinates. Only with this projected map layer, *vic_price_cart*, can we then proceed to create the cartogram. Creation of the cartogram is a simple one-liner - see *vic_cart* object below using the *cartogram_cont* command from the cartogram package (we set a max iteration of 5 for this trial run but it can easily be adjusted if need be).  
+
+```{r}
+
+# transform sf into sf with projections 
+vic_price_cart <- st_transform(vic_median_price,CRS("+init=epsg:3395"))
+
+# Creating contiguous cartogram
+vic_cart <- cartogram_cont(vic_price_cart, "median_price", itermax = 5)
+```
+
+
+Thereafter, we plot the cartogram using the tmap package codes. *(Note, we disable to 'view' mode and use 'plot' for the rest of the iterations in this section to save space).* In the tmap plot, we use the distorted contiguous cartogram map layer as the base shape, add on polygons which takes the median price variable as the color for the polygons, and adopt the "pretty'" style for the classification methods (more on this in later segment), and use the "RdPu" palette for the colors where darker shades of purple corresponds to a higher median price for the LGA. Lastly, we add on a tm_layout command to format the displayed viz, adding a title (and arranging its position), removing a frame for the map, and fixing the legend to the top right.  
+
+
+```{r, results='markup'}
+tmap_mode('plot')
+tm_shape(vic_cart) + 
+  tm_polygons("median_price", style = "pretty", palette='RdPu') +
+  tm_layout(frame = FALSE,
+            main.title='Contiguous Cartogram for Median Price of Listings in each LGA',
+            main.title.size = 1,
+            main.title.position = "center",
+            legend.position = c("right", "top"))
+```
+
+
+The distorted contiguous catogram above '*inflates*'LGAs where median prices are proportionately larger than their geographic size, and *deflates* LGA for the opposite. In the above map, it is observed that areas around the bay area near Melbourne are having inflated areas (this is despite the fact that many of their median prices are not exceptionally high relative to other LGAs with deeper shades of purple).   
+
+However, as noted earlier in Section 2, there is no easy way in contiguous cartogram to know which of the LGAs has a larger distortion relative to another LGA, especially if viewers are not entirely familiar with the original shape and size of the geographical area. Without prior knowledge of how the LGAs are spread out in the Victoria state, it is difficult to draw immediate insights from the cartogram above, and even if viewers are familiar, comparison of proportionate distortion is challenging.  
+
+We next try out a non-contiguous cartogram prototype, where we have a base map, and the LGA outline overlay is deflated proportional to the median price of the area. Similarly, we start first by creating a non-contiguous cartogram polygons using the cartogram package, this time using the *cartogram_ncont* command.  
+
+```{r}
+# Non-contiguous cartogram
+vic_ncont <- cartogram_ncont(vic_price_cart, "median_price")
+```
+
+Similar to the contiguous version, we use the tmap package to run the map layers, except this time round, we set the base map of Victoria as the outline with borders, then include the non-contiguous polygons we have created above as the shape, then let the median price take color within the non-contiguous polygons. The rest of the set up remains the same.  
+
+```{r, results='markup'}
+tmap_mode('plot')
+tm_shape(vic_price_cart) + 
+  tm_borders() +
+  tm_shape(vic_ncont) + 
+  tm_polygons("median_price", style = "pretty", palette='RdPu') +
+  tm_layout(frame = FALSE,
+            main.title='Non-Contiguous Cartogram for Median Price of Listings in each LGA',
+            main.title.size = 1,
+            main.title.position = "center",
+            legend.position = c("right", "top"))
+```
+
+
+Observations are similar to the contiguous version, but this time we do not have to depend on inherent knowledge of the original boundaries, shapes, and sizes of the LGAs within Victoria. However, the issue of comparability and data extraction remains. While knowing the median price proportional to the geographical size of the LGA may be interesting, it is (as discussed in Section 2), perhaps a gimmick at best and worse, a distraction from other more useful information (imagine viewers start spending unnecessary amount of time trying to compare the proportion of the cartogram polygons).  
+
+While fun, the cartogram may not be the best package to use and the two versions of visualization above may not be the best option for clear display of information.  
+
+We next shift our attention to the wildly popular Choropleth.  
+
+
+### 4.1.4: Choropleth Map  
+
+Plotting out a Choropleth map is actually rather straightforward - we have in fact already dabbled with it earlier as part of the cartogram creation process. Same thing, we use tm_shape to map out the underlying base map, then we add on a tm_polygons layer, with median price as the variable and keeping other format settings similar to what we had done earlier.  
+
+```{r, results='markup'}
+tmap_mode("plot")
+tm_shape(vic_sf_clean)+
+  tm_polygons("median_price",
+              style='pretty',
+              palette='RdPu')+
+  tm_layout(frame = FALSE,
+            main.title='Choropleth Map for Median Price of Listings in each LGA',
+            main.title.size = 1,
+            main.title.position = "center",
+            legend.position = c("right", "top"))
+```
+
+With the Choropleth, we have a neater and tidier visualization of the median price of each LGA, and hence, lesser distraction than the cartogram iterations.  
+
+In fact, it is possible to combined proportional symbols onto a choropleth to include another dimension of analysis into the viz. We simply have to add in a tm_symbol layer, as we did below, adding average rating for listings within the LGA, corresponding to the size of the square. Indeed, we can even include other categorical or numerical (with small number of value classes) by assigning them to the shape or color parameters to present even multi-dimensional information.  
+
+
+```{r, results='markup'}
+tmap_mode("plot")
+tm_shape(vic_sf_clean)+
+  tm_polygons("median_price",
+              style='pretty',
+              palette='RdPu')+
+  tm_symbols(size="average_rating",
+             shape=22,
+             alpha=0.3)+
+  tm_layout(frame = FALSE,
+            main.title='Choropleth Map for Median Price of Listings \n with Proportional Symbols for Average Ratings in each LGA',
+            main.title.size = 1,
+            main.title.position = "center",
+            legend.position = c("right", "top"))
+
+```
+
+However, as evident above, the problem of overcrowding and difficulty in comparison and extracting of precise information resurfaces in this iteration. Having more may really mean less in this case: having more data ink that are unhelpful in fact reduces readability.  
+
+In view of the above discussion, it can be concluded that a plain Choropleth would make the best geographical visualization of the variable of interest.  
+
+
+### 4.1.5: Further Discussion and Prototyping of Choropleth Map  
+
+#### Classification Methods - Converting Continuous Numerical Data to Discrete Class Intervals with Different Styles  
+
+***Pretty***  
