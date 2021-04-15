@@ -1,16 +1,17 @@
 ---
-title: Short Paper
+title: Understanding Airbnb listings in Australia
 author:
-  - name: Alice Anonymous
-    email: alice@example.com
-    affiliation: Some Institute of Technology
-  - name: Bob Security
-    email: bob@example.com
-    affiliation: Another University
+  - name: Louelle Teo Fengmin
+    email: louelle.teo.2020@mitb.smu.edu.sg
+    affiliation: Singapore Management University
+  - name: Jason Tey Shou Heng
+    email: jason.tey.2020@mitb.smu.edu.sg
+    affiliation: Singapore Management University
+  - name: Wong Kian Hoong
+    email: kh.wong.2020@mitb.smu.edu.sg
+    affiliation: Singapore Management University
 abstract: |
-  This is the abstract.
-
-  It consists of two paragraphs.
+  The abundance of Airbnb data provides great opportunity to conduct a variety of data analyses to understand the residential short-lease rental market. The dataset that has be scrapped on the Airbnb web and made publicly available by Inside Airbnb provides geospatial, textual, and quantitative data on each of the listings listed on the web. This project provides an analytics platform for interested parties (especially non-data specialists) to conduct exploratory spatial data, text, cluster, and regression analysis on the Australia Airbnb dataset using simple and user-friendly interactive dashboards that does not require programming knowledge.
 bibliography: sigproc.bib
 csl: acm-sig-proceedings.csl
 output: rticles::acm_article
