@@ -80,7 +80,7 @@ With the above filter selections, the word cloud created is shown below.
 
 The size of the font represents the relative frequency of the word in the description section of  Airbnb listings that fall in the category of the filter settings above (the word in the largest font is the most common word). It is not unexpected that the word "victoria" is the most common word in this word cloud, since the region in question here is Victoria. Some other common words are "kitchen", "park", "privat" (private), "bed, "bedroom", and "walk".
 
-This would suggest that these words are common in the descriptions that hosts write about their listings, and these listings garner review score ratings of 91 and above, which is the highest decile of review scores. Thus for an Airbnb host who aims to obtain review score ratings within that range, they should include these words into their descriptions. Of course, the accommodation itself should actually offer these facilities so as not to dissapoint the guest, which would expectly lead to lower rating scores.
+This would suggest that these words are common in the descriptions that hosts write about their listings, and these listings garner review score ratings of 91 and above, which is the highest decile of review scores. Thus for an Airbnb host who aims to obtain review score ratings within that range, they should include these words into their descriptions. Of course, the accommodation itself should actually offer these facilities so as not to dissapoint the guest, which would expectedly lead to lower rating scores.
 
 ### Topic modelling using Latent Dirichlet Allocation
 The next visualisation is a topic modeling technique. Topic modeling is an unsupervised machine learning technique that detects word and phrase patterns in documents and clusters them into groups known as topics.
@@ -95,7 +95,11 @@ With the above filter selections, the topic model is shown below.
 
 ![LDA topic modelling](images/topicmodel1.png)
 
-The size of the font represents the relative frequency of the word in the description section of  Airbnb listings that fall in the category of the filter settings above (the word in the largest font is the most common word). It is not unexpected that the word "victoria" is the most common word in this word cloud, since the region in question here is Victoria. Some other common words are "kitchen", "park", "privat" (private), "bed, "bedroom", and "walk".
+The bar beside the corresponding word represents the probability (beta) of that word appearing in that particular topic. The longer the bar, the higher the probability.
+
+Based on the top words in each topic we can identify the following topics:
+
+- Topic 1: 
 
 This would suggest that these words are common in the descriptions that hosts write about their listings, and these listings garner review score ratings of 91 and above, which is the highest decile of review scores. Thus for an Airbnb host who aims to obtain review score ratings within that range, they should include these words into their descriptions. Of course, the accommodation itself should actually offer these facilities so as not to dissapoint the guest, which would expectly lead to lower rating scores.
 
