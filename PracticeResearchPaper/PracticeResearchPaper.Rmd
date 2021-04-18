@@ -42,7 +42,7 @@ Across all the studies examined, including Gupta’s Shiny app, there are no pro
 
 Another gap that is found across all study and one of the most major flaw considering the wealth of information provided by the datasets. None of the study offered options to, for example, zoom in on a particular sub-region, or to filter out whether a hosts is a superhost, or to subset data based on a range of prices. These are useful features that could tremendously enhance the usefulness of the analysis
 
-#Review of past works
+# Review of past works
 _(Review and critique on past works)_
 The data offered by Inside Airbnb are split into several different data sets - this assignment will be focusing on the listings file, which provides detailed data from individual listings put up on the AirBnb database. Information provided includes hosts details, response data, listing information (e.g. price, number of beds, property type, maximum nights), and review scores.
 
@@ -70,10 +70,41 @@ _(A detail description of the design principles used and data visualisation elem
 # Demonstration
 _(Use case)_
 
-#Discussion
+## Sentiment Analysis
+Sentiment analysis with this app consists of a word cloud and topic modelling using Latent Dirichlet Allocation (LDA). This demonstration, the region of Victoria, Australia, is selected. The review scores range of 91 to 100 is also selected.
+
+### Word Cloud
+With the above filter selections, the word cloud created is shown below.
+
+![Word Cloud](images/wordcloud1.png)
+
+The size of the font represents the relative frequency of the word in the description section of  Airbnb listings that fall in the category of the filter settings above (the word in the largest font is the most common word). It is not unexpected that the word "victoria" is the most common word in this word cloud, since the region in question here is Victoria. Some other common words are "kitchen", "park", "privat" (private), "bed, "bedroom", and "walk".
+
+This would suggest that these words are common in the descriptions that hosts write about their listings, and these listings garner review score ratings of 91 and above, which is the highest decile of review scores. Thus for an Airbnb host who aims to obtain review score ratings within that range, they should include these words into their descriptions. Of course, the accommodation itself should actually offer these facilities so as not to dissapoint the guest, which would expectly lead to lower rating scores.
+
+### Topic modelling using Latent Dirichlet Allocation
+The next visualisation is a topic modeling technique. Topic modeling is an unsupervised machine learning technique that detects word and phrase patterns in documents and clusters them into groups known as topics.
+
+Latent Dirichlet Allocation (LDA) is one common topic modeling technique. The basic assumption of LDA is that similar topics make use of similar words (i.e. distributional hypothesis). The purpose of LDA is to map the corpus to topics covering a significant number of words in the documents in the corpus.
+
+LDA assigns topics to arrangements of words for example, the best word for a topic related to accommodation. This is based on the assumption that documents are written with a certain arrangement of words and that those arrangements will determine the topics. LDA assumes that all words in the document can be assigned a probability of belonging to a topic. As such, the goal of LDA is to determine the mixture of topics that a document contains.
+
+Similar to the word cloud,the region of Victoria, Australia, is selected with the review scores range of 91 to 100. The number of topics to be identified is three, with the top ten words of each topic presented in the visualisation.
+
+With the above filter selections, the topic model is shown below.
+
+![LDA topic modelling](images/topicmodel1.png)
+
+The size of the font represents the relative frequency of the word in the description section of  Airbnb listings that fall in the category of the filter settings above (the word in the largest font is the most common word). It is not unexpected that the word "victoria" is the most common word in this word cloud, since the region in question here is Victoria. Some other common words are "kitchen", "park", "privat" (private), "bed, "bedroom", and "walk".
+
+This would suggest that these words are common in the descriptions that hosts write about their listings, and these listings garner review score ratings of 91 and above, which is the highest decile of review scores. Thus for an Airbnb host who aims to obtain review score ratings within that range, they should include these words into their descriptions. Of course, the accommodation itself should actually offer these facilities so as not to dissapoint the guest, which would expectly lead to lower rating scores.
+
+
+
+# Discussion
 _(What has the audience learned from your work? What new insights or practices has your system enabled? A full blown user study is not expected, but informal observations of use that help evaluate your system are encouraged.)_
 
-#Future Work
+# Future Work
 _(A description of how your system could be extended or refined.)_
 
 # Conclusion

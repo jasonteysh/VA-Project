@@ -35,7 +35,7 @@ Select the range of review scores rating that you would like to focus on. By def
 
 You can also select which region of Australia you want to focus on.
 
-The word cloud will be generated. The size of the font represents the relative frequency of the word in the description section of the Airbnb listing (the word in the largest font is the most common word).
+The word cloud will be generated. The size of the font represents the relative frequency of the word in the description section of  Airbnb listings that fall in the category of the filter settings above (the word in the largest font is the most common word).
 
 ![](images/wordcloud1.png){width=60%}
 
