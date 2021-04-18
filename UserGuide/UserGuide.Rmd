@@ -1,0 +1,60 @@
+---
+title: User Guide - Understanding Airbnb listings in Australia
+author:
+  - name: Louelle Teo Fengmin
+    email: louelle.teo.2020@mitb.smu.edu.sg
+    affiliation: Singapore Management University
+  - name: Jason Tey Shou Heng
+    email: jason.tey.2020@mitb.smu.edu.sg
+    affiliation: Singapore Management University
+  - name: Wong Kian Hoong
+    email: kh.wong.2020@mitb.smu.edu.sg
+    affiliation: Singapore Management University
+output: html_document
+---
+
+```{r, include=FALSE}
+options(tinytex.verbose = TRUE)
+```
+
+# Introduction Page
+Lorem ipsum
+
+# Exploratory Data Analysis (EDA)
+Lorem ipsum
+
+# Geospatial Data Visualization and Analysis
+Lorem ipsum
+
+# Sentiment Analysis
+The semtiment analysis module of this Shiny app includes two analysis models: a word cloud and a topic model.
+
+## Word Cloud</br>
+
+Select the range of review scores rating that you would like to focus on. By default, all scores are selected.
+
+You can also select which region of Australia you want to focus on.
+
+The word cloud will be generated. The size of the font represents the relative frequency of the word in the description section of the Airbnb listing (the word in the largest font is the most common word).
+
+![](images/wordcloud1.png){width=60%}
+
+## Topic Modelling</br>
+
+Topic modeling is an unsupervised machine learning technique that detects word and phrase patterns in documents and clusters them into groups known as topics.
+
+Latent Dirichlet Allocation (LDA) is one common topic modeling technique. The basic assumption of LDA is that similar topics make use of similar words (i.e. distributional hypothesis). The purpose of LDA is to map the corpus to topics covering a significant number of words in the documents in the corpus.
+
+LDA assigns topics to arrangements of words for example, the best word for a topic related to accommodation. This is based on the assumption that documents are written with a certain arrangement of words and that those arrangements will determine the topics. LDA assumes that all words in the document can be assigned a probability of belonging to a topic. As such, the goal of LDA is to determine the mixture of topics that a document contains.
+
+Similar to the word cloud, select the range of review scores rating that you would like to focus on. By default, all scores are selected.
+
+You can also select which region of Australia you want to focus on.
+
+In addition, select how many topics you want to be identified. By default, the number of topics is 3.
+
+Next, select the number of words you want presented in each topic. The default number of words is 10.
+
+The LDA topic model will be generated. The bar beside the corresponding word represents the probability (beta) of that word appearing in that particular topic. The longer the bar, the higher the probability.
+
+![](images/topicmodel1.png){width=60%}
