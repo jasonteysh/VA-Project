@@ -109,3 +109,19 @@ Next, select the number of words you want presented in each topic. The default n
 The LDA topic model will be generated. The bar beside the corresponding word represents the probability (beta) of that word appearing in that particular topic. The longer the bar, the higher the probability.
 
 ![](images/topicmodel1.png){width=60%}
+
+# Multiple Linear Regression
+
+## Regression for Price
+
+- Click on *"Independent Variables:"* to choose the multiple variables that you would like to apply in the Multiple Linear Regression (MLR). The choices of variables could be influenced through the correlation plot found in the EDA. It is better to choose variables with low correlation with each other.
+- Click on *"Strategies of Stepwise:"* to choose whether the MLR will move in a *"Forward", "Backward",* or *"Stepwise"* direction.
+
+The *"Regression Summary"* showcases the MLR calculation and gives us an indication of the significance of each variable in the regression with respect to *"Price"*.
+
+## Regression for Review Score Ratings
+
+- Click on *"Independent Variables:"* to choose the multiple variables that you would like to apply in the Multiple Linear Regression (MLR). The choices of variables could be influenced through the correlation plot found in the EDA. It is better to choose variables with low correlation with each other.
+- Click on *"Strategies of Stepwise:"* to choose whether the MLR will move in a *"Forward", "Backward",* or *"Stepwise"* direction.
+
+The *"Regression Summary"* showcases the MLR calculation and gives us an indication of the significance of each variable in the regression with respect to *"Review Score Ratings"*.
