@@ -73,7 +73,7 @@ The application makes use of the R stastical language which is open-source and o
 4. Offer interactive features for easy use.
 
 ## Data Preparation
-All data preparation was performing using R in the RStudio IDE.
+All data preparation was performing using R in the RStudio IDE. This included dropping columns from the data set that were irrelevant for the scope of our research, converting columns into the appropriate data types, and imputing NA values where appropriate.
 
 # Demonstration
 _(Use case)_
