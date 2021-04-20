@@ -13,7 +13,7 @@ author:
 abstract: |
   _(abstract of not more than 300 words)_
   
-  The abundance of Airbnb data provides great opportunity to conduct a variety of data analyses to understand the residential short-lease rental market. The dataset that has be scrapped on the Airbnb web and made publicly available by Inside Airbnb provides geospatial, textual, and quantitative data on each of the listings listed on the web. This project provides an analytics platform for interested parties (especially non-data specialists) to conduct exploratory spatial data, text, cluster, and regression analysis on the Australia Airbnb dataset using simple and user-friendly interactive dashboards that does not require programming knowledge.
+  The abundance of Airbnb data provides great opportunity to conduct a variety of data analyses to understand the residential short-lease rental market. Most publicly available analysis tools of Airbnb data do not have much interavtive features and are therefore necessarily very narrow in thier scope of analysis. This project provides an analytics platform for interested parties (especially non-data specialists) to conduct exploratory spatial data, text, cluster, and regression analysis on the Australia Airbnb dataset use simple and user-friendly interactive dashboards that does not require programming knowledge. Another advantage of incorporating interactivity is that the dashboard does not need to have a very limited scope of analysis. With a larger scope, 
 bibliography: sigproc.bib
 csl: acm-sig-proceedings.csl
 output: rticles::acm_article
@@ -23,29 +23,28 @@ output: rticles::acm_article
 options(tinytex.verbose = TRUE)
 ```
 
-
+</br>
 _(The actual research paper itself should not more than 6 pages excluding figures, tables, formula and references.)_
 
 # Introduction
-Airbnb is an online marketplace platform for accomodation rental. Founded in 2008 by Brian Chesky and Joe Gebbia who put an air mattress in their living room and offered bed & breakfast (thus “Airbnb”), the company has grown to be one of the most popular short-term accomodation rental platforms in multiple countries around the world.
+Airbnb is an online marketplace platform for accomodation rental. Founded in 2008 by Brian Chesky and Joe Gebbia who had the idea to put an air mattress in their living room and offered bed & breakfast[@brandeduc2019] (thus “Airbnb”), the company has grown to be one of the most popular short-term accommodation rental platforms in multiple countries around the world.
 
-With millions of listings in 220 countries and over 100,000 cities, Airbnb has a rich store of data from transactions between hosts and guests. Such data includes structured data like price, number of facilities (e.g. bedrooms, bathrooms), minimum and maximum number of nights’ stay; and unstructured text data like description of the accommodation, and reviews by guests.
-
-This assignment focuses on analysis of unstructured text data from Airbnb’s online marketplace.
+With millions of listings in 220 countries and over 100,000 cities[@airbnb2020], Airbnb has a rich store of data from transactions between hosts and guests. Such data includes structured data like price, number of facilities (e.g. bedrooms, bathrooms), minimum and maximum number of nights’ stay; and unstructured text data like description of the accommodation, and reviews by guests.
 
 # Motivation
 _(Motivation of the application)_
 
-All of the studies discussed earlier focused on single dimensional aspect of the dataset - for example, Kwon (2018) on predicting ratings, Chen (2019) on visualizing the data, and Gedik (2020) on identifying common amenities potentially useful in predicting demand and price. The only attempt at merging the analyses into a centralised platform to be used for thematic analysis is Gupta’s. Notwithstanding the fact that his Shiny apps are hosted on separate io pages, Gupta’s analyses are also disjointed in content. Gupta started off providing descriptive analysis of Airbnb in New York, then transited to a Shiny for property locator, then more exploratory analysis on geospatial and categortical distribution, before transiting to temporal and text analysis - throughout his study, there is no one common theme that links the different methodologies and discussion together. A more concerted and systematic organization of the analysis and the tools used is needed.
+Given the proven potential of the Airbnb model for hosts to offer their accommodations for rental, hosts would be keen to know how the potential for their listing to be successful in turning a profit.
 
-Across all the studies examined, including Gupta’s Shiny app, there are no provision of analytical tool that can allow users to change certain parameters to tweak the analyses to their own objective/preference. For example, in Kwon’s predictive modeling, there is no way to change the methods or predictor that is included, or perhaps even to change the dependent variable of interest. In Chen’s visualization, there is also no way to change the variable presented, say from her original price-as-size, to examine ratings using size or even colors on the viz. Similarly, Gedik does not offer any tools in this aspect. Gupta, while offering a wide range of analytical methods and even offering Shiny app, also surprisingly fell short in this area - for example, in his text analytics app, while user can change the word query, they are unable to, say, focus on reviews with more than a 4-star ratings to find out common words associated with higher ratings.
+However, many hosts might not have the requisite knowledge in scraping Airbnb listing data from the web, nor the skills to develop their own analysis tools. This application aims to bridge this gap by providing a publicly available analysis dashboard that provides various analysis techniques such as Exploratory Data Analysis of the characteristics of listings, statistical clustering and spatial clustering analyses, sentiment analysis and multi-linear regression analysis.
 
-Another gap that is found across all study and one of the most major flaw considering the wealth of information provided by the datasets. None of the study offered options to, for example, zoom in on a particular sub-region, or to filter out whether a hosts is a superhost, or to subset data based on a range of prices. These are useful features that could tremendously enhance the usefulness of the analysis
+The tagret users of this application are users with some knowledge of statistical techniques but lack the coding skills to develop their own tools.
+
+It is hoped that this application would provide the target users with useful statistical knowledge to be able to apply to their Airbnb listings, in order to maximise the potential of their listings.
+
 
 # Review of past works
 _(Review and critique on past works)_
-The data offered by Inside Airbnb are split into several different data sets - this assignment will be focusing on the listings file, which provides detailed data from individual listings put up on the AirBnb database. Information provided includes hosts details, response data, listing information (e.g. price, number of beds, property type, maximum nights), and review scores.
-
 There are currently a number of analyses that has been conducted on the Airbnb dataset. While most of them are focused on one particular country, given that the datasets made available by Inside Airbnb are rather consistent across different geographical space, it is reasonable to assume that the analytical methodologies adopted by these other studies can be easily replicated and reproduced with data from other countries.
 
 One of most prominent and recent study on Airbnb data is by Steve Deane from Stratos, who wrote a blogpost in January 2021 on the topic (which also inspired this project). In his post, Deane provides descriptive statistics (e.g. total number of hosts, most popular destination, number of guests) focusing on the global distribution with a slight inclination towards the United States of America. While some of the statistics were provided, Deane’s analysis is heavily weighted towards the economic aspects of Airbnb (e.g. whether Airbnb affects property values and rents - “Airbnb effect”, whether Airbnb is cheaper than hotels, and economic impact of Airbnb in each country). However, Deane does not provide any higher level data analysis beyond the descriptive ones. He did presented one segment explaining the factors that host should consider when purchasing a property to use as an Airbnb - reflecting some form of explanatory analysis (and perhaps even predictive) but the content was scarce with no elaboration on how these factors were derived. The major ‘flaw’, though, remains the fact that Deane’s blog post is heavy on qualitative write-up with minimal (or no) meaningful visualization of the statistics he has quoted.
@@ -67,6 +66,12 @@ Within the industry, there exists interactive tools that allow analysts or poten
 # Design Framework
 _(A detail description of the design principles used and data visualisation elements built (Refer to Section IV: Interface of [this paper](https://ink.library.smu.edu.sg/cgi/viewcontent.cgi?article=2760&context=sis_research).)_
 
+The application makes use of the R stastical language which is open-source and offers many tried-and-tested packages for the type of analysis that the application will feature. The design considerations are as follows:
+1. Reproducibility of results by performing calculations within the application itself.
+2. Adoption of common R packages in the Comprehensive R Archive Network[@CRAN2021] (CRAN) for supportability.
+3. Use of the R Shiny package for interactivity and easy deployment.
+4. Offer interactive features for easy use.
+
 # Demonstration
 _(Use case)_
 
@@ -76,7 +81,8 @@ Sentiment analysis with this app consists of a word cloud and topic modelling us
 ### Word Cloud
 With the above filter selections, the word cloud created is shown below.
 
-![Word Cloud](images/wordcloud1.png)
+![](images/wordcloud1.png)
+_Figure 1: Word Cloud_
 
 The size of the font represents the relative frequency of the word in the description section of  Airbnb listings that fall in the category of the filter settings above (the word in the largest font is the most common word). It is not unexpected that the word "victoria" is the most common word in this word cloud, since the region in question here is Victoria. Some other common words are "kitchen", "park", "privat" (private), "bed, "bedroom", and "walk".
 
@@ -93,15 +99,19 @@ Similar to the word cloud,the region of Victoria, Australia, is selected with th
 
 With the above filter selections, the topic model is shown below.
 
-![LDA topic modelling](images/topicmodel1.png)
+![](images/topicmodel1.png)
+_Figure 1: Topic Modelling using LDA_
 
 The bar beside the corresponding word represents the probability (beta) of that word appearing in that particular topic. The longer the bar, the higher the probability.
 
 Based on the top words in each topic we can identify the following topics:
 
-- Topic 1: 
+- Topic 1: The word "garden" is very common in this topic (other than the word "victoria" which is the region in question). Along with "garden", other words like "phone", "washer", "essenti" (essentials), "room", "bedroom", "balconi" (balconies), "minut" (minutes) feature in the top 20 most common words in this cluster. This suggests that listing descriptions with these words tend to appeal to guests who stay in the accommodation more often, and enjoy facilities such as a garden, washer, balconies, etc. Such guests may be older persons who enjoy staying in the comforts of the house.
 
-This would suggest that these words are common in the descriptions that hosts write about their listings, and these listings garner review score ratings of 91 and above, which is the highest decile of review scores. Thus for an Airbnb host who aims to obtain review score ratings within that range, they should include these words into their descriptions. Of course, the accommodation itself should actually offer these facilities so as not to dissapoint the guest, which would expectly lead to lower rating scores.
+
+- Topic 2: Words common to topic 2 are "park", "kitchen", "dryer", "street", "walk" "washer", "wifi". These are the words in the list of top 20 most common words in this topic. This type of accommodation description may appeal more to younger guests who want Wi-Fi access in the accommodation, and also who might enjoy going outdoors to the park for a walk.
+
+- Topic 3: The common words in this cluster are "park", "bath", "bed, "heat", "bedroom", "beach", "walk", "dryer". These terms may appeal to those who are looking to visit the beach during their stay.
 
 
 
@@ -118,6 +128,22 @@ Duis nec purus sed neque porttitor tincidunt vitae quis augue. Donec porttitor a
 
 ---
 references:
+- id: brandeduc2019
+  title: Airbnb Inc
+  author: Brand Education
+  type: website
+  URL: 'https://brand.education/airbnb-inc/'
+  issued:
+    year: 2019
+    month: 6
+- id: airbnb2020
+  title: 2020 Airbnb Update
+  author: Airbnb
+  type: website
+  URL: 'https://news.airbnb.com/2020-update/'
+  issued:
+    year: 2020
+    month: 1
 - id: meier2012
   title: Professinal Android 4 Application Development
   author: 
@@ -128,6 +154,11 @@ references:
   issued:
     year: 2012
     month: 5
+- id: CRAN2021
+  Title: The Comprehensive R Archive Network
+  author: The Comprehensive R Archive Network
+  type: website
+  URL: 'https://cran.r-project.org/'
 - id: fenner2012a
   title: One-click science marketing
   author:
