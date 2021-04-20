@@ -75,6 +75,21 @@ The application makes use of the R stastical language which is open-source and o
 ## Data Preparation
 All data preparation was performing using R in the RStudio IDE. This included dropping columns from the data set that were irrelevant for the scope of our research, converting columns into the appropriate data types, and imputing NA values where appropriate.
 
+## Exploratory Data Analysis
+_(Can refer to Raymond Teo's paper: https://wiki.smu.edu.sg/1920t2isss608/Group11_research_paper and how they write this portion.)_
+
+## Cluster Analysis
+_(Can refer to Raymond Teo's paper: https://wiki.smu.edu.sg/1920t2isss608/Group11_research_paper and how they write this portion.)_
+
+## Spatial Cluster Analysis
+_(Can refer to Raymond Teo's paper: https://wiki.smu.edu.sg/1920t2isss608/Group11_research_paper and how they write this portion.)_
+
+## Sentiment Analysis
+_(Can refer to Raymond Teo's paper: https://wiki.smu.edu.sg/1920t2isss608/Group11_research_paper and how they write this portion.)_
+
+## Multi-linear Regression Analysis
+_(Can refer to Raymond Teo's paper: https://wiki.smu.edu.sg/1920t2isss608/Group11_research_paper and how they write this portion.)_
+
 # Demonstration
 _(Use case)_
 
