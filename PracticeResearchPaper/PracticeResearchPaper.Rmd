@@ -68,7 +68,7 @@ _(A detail description of the design principles used and data visualisation elem
 
 The application makes use of the R stastical language which is open-source and offers many tried-and-tested packages for the type of analysis that the application will feature. The design considerations are as follows:
 1. Reproducibility of results by performing calculations within the application itself.
-2. Adoption of common R packages in the Comprehensive R Archive Network[@CRAN2021] (CRAN) for supportability.
+2. Adoption of common R packages in the Comprehensive R Archive Network[@cran2021] (CRAN) for supportability.
 3. Use of the R Shiny package for interactivity and easy deployment.
 4. Offer interactive features for easy use.
 
@@ -87,6 +87,26 @@ _(Can refer to Raymond Teo's paper: https://wiki.smu.edu.sg/1920t2isss608/Group1
 ## Sentiment Analysis
 _(Can refer to Raymond Teo's paper: https://wiki.smu.edu.sg/1920t2isss608/Group11_research_paper and how they write this portion.)_
 
+### Word Cloud
+Word clouds are an effective way to represent the frequency that a word appears in a particular corpus (a collection of texts). For this application, the size of the word represents the relative frequency of the word in the description section of Airbnb listings. The word in the largest font is the most common word.
+
+The first step to clustering is to create the corpus. This is done by scraping all the text from the desired column in the Airbnb data set - in this case, the description field. Once the corpus is created, tokenisation is done to clean up the words or terms and create a tibble of single terms in a column. Tokenisation includes removing extra white spaces from between terms, removing numbers (number do not have any meaning in a textual word cloud), punctuation symbols, and removing _stop words_ (which refer to words that have no meaning like "I", "a", "this", "and", etc), and stemming words (reducing words to their root like "walking" to "walk"). This cleaning process ensures that only valuable terms are included.
+
+Aftet tokenisation is performed, the corpus of words are transformed into a Document Term Matrix (DTM), which is a matrix of the frequency of each term in the corpus. Based on the DTM, the word cloud will generate the words according to their frequency.
+
+### Topic modelling using Latent Dirichlet Allocation
+Topic modelling is a statisical model to identify topics in textual data. It is an unsupervised machine learning technique that detects word and phrase patterns in documents and clusters them into groups known as topics. The concept behind topic modelling is that different topics would have certain words appear together frequently. Based on this, topics can be discovered based on the words that appear frequently together.
+
+The 2 common approaches to topic modelling are Latent Semantic Analysis (LSA) and Latent Dirichlet Allocation (LDA)[@git2016].
+
+As described by Cvitanic, et al. [@git2016], LSA is a text analysis method that makes use of a semantic space (representations of natural language meant to identify meaning in language) to calculate or compute the similarity between words, phrases, sentences, paragraphs, or even whole documents. Similar to the word cloud, LSA makes use of a document term matrix to weight the words in terms of the frequency that they appear in the corpus.
+
+LDA, according to Cvitanic, et al. [@git2016] was a topic modelling technique that evolved from LSA. The basic idea of LDA is that "documents are represented as random mixtures over latent topics, where each topic is characterized by a distribution over words."[@git2016] To be able to identify the topics in a corpus, a "generative process whereby the documents are created" is done so as to infer the topics[@wikilda2021]. This inference is done by imagining documents being random mixtures of terms with latent topics underlying them, where each topic has a unique distribution across all the words in the corpus[@wikilda2021]. LDA requires a defined number of topics as an input parameter.
+
+In other words, LDA assumes that all words in the document can be assigned a probability of belonging to a topic. As such, the goal of LDA is to determine the mixture of topics that a document contains.
+
+LDA was chosen at the topic modelling technique to implement in this application.
+
 ## Multi-linear Regression Analysis
 _(Can refer to Raymond Teo's paper: https://wiki.smu.edu.sg/1920t2isss608/Group11_research_paper and how they write this portion.)_
 
@@ -102,17 +122,11 @@ With the above filter selections, the word cloud created is shown below.
 ![](images/wordcloud1.png)
 _Figure 1: Word Cloud_
 
-The size of the font represents the relative frequency of the word in the description section of  Airbnb listings that fall in the category of the filter settings above (the word in the largest font is the most common word). It is not unexpected that the word "victoria" is the most common word in this word cloud, since the region in question here is Victoria. Some other common words are "kitchen", "park", "privat" (private), "bed, "bedroom", and "walk".
+It is not unexpected that the word "victoria" is the most common word in this word cloud, since the region in question here is Victoria. Some other common words are "kitchen", "park", "privat" (private), "bed, "bedroom", and "walk".
 
 This would suggest that these words are common in the descriptions that hosts write about their listings, and these listings garner review score ratings of 91 and above, which is the highest decile of review scores. Thus for an Airbnb host who aims to obtain review score ratings within that range, they should include these words into their descriptions. Of course, the accommodation itself should actually offer these facilities so as not to dissapoint the guest, which would expectedly lead to lower rating scores.
 
-### Topic modelling using Latent Dirichlet Allocation
-The next visualisation is a topic modeling technique. Topic modeling is an unsupervised machine learning technique that detects word and phrase patterns in documents and clusters them into groups known as topics.
-
-Latent Dirichlet Allocation (LDA) is one common topic modeling technique. The basic assumption of LDA is that similar topics make use of similar words (i.e. distributional hypothesis). The purpose of LDA is to map the corpus to topics covering a significant number of words in the documents in the corpus.
-
-LDA assigns topics to arrangements of words for example, the best word for a topic related to accommodation. This is based on the assumption that documents are written with a certain arrangement of words and that those arrangements will determine the topics. LDA assumes that all words in the document can be assigned a probability of belonging to a topic. As such, the goal of LDA is to determine the mixture of topics that a document contains.
-
+### Topic Modelling
 Similar to the word cloud,the region of Victoria, Australia, is selected with the review scores range of 91 to 100. The number of topics to be identified is three, with the top ten words of each topic presented in the visualisation.
 
 With the above filter selections, the topic model is shown below.
@@ -146,52 +160,55 @@ Duis nec purus sed neque porttitor tincidunt vitae quis augue. Donec porttitor a
 
 ---
 references:
-- id: brandeduc2019
-  title: Airbnb Inc
-  author: Brand Education
-  type: website
-  URL: 'https://brand.education/airbnb-inc/'
-  issued:
-    year: 2019
-    month: 6
-- id: airbnb2020
-  title: 2020 Airbnb Update
-  author: Airbnb
-  type: website
-  URL: 'https://news.airbnb.com/2020-update/'
-  issued:
-    year: 2020
-    month: 1
-- id: meier2012
-  title: Professinal Android 4 Application Development
-  author: 
-  - family: Meier
-    given: Reto
-  type: book
-  publisher: John Wiley & Sons, Inc.
-  issued:
-    year: 2012
-    month: 5
-- id: CRAN2021
-  Title: The Comprehensive R Archive Network
-  author: The Comprehensive R Archive Network
-  type: website
-  URL: 'https://cran.r-project.org/'
-- id: fenner2012a
-  title: One-click science marketing
-  author:
-  - family: Fenner
-    given: Martin
-  container-title: Nature Materials
-  volume: 11
-  URL: 'https://doi.org/10.1038/nmat3283'
-  DOI: 10.1038/nmat3283
-  issue: 4
-  publisher: Nature Publishing Group
-  page: 261-263
-  type: article-journal
-  issued:
-    year: 2012
-    month: 3
+-  id: brandeduc2019
+   title: 'Airbnb Inc'
+   Author: Brand Education
+   URL: 'https://brand.education/airbnb-inc/'
+   type: webpage
+   issued:
+     year: 2019
+     month: 6
+-  id: airbnb2020
+   title: '2020 Airbnb Update'
+   Author: Airbnb
+   URL: 'https://news.airbnb.com/2020-update/'
+   type: webpage
+   issued:
+     year: 2020
+     month: 1
+-  id: cran2021
+   title: 'The Comprehensive R Archive Network'
+   Author: The Comprehensive R Archive Network
+   URL: 'https://cran.r-project.org/'
+   type: website
+   issued:
+     year: 2021
+     month: 4
+-  id: git2016
+   title: 'LDA v. LSA: A Comparison of Two Computational Text Analysis Tools for the Functional Categorization of Patents'
+   Author:
+   - family: Cvitanic
+     given: Toni
+   - family: Lee
+     given: Bumsoo
+   - family: Song
+     given: Hyeon Ik
+   - family: Fu
+     given: Katherine
+   - family: Rosen
+     given: David
+   URL: 'http://ceur-ws.org/Vol-1815/paper4.pdf'
+   type: paper
+   issued:
+     year: 2016
+     month: 1
+-  id: wikilda2021
+   title: 'Latent Dirichlet allocation'
+   Author: Wikipedia
+   URL: 'https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation'
+   type: webpage
+   issued:
+     year: 2021
+     month: 4
 ...
 
