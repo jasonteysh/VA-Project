@@ -72,6 +72,9 @@ The application makes use of the R stastical language which is open-source and o
 3. Use of the R Shiny package for interactivity and easy deployment.
 4. Offer interactive features for easy use.
 
+## Data Preparation
+All data preparation was performing using R in the RStudio IDE.
+
 # Demonstration
 _(Use case)_
 
