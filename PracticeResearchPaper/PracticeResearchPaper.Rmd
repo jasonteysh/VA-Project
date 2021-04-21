@@ -13,7 +13,7 @@ author:
 abstract: |
   _(abstract of not more than 300 words)_
   
-  The abundance of Airbnb data provides great opportunity to conduct a variety of data analyses to understand the residential short-lease rental market. Most publicly available analysis tools of Airbnb data do not have much interavtive features and are therefore necessarily very narrow in thier scope of analysis. This project provides an analytics platform for interested parties (especially non-data specialists) to conduct exploratory spatial data, text, cluster, and regression analysis on the Australia Airbnb dataset use simple and user-friendly interactive dashboards that does not require programming knowledge. Another advantage of incorporating interactivity is that the dashboard does not need to have a very limited scope of analysis. With a larger scope, 
+  The abundance of Airbnb data provides great opportunity to conduct a variety of data analyses to understand the residential short-lease rental market. Most publicly available analysis tools of Airbnb data do not have much interactive features and are therefore, by design, are narrow in their scope of analysis. This Shiny application provides an analytics platform for interested parties such as analysts to conduct exploratory spatial data, text and sentiment, cluster, and regression analysis on the Australia Airbnb dataset use simple and user-friendly interactive dashboards that does not require programming knowledge in an interactive environment that allows them to customise their scope of analysis.
 bibliography: sigproc.bib
 csl: acm-sig-proceedings.csl
 output: rticles::acm_article
@@ -23,10 +23,9 @@ output: rticles::acm_article
 options(tinytex.verbose = TRUE)
 ```
 
-</br>
-_(The actual research paper itself should not more than 6 pages excluding figures, tables, formula and references.)_
-
 # Introduction
+_[The actual research paper itself should not more than 6 pages excluding figures, tables, formula and references.]_
+
 Airbnb is an online marketplace platform for accomodation rental. Founded in 2008 by Brian Chesky and Joe Gebbia who had the idea to put an air mattress in their living room and offered bed & breakfast[@brandeduc2019] (thus “Airbnb”), the company has grown to be one of the most popular short-term accommodation rental platforms in multiple countries around the world.
 
 With millions of listings in 220 countries and over 100,000 cities[@airbnb2020], Airbnb has a rich store of data from transactions between hosts and guests. Such data includes structured data like price, number of facilities (e.g. bedrooms, bathrooms), minimum and maximum number of nights’ stay; and unstructured text data like description of the accommodation, and reviews by guests.
@@ -41,7 +40,6 @@ However, analysts keen to delve into such data sets might not have the requisite
 The tagret users of this application are analysts with some knowledge of statistical techniques but lack the coding skills to develop their own tools.
 
 It is hoped that this application would provide the target users with useful statistical knowledge to be able to apply to their Airbnb listings, that they may advise hosts on how to maximise the potential of their listings.
-
 
 # Review of past works
 _(Review and critique on past works)_
@@ -151,28 +149,19 @@ Based on the top words in each topic we can identify the following topics:
 
 - Topic 3: The common words in this cluster are "park", "bath", "bed, "heat", "bedroom", "beach", "walk", "dryer". These terms may appeal to those who are looking to visit the beach during their stay.
 
-
-
 # Discussion
 _(What has the audience learned from your work? What new insights or practices has your system enabled? A full blown user study is not expected, but informal observations of use that help evaluate your system are encouraged.)_
 
 From the sentiment analysis, it was observed that most guests only gave a review score if they has a positive experience staying at the accommodation. As such, most of the review scores were in the range of 91 - 100. This caused a lack of data that could have highlighted what words in a listing description might cause garner low review score (claims of accommodation facilities that were not actually available, for example), or what topics might receive the same (these topics might reveal unpleasant sentiments for guests). However, it was still valuable to know what terms and topics were common in listings that garnered high review scores. Such insight would advise a potential host on what kind of words or accommodation facilities would appeal more to guests. In addition, different regions in Australia yield different results. For example, the word cloud for Queensland yielded the terms "Beach" and "park" as the 2nd and 3rd most common terms, while the word cloud for Queensland yielded only "park". This indicates that Queensland listings that garner high review scores are likely near a beach and made that explicit in the listing description, whereas listings in Victoria does not seem to have that, but still can highlight their proximity to parks.
-
-For the topic modelling using LDA..._(something something something)_
-
 
 # Future Work
 _(A description of how your system could be extended or refined.)_
 
 Future versions of such an application could include other countries to provide more compreghensive analysis of different regions and markets. FOr example, Airbnb listings in South Africa may provide different insight into what hosts provide and what guests want, compared to Australia or other countries.
 
-Other sentiment analysis techniques such as LSA and Sentiment Scoring could be included, to provide the analyst with a more comprehensive suite of statistical analysis tools with which to perform their analysis.
+Other sentiment analysis techniques such as LSA could be included, to provide the analyst with a more comprehensive suite of statistical analysis tools with which to perform their analysis.
 
 Deeper analysis could also be done on the profile of hosts as well as guests, for example what type of hosts were more likely to have listings that gained good reviews, or what type of guests were more likely to match a certain type of listing and give good reviews.
-
-
-# Conclusion
-Lorem ipsum.
 
 # References
 
