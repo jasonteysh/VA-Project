@@ -73,8 +73,30 @@ The second plot is an Optimal Cluster Plot, that gives you an indication the num
 
 The third plot is a parallel plot that showcases the relationship of the variables and the clusters. It gives an indication of the characteristics of the cluster that was formed.
 
-# Geospatial Data Visualization and Analysis
-Lorem ipsum
+# Exploratory Spatial Data Visualization and Analysis
+This tab can be used for exploratory spatial data visualization and analysis on the Local Government Area (LGA) level for each of the States of Australia.  
+
+Step 1) by clicking on the Spatial Cluster Analysis main left-hand panel, we enter this tab, with two maps coming into view (Note: it might take awhile for the viz to load). The left-hand viz provides an overview of the distribution of either the raw values (default) or clustering statistics for the LGAs within a selected area (State) of Australia. The right-hand viz displays the spatial cluster analysis results - showing areas of high/low clusters, and outliers
+
+Step 2) clicking on the drop down list on the "Select State:" tab allows you to  select the state of interest from a list of nine different states in Australia (*Note: while the visualization allows for user to select the "All" state option, it is highly discouraged as some of the spatial analyses do not have meaningful interpretations for areas with considerable missing data - for which at the whole-of-Australia level, data are more sparsed. When analyzing the data, users are also advised to conduct due diligence in determining whether the selected data range of interest has sufficiently satisfied analysis requirements.*)  
+
+Step 3) allows you to select the variable of interest from a list of six..   
+
+The resultant maps also allows you to click on the area within each contiguous boundary to have more information, such as the name of the LGA, the status (e.g. (C) is a city, (A) an area, (T) towns, (M) municipalities, and (S) shire), and the value of the variable of interest on the first geographical visualization, and the clustering analysis statistics on the second geo-viz on the right. 
+
+![](images/geospatial1.PNG){width=60%} 
+
+Step 4) we go on to the options for individual geoviz. For the left-hand viz, user can first select whether you want the distribution of raw values displayed, or that of the local indicators of spatial association's statistics displayed. Note that if the Moran's I's p-value or the Getis-Ord's G z-scores are selected, selection for other options (see step 4 and 5 below) will be disabled as these statistical results are to be interpreted on pre-determined intervals.  
+
+Step 5) allows you to select the binning methods - in other words, how should the values be split up, be it by equal intervals, by natural breaks (Jenks' and Fisher's), standard deviation bins, etc. A total of 10 options are available under the dropdown. 
+
+Step 6) allows user to select the number of intervals to have - i.e. how many different classes should the data be split into. User can shift the slider manually to select the desired class. Note that the selection is very critical (compulsory) for classification methods such as the K-Mean selection; practical for methods such as Equal, Pretty, Jenks and Fisher; but not as useful for methods such as log10 Pretty or even standard deviation.  
+
+Step 7) on the right-hand viz, user can select variables to alter the clustering parameters. Firstly, the level of confidence - i.e. how much confidence do we need to reject the null hypothesis that there are no spatial clustering/outlier at the areas identified to have such cluster/outlier.   
+
+Step 8) in geospatial analysis, there are also different methods to select the definition of 'neighbor' - this can be selected by changing the "Analysis methods:" panel options. Note that if "K Nearest Neighbors" is selected, an additional slider requesting user to input the number of nearest neighbors to be considered will appear. Same thing, if "Distance" is selected, a slider to select the distance radius to be considered neighbor will appear as well. 
+
+![](images/geospatial2.PNG){width=60%} 
 
 # Sentiment Analysis
 The sentiment analysis module of this Shiny app includes two analysis models: a word cloud and a topic model.

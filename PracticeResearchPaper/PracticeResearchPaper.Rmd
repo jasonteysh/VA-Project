@@ -110,7 +110,7 @@ In other words, LDA assumes that all words in the document can be assigned a pro
 LDA was chosen at the topic modelling technique to implement in this application.
 
 ```{r, echo=FALSE, fig.cap="testing caption", fig.align='center', dpi=300, fig.width=12, fig.height=6}
-knitr::include_graphics("images/wordcloud1.png")
+#knitr::include_graphics("/images/wordcloud1.png")
 ```
 
 ![](images/topicmodel1.png)
