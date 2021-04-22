@@ -37,9 +37,9 @@ Given the proven potential of the Airbnb model for hosts to offer their accommod
 
 However, analysts keen to delve into such data sets might not have the requisite knowledge in scraping Airbnb listing data from the web, nor the skills to develop their own analysis tools. This application aims to bridge this gap by providing a publicly available analysis dashboard that provides various analysis techniques such as Exploratory Data Analysis of the characteristics of listings, statistical clustering and spatial clustering analyses, sentiment analysis and multi-linear regression analysis.
 
-The tagret users of this application are analysts with some knowledge of statistical techniques but lack the coding skills to develop their own tools.
+The target users of this application are analysts with some knowledge of statistical techniques but lack the coding skills to develop their own tools.
 
-It is hoped that this application would provide the target users with useful statistical knowledge to be able to apply to their Airbnb listings, that they may advise hosts on how to maximise the potential of their listings.
+It is hoped that this application would provide the target users with a useful statistical tool for their analysis.
 
 # Review of past works
 _(Review and critique on past works)_
@@ -64,11 +64,12 @@ Within the industry, there exists interactive tools that allow analysts or poten
 # Design Framework
 _(A detail description of the design principles used and data visualisation elements built (Refer to Section IV: Interface of [this paper](https://ink.library.smu.edu.sg/cgi/viewcontent.cgi?article=2760&context=sis_research).)_
 
-The application makes use of the R stastical language which is open-source and offers many tried-and-tested packages for the type of analysis that the application will feature. The design considerations are as follows:
-1. Reproducibility of results by performing calculations within the application itself.
-2. Adoption of common R packages in the Comprehensive R Archive Network[@cran2021] (CRAN) for supportability.
-3. Use of the R Shiny package for interactivity and easy deployment.
-4. Offer interactive features for easy use.
+The application makes use of the R stastical language which is open-source and offers many tried-and-tested packages for the type of analysis that the application will feature. The design considerations are as follows:  
+
+1. Reproducibility of results by performing calculations within the application itself.  
+2. Adoption of common R packages in the Comprehensive R Archive Network[@cran2021] (CRAN) for supportability.  
+3. Use of the R Shiny package for interactivity and easy deployment.  
+4. Offer interactive features for easy use.  
 
 ## Data Preparation
 All data preparation was performing using R in the RStudio IDE. This included dropping columns from the data set that were irrelevant for the scope of our research, converting columns into the appropriate data types, and imputing NA values where appropriate.
@@ -90,7 +91,7 @@ Word clouds are an effective way to represent the frequency that a word appears 
 
 The first step to clustering is to create the corpus. This is done by scraping all the text from the desired column in the Airbnb data set - in this case, the description field. Once the corpus is created, tokenisation is done to clean up the words or terms and create a tibble of single terms in a column. Tokenisation includes removing extra white spaces from between terms, removing numbers (number do not have any meaning in a textual word cloud), punctuation symbols, and removing _stop words_ (which refer to words that have no meaning like "I", "a", "this", "and", etc), and stemming words (reducing words to their root like "walking" to "walk"). This cleaning process ensures that only valuable terms are included.
 
-Aftet tokenisation is performed, the corpus of words are transformed into a Document Term Matrix (DTM), which is a matrix of the frequency of each term in the corpus. Based on the DTM, the word cloud will generate the words according to their frequency.
+After tokenisation is performed, the corpus of words are transformed into a Document Term Matrix (DTM), which is a matrix of the frequency of each term in the corpus. Based on the DTM, the word cloud will generate the words according to their frequency.
 
 ![](images/wordcloud1.png)
 _Figure 1: Word Cloud_
@@ -107,6 +108,10 @@ LDA, according to Cvitanic, et al. [@git2016] was a topic modelling technique th
 In other words, LDA assumes that all words in the document can be assigned a probability of belonging to a topic. As such, the goal of LDA is to determine the mixture of topics that a document contains.
 
 LDA was chosen at the topic modelling technique to implement in this application.
+
+```{r, echo=FALSE, fig.cap="testing caption", fig.align='center', dpi=300, fig.width=12, fig.height=6}
+knitr::include_graphics("images/wordcloud1.png")
+```
 
 ![](images/topicmodel1.png)
 _Figure 2: Topic Modelling using LDA_
@@ -171,7 +176,7 @@ references:
    title: 'Airbnb Inc'
    Author: Brand Education
    URL: 'https://brand.education/airbnb-inc/'
-   type: webpage
+   type: website
    issued:
      year: 2019
      month: 6
@@ -179,7 +184,7 @@ references:
    title: '2020 Airbnb Update'
    Author: Airbnb
    URL: 'https://news.airbnb.com/2020-update/'
-   type: webpage
+   type: website
    issued:
      year: 2020
      month: 1
