@@ -23,14 +23,14 @@ output: rticles::acm_article
 options(tinytex.verbose = TRUE)
 ```
 
-# 1 Introduction
+# Introduction
 _[The actual research paper itself should not more than 6 pages excluding figures, tables, formula and references.]_
 
 Airbnb is an online marketplace platform for accomodation rental. Founded in 2008 by Brian Chesky and Joe Gebbia who had the idea to put an air mattress in their living room and offered bed & breakfast[@brandeduc2019] (thus “Airbnb”), the company has grown to be one of the most popular short-term accommodation rental platforms in multiple countries around the world.
 
 With millions of listings in 220 countries and over 100,000 cities[@airbnb2020], Airbnb has a rich store of data from transactions between hosts and guests. Such data includes structured data like price, number of facilities (e.g. bedrooms, bathrooms), minimum and maximum number of nights’ stay; and unstructured text data like description of the accommodation, and reviews by guests.
 
-# 2 Motivation
+# Motivation
 _(Motivation of the application)_
 
 Given the proven potential of the Airbnb model for hosts to offer their accommodations for rental, hosts would be keen to know how the potential for their listing to be successful in turning a profit.
@@ -41,7 +41,7 @@ The target users of this application are analysts with some knowledge of statist
 
 It is hoped that this application would provide the target users with a useful statistical tool for their analysis.
 
-# 3 Review of past works
+# Review of past works
 _(Review and critique on past works)_
 There are currently a number of analyses that has been conducted on the Airbnb dataset. While most of them are focused on one particular country, given that the datasets made available by Inside Airbnb are rather consistent across different geographical space, it is reasonable to assume that the analytical methodologies adopted by these other studies can be easily replicated and reproduced with data from other countries.
 
@@ -61,7 +61,7 @@ While non-interactive, Gupta’s subsequent discussion provides a preliminary vi
 
 Within the industry, there exists interactive tools that allow analysts or potential hosts to analyze rental data using attributes and past performance. One such example is AIRDNA. Notwithstanding the fact that the platform only offers paid services, the results are also provided in a prescriptive manner with little analytical value-add.
 
-# 4 Design Framework
+# Design Framework
 _(A detail description of the design principles used and data visualisation elements built (Refer to Section IV: Interface of [this paper](https://ink.library.smu.edu.sg/cgi/viewcontent.cgi?article=2760&context=sis_research).)_
 
 The application makes use of the R stastical language which is open-source and offers many tried-and-tested packages for the type of analysis that the application will feature. The design considerations are as follows:  
@@ -71,22 +71,24 @@ The application makes use of the R stastical language which is open-source and o
 3. Use of the R Shiny package for interactivity and easy deployment.  
 4. Offer interactive features for easy use.  
 
-## 5 Data Preparation
+## Data Preparation
 All data preparation was performing using R in the RStudio IDE. This included dropping columns from the data set that were irrelevant for the scope of our research, converting columns into the appropriate data types, and imputing NA values where appropriate.
 
-## 5.1 Exploratory Data Analysis
+## Exploratory Data Analysis
 _(Can refer to Raymond Teo's paper: https://wiki.smu.edu.sg/1920t2isss608/Group11_research_paper and how they write this portion.)_
 
-## 5.2 Cluster Analysis
+## Cluster Analysis
 _(Can refer to Raymond Teo's paper: https://wiki.smu.edu.sg/1920t2isss608/Group11_research_paper and how they write this portion.)_
 
-## 5.3 Spatial Data Analysis  
+## Spatial Data Analysis  
 The spatial data analysis provides an analytical overview of the geographical distribution of different variables of interest across the different Local Government Areas (LGAs) of Australia. For example, the choropleth below presents the median price of listing is in each of the LGAs in the Victoria State - the darker the color, the higher the median price for that LGA, and we see the darkest range of median price in the area around the tip of the Melbourne bay. This way, we can easily compare whether median prices are within the same range, higher, or lower across the different LGAs. 
 
 ![](images/geo1.png)
 
-The above visualization is achieved by merging the Airbnb listings data scraped by Inside AirBnb (including the coordinates of each listing's geospatial position) with the LGA digital boundaries in ESRI Shaprefile format made available by the Australian Bureau of Statistics[@abs]. Firstly, six variables from the raw listing data (i.e.. price, count, ratings, number of reviews, acceptance and response rates) are summarized and grouped using the base R *summarise()* and *group_by()* modules into their LGAs to obtain aggregated variables. 
-Next, we import the shapefile using the *st_read* function from the *sf* package. We then left-join the summarized aggregated values onto the spatial dataframe. 
+The above visualization is achieved by merging the Airbnb listings data scrapped by Inside Airbnb (including the coordinates of each listing's geospatial position) with the LGA digital boundaries in ESRI Shaprefile format made available by the Australian Bureau of Statistics[@abs]. Firstly, six variables from the raw listing data (i.e.. price, count, ratings, number of reviews, acceptance and response rates) are summarized and grouped using the base R *summarise()* and *group_by()* modules into their LGAs to obtain aggregated variables.
+
+Next, we import the shapefile using the *st_read* function from the *sf* package. We then left-join the summarized aggregated values onto the spatial dataframe.
+
 Finally, we remove rows that have missing values from our data, filter data down to the state we are interested in (Victoria in this case) and then plot the viz using functions under the *tmap* package.  
 Beyond the selection of state, the application also allows user to tweak the parameters, such as the variable of interest (6 in total) and binning methods. 
 
@@ -108,10 +110,10 @@ The resultant LISA analysis for median price in LGAs in the State of Victoria is
 ![](images/geo2.png)
 
 
-## 5.4 Sentiment Analysis
+## Sentiment Analysis
 _(Can refer to Raymond Teo's paper: https://wiki.smu.edu.sg/1920t2isss608/Group11_research_paper and how they write this portion.)_
 
-### 5.4.1 Word Cloud
+### Word Cloud
 Word clouds are an effective way to represent the frequency that a word appears in a particular corpus (a collection of texts). For this application, the size of the word represents the relative frequency of the word in the description section of Airbnb listings. The word in the largest font is the most common word.
 
 The first step to clustering is to create the corpus. This is done by scraping all the text from the desired column in the Airbnb data set - in this case, the description field. Once the corpus is created, tokenisation is done to clean up the words or terms and create a tibble of single terms in a column. Tokenisation includes removing extra white spaces from between terms, removing numbers (number do not have any meaning in a textual word cloud), punctuation symbols, and removing _stop words_ (which refer to words that have no meaning like "I", "a", "this", "and", etc), and stemming words (reducing words to their root like "walking" to "walk"). This cleaning process ensures that only valuable terms are included.
@@ -121,7 +123,7 @@ After tokenisation is performed, the corpus of words are transformed into a Docu
 ![](images/wordcloud1.png)
 _Figure 1: Word Cloud_
 
-### 5.4.2 Topic modelling using Latent Dirichlet Allocation
+### Topic modelling using Latent Dirichlet Allocation
 Topic modelling is a statisical model to identify topics in textual data. It is an unsupervised machine learning technique that detects word and phrase patterns in documents and clusters them into groups known as topics. The concept behind topic modelling is that different topics would have certain words appear together frequently. Based on this, topics can be discovered based on the words that appear frequently together.
 
 The 2 common approaches to topic modelling are Latent Semantic Analysis (LSA) and Latent Dirichlet Allocation (LDA)[@git2016].
@@ -141,13 +143,13 @@ LDA was chosen at the topic modelling technique to implement in this application
 ![](images/topicmodel1.png)
 _Figure 2: Topic Modelling using LDA_
 
-## 5.5 Multi-linear Regression Analysis
+## Multi-linear Regression Analysis
 _(Can refer to Raymond Teo's paper: https://wiki.smu.edu.sg/1920t2isss608/Group11_research_paper and how they write this portion.)_
 
-# 6 Demonstration
+# Demonstration
 _(Use case)_
 
-## 6.3 Spatial Data Analysis
+## Spatial Data Analysis
 
 This demonstration focuses on the LISA analysis for median price of listings in each LGAs within the regions of Victoria, Australia. Based on the LISA plot below (result of 90% confidence level, Queen's Continuity for spatial weight), we conclude with 90% confidence that the LGAs shaded has spatial association with the LGAs around them. 
 
@@ -157,10 +159,10 @@ We observed that there is an area of Low-High outliers (dark blue) in the north 
 
 On the other hand, we also notice two distinct High-High clusters in purple. These area reflects clusters or congregation of LGAs with higher median Airbnb listing prices. The cluster on the southwestern end of the bay area corresponds to the start point of the famous Great Ocean Road and is hence not a surprise to have wide-spread area of high accommodation prices. The cluster to the East, though, comprises of mainly smaller and more remote tourist spots such as the Swifts Creek - the fact that they are detected as a High-High cluster is a little unexpected. However, once we shift to take a look at the raw median price (see viz in Section 5.3), we notice that this is mainly due to the fact that surrounding LGAs typically have lower median price (since it is a remote area) - any minor hotspot that increases the median listing price slightly (though statistically significant) in LGAs of close proximity (each with one small attraction) would result in a "High-High" cluster. This is confirmed when we notice the raw median price of this cluster is of lower price range (ligher pink) than those in the Great Ocean Road area. 
 
-## 6.4 Sentiment Analysis
+## Sentiment Analysis
 Sentiment analysis with this app consists of a word cloud and topic modelling using Latent Dirichlet Allocation (LDA). For this demonstration, the region of Victoria, Australia, is selected. The review scores range of 91 to 100 is also selected.
 
-### 6.4.1 Word Cloud
+### Word Cloud
 With the above filter selections, the word cloud created is shown below.
 
 ![](images/wordcloud2.png)
@@ -170,7 +172,7 @@ It is not unexpected that the word "victoria" is the most common word in this wo
 
 This would suggest that these words are common in the descriptions that hosts write about their listings, and these listings garner review score ratings of 91 and above, which is the highest decile of review scores. Thus for an Airbnb host who aims to obtain review score ratings within that range, they should include these words into their descriptions. Of course, the accommodation itself should actually offer these facilities so as not to dissapoint the guest, which would expectedly lead to lower rating scores.
 
-### 6.4.2 Topic Modelling
+### Topic Modelling
 Similar to the word cloud,the region of Victoria, Australia, is selected with the review scores range of 91 to 100. The number of topics to be identified is three, with the top ten words of each topic presented in the visualisation.
 
 With the above filter selections, the topic model is shown below.
@@ -185,18 +187,16 @@ Based on the top words in each topic we can identify the following topics:
 - Topic 1: The word "garden" is very common in this topic (other than the word "victoria" which is the region in question). Along with "garden", other words like "phone", "washer", "essenti" (essentials), "room", "bedroom", "balconi" (balconies), "minut" (minutes) feature in the top 20 most common words in this cluster. This suggests that listing descriptions with these words tend to appeal to guests who stay in the accommodation more often, and enjoy facilities such as a garden, washer, balconies, etc. Such guests may be older persons who enjoy staying in the comforts of the house.
 
 
-- Topic 2: Words common to topic 2 are "park", "kitchen", "dryer", "street", "walk" "washer", "wifi". These are the words in the list of top 20 most common words in this topic. This type of accommodation description may appeal more to younger guests who want Wi-Fi access in the accommodation, and also who might enjoy going outdoors to the park for a walk.
+- Topic 2: Words common to topic 2 are "park", "kitchen", "dryer", "street", "walk" "washer", "wifi". These are some of the words in the list of top 20 most common words in this topic. This type of accommodation description may appeal more to younger guests who want Wi-Fi access in the accommodation, and also who might enjoy going outdoors to the park for a walk.
 
 - Topic 3: The common words in this cluster are "park", "bath", "bed, "heat", "bedroom", "beach", "walk", "dryer". These terms may appeal to those who are looking to visit the beach during their stay.
 
 # Discussion
 _(What has the audience learned from your work? What new insights or practices has your system enabled? A full blown user study is not expected, but informal observations of use that help evaluate your system are encouraged.)_
 
-
 The geospatial analysis allows audience to have a quick overview on the geographical distribution of a variable of interest (say, median price) across a selected level of detail (whole-of-Australia or individual LGA). The LISA analysis further adds on to this overview to allow identification of hotspots/coldspots (clusters of high/low value) and outliers (LGAs with abnomally high/low median price vis-a-vis its neighbors). User can form hypothesis about the spatial correlation between different variable of interest (e.g. price hotspots in Victoria corresponds to rating hotspots), where further confirmatory analysis can be conducted as an extension based on observations from this system. In fact, with the clusters and outliers identified, users can conduct deeper analysis on these areas using other tools available on this system (e.g. sentiment analysis, predictive analysis) to understand why these patterns formed. 
 
 From the sentiment analysis, it was observed that most guests only gave a review score if they has a positive experience staying at the accommodation. As such, most of the review scores were in the range of 91 - 100. This caused a lack of data that could have highlighted what words in a listing description might cause garner low review score (claims of accommodation facilities that were not actually available, for example), or what topics might receive the same (these topics might reveal unpleasant sentiments for guests). However, it was still valuable to know what terms and topics were common in listings that garnered high review scores. Such insight would advise a potential host on what kind of words or accommodation facilities would appeal more to guests. In addition, different regions in Australia yield different results. For example, the word cloud for Queensland yielded the terms "Beach" and "park" as the 2nd and 3rd most common terms, while the word cloud for Queensland yielded only "park". This indicates that Queensland listings that garner high review scores are likely near a beach and made that explicit in the listing description, whereas listings in Victoria does not seem to have that, but still can highlight their proximity to parks.
-
 
 # Future Work
 _(A description of how your system could be extended or refined.)_
