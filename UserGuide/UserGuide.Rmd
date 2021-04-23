@@ -24,7 +24,7 @@ Exploratory Data Analysis allows you to perform initial investigation on the dat
 
 ## Bar Charts
 
-![](images/edabar.png){width=60%}
+![](images/edabar.png){width=100%}
 
 
 - Click on *"Region:"* to explore the different states in Australia
@@ -32,39 +32,39 @@ Exploratory Data Analysis allows you to perform initial investigation on the dat
 
 The top barchart showcases the *"X Variable"* per State.
 
-![](images/edabar2.png){width=60%}
+![](images/edabar2.png){width=100%}
 
 The bottom barchart showcases the *"X Variable"* per top 10 Local Government Area per State.
 
 ## Boxplots
 
-![](images/edabox.png){width=60%}
+![](images/edabox.png){width=100%}
 
 - Click on *"Region:"* to explore the different states in Australia.
 - Click on *"Local Government Area"* to explore the different cities in the State. You are able to choose multiple cities to view at a single time through clicking the chosen city in the drop down bar.
 - Click on *"Y Variable:"* to view the boxplots of different variables such as *Price, Review Scores Ratings, Bedrooms, Beds* etc.
 
-![](images/edabox2.png){width=60%}
+![](images/edabox2.png){width=100%}
 
 The top boxplot showcases Boxplots of *"Y Variable"* against the Local Government Area.
 
-![](images/edabox3.png){width=60%}
+![](images/edabox3.png){width=100%}
 
 The bottom boxplot showcases *"Price"* vs *"Property Type"* with a Facet Wrap of Local Government Area.
 
 ## Bivariate Analysis
 
-![](images/edabivariate.png){width=60%}
+![](images/edabivariate.png){width=100%}
 
 - Click on *"Region:"* to explore the different states in Australia.
 - Click on *"Local Government Area"* to explore the different cities in the State. You are able to choose multiple cities to view at a single time through clicking the chosen city in the drop down bar.
 - Click on *"X Variable:"* and *"Y Variable:"* to view the bivariate plot with different variables such as *Price, Review Scores Ratings, Bedrooms, Beds* etc. This will allow us to explore how 2 variables interact with each other
 
-![](images/edabivariate2.png){width=60%}
+![](images/edabivariate2.png){width=100%}
 
 The top plot is a density plot to showcase the density of the *"X Variable"*.
 
-![](images/edabivariate3.png){width=60%}
+![](images/edabivariate3.png){width=100%}
 
 The bottom plot is a bivariate plot to explore the relationship between 2 variables.
 
@@ -72,33 +72,33 @@ The two tables below the bivarate plots showcase the confidence interval of the 
 
 ## Correlation Analysis
 
-![](images/edacorr.png){width=60%}
+![](images/edacorr.png){width=100%}
 
 - Click on *"Visualisation Method:"* to view the correlation plots in different methods such as *"circle, ellipse and number"*.
 - Click on *"Reorder Correlation Matrix:"* to view the correlation plots in different orders such as *"hclust, alphabet and AOE"*.
 
-![](images/edacorr2.png){width=60%}
+![](images/edacorr2.png){width=100%}
 
 The plot represents the correlation plot of all the variables in the Airbnb data set.
 
 # Cluster Analysis
 
-![](images/cluster.png){width=60%}
+![](images/cluster.png){width=100%}
 
 - Click on *"Region:"* to explore the different states in Australia.
 - Click on *"Cluster Variable:"* to explore the different variables you would like to cluster. Types of variables are *"Price, Bedrooms, Beds, Review Score Ratings"* etc. You are also able to click to choose more variables that would be used for clustering.
 - Click on *"Distance Function:"* to choose between *"euclid"* and *"cosine"* distance for the clusters.
 - Toggle *"Cluster Size"* between the sizes 2 and 15, to see different cluster sizes in the data set.
 
-![](images/cluster2.png){width=60%}
+![](images/cluster2.png){width=100%}
 
 The first plot is the kmeans plot. it showcases the different cluster sizes.
 
-![](images/cluster3.png){width=60%}
+![](images/cluster3.png){width=100%}
 
 The second plot is an Optimal Cluster Plot, that gives you an indication the number of clusters that will be best for the data set used.
 
-![](images/cluster4.png){width=60%}
+![](images/cluster4.png){width=100%}
 
 The third plot is a parallel plot that showcases the relationship of the variables and the clusters. It gives an indication of the characteristics of the cluster that was formed.
 
@@ -113,7 +113,7 @@ Step 3) allows you to select the variable of interest from a list of six..
 
 The resultant maps also allows you to click on the area within each contiguous boundary to have more information, such as the name of the LGA, the status (e.g. (C) is a city, (A) an area, (T) towns, (M) municipalities, and (S) shire), and the value of the variable of interest on the first geographical visualization, and the clustering analysis statistics on the second geo-viz on the right. 
 
-![](images/geospatial1.png){width=60%} 
+![](images/geospatial1.png){width=100%} 
 
 Step 4) we go on to the options for individual geoviz. For the left-hand viz, user can first select whether you want the distribution of raw values displayed, or that of the local indicators of spatial association's statistics displayed. Note that if the Moran's I's p-value or the Getis-Ord's G z-scores are selected, selection for other options (see step 4 and 5 below) will be disabled as these statistical results are to be interpreted on pre-determined intervals.  
 
@@ -125,7 +125,7 @@ Step 7) on the right-hand viz, user can select variables to alter the clustering
 
 Step 8) in geospatial analysis, there are also different methods to select the definition of 'neighbor' - this can be selected by changing the "Analysis methods:" panel options. Note that if "K Nearest Neighbors" is selected, an additional slider requesting user to input the number of nearest neighbors to be considered will appear. Same thing, if "Distance" is selected, a slider to select the distance radius to be considered neighbor will appear as well. 
 
-![](images/geospatial2.png){width=60%} 
+![](images/geospatial2.png){width=100%} 
 
 # Sentiment Analysis
 The sentiment analysis module of this Shiny app includes two analysis models: a word cloud and a topic model.
@@ -140,7 +140,7 @@ Step 3) Select the region of focus. In this case, it is Victroria.
 
 The word cloud will be generated. The size of the font represents the relative frequency of the word in the description section of  Airbnb listings that fall in the category of the filter settings above (the word in the largest font is the most common word).
 
-![](images/wordcloud.png){width=60%}
+![](images/wordcloud.png){width=100%}
 
 ## Topic Modelling</br>
 
@@ -164,24 +164,24 @@ Step 5) Enter the number of words you would like to be displayed for each topic.
 
 The LDA topic model will be generated. The bar beside the corresponding word represents the probability (beta) of that word appearing in that particular topic. The longer the bar, the higher the probability.
 
-![](images/topicmodel.png){width=60%}
+![](images/topicmodel.png){width=100%}
 
 # Multiple Linear Regression
 
 ## Regression for Price
 
-![](images/mlr.png){width=60%}
+![](images/mlr.png){width=100%}
 
 - Click on *"Independent Variables:"* to choose the multiple variables that you would like to apply in the Multiple Linear Regression (MLR). The choices of variables could be influenced through the correlation plot found in the EDA. It is better to choose variables with low correlation with each other.
 - Click on *"Strategies of Stepwise:"* to choose whether the MLR will move in a *"Forward", "Backward",* or *"Stepwise"* direction.
 
-![](images/mlr2.png){width=60%}
+![](images/mlr2.png){width=100%}
 
 The *"Regression Summary"* showcases the MLR calculation and gives us an indication of the significance of each variable in the regression with respect to *"Price"*.
 
 ## Regression for Review Score Ratings
 
-![](images/mlr3.png){width=60%}
+![](images/mlr3.png){width=100%}
 
 - Click on *"Independent Variables:"* to choose the multiple variables that you would like to apply in the Multiple Linear Regression (MLR). The choices of variables could be influenced through the correlation plot found in the EDA. It is better to choose variables with low correlation with each other.
 - Click on *"Strategies of Stepwise:"* to choose whether the MLR will move in a *"Forward", "Backward",* or *"Stepwise"* direction.
