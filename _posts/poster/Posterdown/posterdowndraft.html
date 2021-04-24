@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<title>posterdowndraft.utf8</title>
+
+<script src="posterdowndraft_files/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+
+
+
+<!--
+Font-awesome icons ie github or twitter
+-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/brands.css" integrity="sha384-n9+6/aSqa9lBidZMRCQHTHKJscPq6NW4pCQBiMmHdUCvPN8ZOg2zJJTkC7WIezWv" crossorigin="anonymous">
+
+<!--
+Google fonts api stuff
+-->
+<link href='https://fonts.googleapis.com/css?family=Helvetica' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Rasa' rel='stylesheet'>
+
+<!--
+Here are the required style attributes for css to make this poster work :)
+-->
+<style>
+@page {
+size: 59.4cm 84.1cm;
+margin: 0;
+padding: 0;
+}
+body {
+margin: 0px;
+padding: 0px;
+width: 59.4cm;
+height: 84.1cm;
+text-align: justify;
+font-size: 17pt;
+line-height: 1.05;
+}
+/* RMarkdown Class Styles */
+/* center align leaflet map,
+from https://stackoverflow.com/questions/52112119/center-leaflet-in-a-rmarkdown-document */
+.html-widget {
+margin: auto;
+position: sticky;
+margin-top: 2cm;
+margin-bottom: 2cm;
+}
+.leaflet.html-widget.html-widget-static-bound.leaflet-container.leaflet-touch.leaflet-fade-anim.leaflet-grab.leaflet-touch-drag.leaflet-touch-zoom {
+position: sticky;
+width: 100%;
+}
+pre.sourceCode.r {
+background-color: #dddddd40;
+border-radius: 4mm;
+padding: 4mm;
+width: 75%;
+margin: auto;
+margin-top: 1em;
+margin-bottom: 1em;
+/* align-items: center; */
+}
+code.sourceCode.r{
+background-color: transparent;
+font-size: 20pt;
+border-radius: 2mm;
+}
+code {
+font-size: 25pt;
+font-family: monospace;
+background-color: #FF5A5F24;
+color: #FF5A5F;
+padding: 1.2mm;
+line-height: 1;
+border-radius: 2mm;
+}
+caption {
+margin-bottom: 10px;
+font-size: 12pt;
+font-style: italic;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #FF5A5F20;
+}
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+  border-spacing: 0;
+  font-size: 40%;
+  border-style: none;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-right: 1em;
+  padding-left: 1em;
+  line-height: 1em;
+}
+table {
+  margin: auto;
+}
+th {
+  padding-left: 5mm;
+  padding-right: 5mm;
+}
+.caption {
+font-size: 12pt;
+font-style: italic;
+padding-top: 0;
+}
+.references {
+font-size: 20px;
+line-height: 90%;
+}
+/* Create three unequal columns that floats next to each other */
+.column {
+float: left;
+padding: 0px;
+}
+.outer {
+width: 59.4cm;
+height: calc(84.1cm *  (1 - 0.045 - 0.0 - 0.01) );
+-webkit-column-count: 3; /* Chrome, Safari, Opera */
+-moz-column-count: 3; /* Firefox */
+column-count: 3;
+-webkit-column-fill: auto;
+-moz-column-fill: auto;
+column-fill: auto;
+column-gap: 0;
+padding-left: 0cm;
+padding-right: 0cm;
+/* -webkit-column-rule-width: 50%;
+-moz-column-rule-width: 50%;
+column-rule-width: 50%; */
+-webkit-column-rule-style: none;
+-moz-column-rule-style: none;
+column-rule-style: none;
+-webkit-column-rule-color: black;
+-moz-column-rule-color: black;
+column-rule-color: black;
+background-color: #ffffff;
+font-family: Rasa;
+margin-top: calc(84.1cm *  0.045 );
+padding-top: 1em;
+padding-bottom: 1em;
+}
+span.citation {
+  color: #FF5A5F;
+  font-weight: bold;
+}
+a {
+text-decoration: none;
+color: #FF5A5F;
+}
+#title {
+font-size: 125pt;
+text-align: left;
+margin: 0;
+line-height: 98%;
+border-bottom: 0;
+font-weight: normal;
+background: 0;
+}
+#author {
+color: #FF5A5F;
+margin: 0;
+line-height: 85%;
+font-size: 12pt;
+}
+#affiliation {
+padding-top: 0.1em;
+color: ;
+font-style: italic;
+font-size: 25px;
+margin: 0;
+}
+sup {
+color: #484848;
+}
+.affiliation sup {
+font-size: 20px;
+}
+.author {
+text-align: left;
+}
+.author sup {
+font-size: 30px;
+}
+.author_extra {
+color: #FF5A5F;
+margin: 0;
+line-height: 85%;
+font-size: 35px;
+text-align: left;
+}
+.outer h1, h2, h3, h4, h5, h6 {
+text-align: center;
+margin: 0;
+font-weight: bold;
+}
+.section h1 {
+  text-align:center;
+  padding-bottom:5px;
+  background:
+    linear-gradient(
+      to left,
+      #ffffff 1%,
+      #ffffff 20%,
+      #FF5A5F75 33%,
+      #FF5A5F 50%,
+      #FF5A5F75 66%,
+      #ffffff 80%,
+      #ffffff 99%
+    )
+    left
+    bottom
+    #ffffff
+    no-repeat;
+  background-size:100% 5px ;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+.outer h2 {
+text-align: center;
+}
+.outer p, .level2 {
+color: #000000;
+}
+.outer ol {
+padding-left: 8%;
+padding-right: 8%;
+text-align: left;
+}
+.main {
+width: 59.4cm;
+height: calc(84.1cm * 0.045);
+position: absolute;
+background-color: #FF5A5F;
+color: #ffffff90;
+font-family: Helvetica;
+background-image: linear-gradient(#FF5A5F 50%,#FF5A5F);
+}
+.main strong {
+color: #ffffff;
+}
+.main strong > sup {
+color: #ffffff;
+}
+.main sup {
+color: #ffffff90;
+}
+#main-img-left {
+width: 10%;
+left: 0.5in;
+bottom: 0.2in;
+position: absolute;
+}
+#main-img-center {
+width: 10%;
+left: calc(59.4cm * 0.45);
+bottom: 0.5in;
+position: absolute;
+}
+#main-img-right {
+width: 10%;
+right: 0.5in;
+bottom: 0.2in;
+position: absolute;
+}
+.main p {
+font-size: 60pt;
+font-family: Helvetica;
+text-align: center;
+margin: 0;
+position: absolute;
+top: 50%;
+-ms-transform: translateY(-50%);
+transform: translateY(-50%);
+margin-left: 1em;
+}
+.fab {
+color: #00000030;
+font-size: 25px;
+}
+.twitter, i {
+color: #00000030;
+font-size: 35px;
+text-decoration: none;
+}
+a.email {
+text-decoration: none;
+color: #00000030;
+font-size: 35px;
+}
+.envelope {
+color: #00000030;
+font-size: 5px;
+text-decoration: none;
+}
+.poster_wrap {
+width: 59.4cm;
+height: 84.1cm;
+padding: 0cm;
+}
+.main_bottom {
+width: 59.4cm;
+height: calc(84.1cm * 0.0);
+margin-top: calc(84.1cm * (1 - 0.0));
+position: absolute;
+background-color: #FF5A5F;
+background-image: linear-gradient(#FF5A5F 10%, #FF5A5F);
+}
+.section {
+  padding-left: 10mm;
+  padding-right: 10mm;
+}
+span > #tab:mytable {
+  font-weight: bold;
+}
+.orcid img {
+  width: 3%;
+}
+.emphasis {
+  background-color: #008080;
+  color: #ffffff;
+  border: solid #0b2045 3mm;
+  margin: 1em;
+  padding-left: 0;
+  padding-right: 0;
+}
+.emphasis h1 {
+  font-weight: bold;
+  background: none;
+  background-color: #0b2045;
+  padding-bottom: 5mm;
+  padding-top: 1mm;
+  margin-top: -1mm;
+  margin-right: -1mm;
+  margin-left: -1mm;
+}
+.emphasis blockquote {
+  border: 0;
+}
+.emphasis ol {
+  padding: 0;
+  padding-left: 8%;
+  font-size: 100%;
+  font-weight: bold;
+}
+.emphasis p {
+  color: #ffffff;
+}
+</style>
+</head>
+<body>
+
+
+<div class="poster_wrap">
+
+<div class="column outer">
+<div class="section">
+
+<h3 id="author" class="author">
+
+  </h3>
+
+<h5 id="author_extra", class="author_extra">
+<strong>Louelle Teo |</strong><sup></sup>
+ <strong>Jason Tey |</strong><sup></sup>
+ <strong>Wong Kian Hoong</strong><sup></sup>
+</h5>
+
+
+</div>
+
+<div id="issues-and-problems" class="section level1">
+<h1>Issues and problems</h1>
+<p>Airbnb, Inc. is one of the most well-known vacation rental platforms in the world. With almost 3 million hosts listing over 7 million accommodations worldwide. There are currently a number of analyses that has been conducted on the Airbnb dataset. <a href="https://medium.com/@jkwonhalla/airbnb-listings-data-analysis-with-r-e2c6001147a6#:~:text=%20Airbnb%20Listings%20Data%20Analysis%20with%20R%20%28Analyses%29,from%20applying%20LDA%20to%20the%20three-class...%20More%20">Kwon et. al. (2018)</a>, <a href="https://medium.com/analytics-vidhya/how-to-analyze-airbnb-performance-data-in-the-right-way-b83f3dad1458">Chen (2019)</a>, <a href="https://medium.com/@emrebilgehangedik/seattle-airbnb-listings-analysis-d88c839596f8">Gedik (2020)</a>, <a href="https://towardsdatascience.com/airbnb-rental-listings-dataset-mining-f972ed08ddec">Gupta (2019)</a> are some recent examples. Each of these analysis focus only on one statistical method, and does not have a common theme across. More importantly, they lack interactivity to allow users to customize analysis based on their individual needs.</p>
+<p>Within the industry, there exists interactive tools that allow analysts and potential hosts to analyze rental data using attributes and past performance. One such example is AIRDNA. Notwithstanding the fact that the platform only offers paid services, the results are also provided in a prescriptive manner with little analytical value-add, and limited customisation for users to tweak the analysis to their requirements.</p>
+</div>
+<div id="motivation" class="section level1">
+<h1>Motivation</h1>
+<p>Given rich multitude of data made available through Airbnb’s website, there are huge potential for a free-to-use analytic dashboard that housing market analyst, sharing economy professionals, property agents, research institutes, and would-be AirBnB hosts to utilize and better understand this business environment.</p>
+<p>However, analysts, hosts, and professionals who are keen to delve into such data sets might not have the requisite knowledge or programmatic skills to develop their own analytic tools. This application aims to bridge this gap by providing a publicly available analytic dashboard that provides various analytic techniques to enable interested parties to tap on the rich data provided to derive meaningful insights for their professional use. The target users of this application are analysts with some knowledge of statistical techniques but lack the coding skills to develop their own tools.</p>
+</div>
+<div id="approach" class="section level1">
+<h1>Approach</h1>
+<p>Australia Airbnb Data set taken from <a href="http://insideairbnb.com/get-the-data.html">Inside Airbnb</a>, will be hosted on a R Shiny Dashboard, allowing users to toggle between 5 different elements. They will be able to explore</p>
+<ol style="list-style-type: decimal">
+<li>Exploratory Data Analysis (EDA)</li>
+<li>Cluster Analysis</li>
+<li>Exploratory Spatial Data Analysis</li>
+<li>Text and Sentiment Analysis</li>
+<li>Multi Linear Regression</li>
+</ol>
+</div>
+<div id="results" class="section level1">
+<h1>Results</h1>
+<div id="exploratory-data-analysis" class="section level2">
+<h2>Exploratory Data Analysis</h2>
+Exploratory Data Analysis allows initial investigation of the data, to discover correlation patterns and frequency distribution of different variables in the data set. Hypotheses can be formed, creating the foundation for different statistics analysis that could be explored after.
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
+<img src="images/hostlistings.png" alt="Bar Charts of Number of Hosts/Listings" width="100%" />
+<p class="caption">
+Figure 1: Bar Charts of Number of Hosts/Listings
+</p>
+</div>
+It is noted that <strong>New South Wales</strong> have the highest number of Hosts and Listings, with the Local Government Area (LGA) of <strong>Sydney</strong> taking the top spot. Users of the Shiny will be able to toggle the variables to size up the market condition in the barcharts.
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
+<img src="images/boxplotvic.png" alt="Boxplots of Victoria's Property Prices" width="100%" />
+<p class="caption">
+Figure 2: Boxplots of Victoria’s Property Prices
+</p>
+</div>
+Taking a look at another State <strong>Victoria</strong>, we can analyze the distribution of the pricing or other variables through a boxplot. It gives us an insight into the pricing range for the type of housing.
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-9"></span>
+<img src="images/densityplot.png" alt="Density Plot of Victoria's Review Scores Rating" width="100%" />
+<p class="caption">
+Figure 3: Density Plot of Victoria’s Review Scores Rating
+</p>
+</div>
+The Density plot of variables allows us to view and observe any skewness in the distribution. For example, in this density plot of the State of <strong>Victoria</strong>, the <em>Review Scores Ratings</em> are generally between 80 to 100, and peaks can be seen at multiples of 20.
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-10"></span>
+<img src="images/bivariate.png" alt="Bivariate Analysis between Price and Review Scores Ratings" width="100%" />
+<p class="caption">
+Figure 4: Bivariate Analysis between Price and Review Scores Ratings
+</p>
+</div>
+In the Bivariate analysis, we can review how the X Variable of interest (eg, <em>Review Score Rating</em>) correlates to another variable. In the plot above, we found the four LGAs to have a low correlation between <em>Price</em> and <em>Review Scores Rating</em>.
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
+<img src="images/corrplot.png" alt="Correlation Plot" width="100%" />
+<p class="caption">
+Figure 5: Correlation Plot
+</p>
+</div>
+<p>Our last Exploratory Data Analysis explores a correlation chart between all the variables in the dataset. We observe that some variables are highly correlated like <em>Price</em> and <em>Bedrooms</em>, while some are neutral such as <em>Price</em> and <em>Review Scores Ratings</em>.</p>
+</div>
+<div id="cluster-analysis" class="section level2">
+<h2>Cluster Analysis</h2>
+<p>A K-Means Clustering is first plotted in the Shiny. Users are able to toggle between variables they are interested in and choose an optimal cluster size. The data clusters are visualized with a parallel plot as below.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
+<img src="images/parallelplot.png" alt="Parallel Plot" width="100%" />
+<p class="caption">
+Figure 6: Parallel Plot
+</p>
+</div>
+<p>From the parallel plot above, cluster 4 appears to be listings with higher number of beds and bedrooms that are listed at a higher price with varying review scores rating. This cluster of listings likely caters to large groups.</p>
+</div>
+<div id="exploratory-spatial-data-analysis" class="section level2">
+<h2>Exploratory Spatial Data Analysis</h2>
+<p>Spatial Data Analysis is conducted to provide quick overview of the geographical distribution of various variables of interest such as median price of listings across LGAs. A further Local Indicator of Spatial Association (LISA) is also conducted to provide statistical rigor in testing spatial autocorrelation.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-13"></span>
+<img src="images/geo.png" alt="Exploratory Spatial Data Analysis" width="100%" />
+<p class="caption">
+Figure 7: Exploratory Spatial Data Analysis
+</p>
+</div>
+<p>Using a choropleth (left-hand fig) to present the median price of listings across LGAs in the Victoria region, we note that prices are highest around the Melbourne Bay Area (darkest pink). With this, we can easily compare whether median prices are within the same range, higher, or lower across the different LGAs.</p>
+<p>However, the choropleth does not provide an objective view of how the variable (e.g. median price) of one LGA compares with the other LGAs around it or across Australia. A LISA analysis is thus employed to identify clusters or outliers between LGAs and their surrounding neighbors using Local Moran’s I statistics (right-hand fig). The figure above presents the spatial analysis for the region of Victoria in Australia. As observed, there is an area of low values within neighbors of high values (Low-High in dark blue) north of the Melbourne Bay Area, and two High-High clusters (purple) of high values around neighborhood of high values (one around the Great Ocean Road, the other around more remote and less popular tourist spots).</p>
+<p>Users are able to toggle between different regions and variable of interests. Reference value (raw value, p-value, local Moran’s I) and bidding methods for the choropleth, and neighbor analysis method and confidence level for the LISA, can also be varied.</p>
+</div>
+<div id="text-and-sentiment-analysis" class="section level2">
+<h2>Text and Sentiment Analysis</h2>
+Text and sentiment analysis is performed on the description field of the accommodation listings. This is different from the usual sentiment analysis which is performed on guests’ reviews of their accommodation. Using a Word Cloud which can be filtered to specific regions and review score ranges, the users can identify if certain words used to describe the listing may contribute to higher review ratings given by guests. The word cloud below is for the region of Victoria and review scores in the 91 - 100 range (guests with very high satisfaction of their stay).
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-14"></span>
+<img src="images/wordcloud.png" alt="Word Cloud" width="100%" />
+<p class="caption">
+Figure 8: Word Cloud
+</p>
+</div>
+Latent Dirichlet Allocation (LDA) topic modelling technique is performed to infer what types or topics of listing descriptions there are. The application allows the user to select the number of topics to identify, and also the number of words to present in the list. From these topics, the user can attempt to form a profile of these listings which would appeal to different segment of guests. The below LDA shows the region of Victoria and review scores in the 91 - 100 range. In this case, the user wants to identify 3 different topics.
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-15"></span>
+<img src="images/topicmodel.png" alt="Topic modelling using Latent Dirichlet Allocation" width="100%" />
+<p class="caption">
+Figure 9: Topic modelling using Latent Dirichlet Allocation
+</p>
+</div>
+</div>
+<div id="multi-linear-regression" class="section level2">
+<h2>Multi Linear Regression</h2>
+<p>Users will be able to explore a Multi Linear Regression of either <em>Price</em> or <em>Review Score Ratings</em> to understand the variables that will directly affect the target variables. With this information, they can therefore understand the effect an individual predictor can cause.</p>
+<p>Users are able to select multiple variables, and toggle through different analysis method such as “Forward”, “Backward” and “Stepwise” regression.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-16"></span>
+<img src="images/mlr.png" alt="Multi Linear Regression" width="100%" />
+<p class="caption">
+Figure 10: Multi Linear Regression
+</p>
+</div>
+<p>The regression above returns four variables that are of statistical significance in predicting <em>Price</em>. However, the model is only able to explain 4% of the variation in price. (Adjusted R-squared = 0.044)</p>
+</div>
+</div>
+<div id="future-work" class="section level1">
+<h1>Future Work</h1>
+<p>Based on the exploratory spatial data analysis, we noted that prices are highly driven by location-based factors. This is further confirmed when the MLR fails to account for a large portion of the variation in price. A Geographically-Weighted Regression (GWR) can be introduced in future editions to enhance the performance of the predictive model.</p>
+<p>Other sentiment analysis techniques such as LSA could also be included, to provide the analyst with a more comprehensive suite of statistical analysis tools. Complex statistical analysis such as hierarchical clustering can also be included, with the support of adequate computing hardware.</p>
+<p>Deeper analysis could also be done on the profile of hosts as well as guests, for example the type of hosts that are more likely to have listings with good reviews, or the type of guest are more likely to give good reviews, for a particular listing type.</p>
+<p>On a whole-of-Australia scale, there are numerous LGAs with missing data. In order support a more robust and holistic geospatial association analysis, these information gaps will need to be plucked.</p>
+<p>Future versions of such an application could include other countries to provide more comprehensive analysis of different regions and markets. FOr example, Airbnb listings in South Africa may provide different insight into what hosts provide and what guests want, compared to Australia or other countries.</p>
+</div>
+
+</div>
+<div class="main">
+<p><img src="images/airbnbanalytics.png" /></p>
+</div>
+<div class="main_bottom">
+<img id="main-img-left" src=>
+<img id="main-img-center" src=>
+<img id="main-img-right" src=>
+</div>
+</div>
+
+
+
+</body>
+</html>
