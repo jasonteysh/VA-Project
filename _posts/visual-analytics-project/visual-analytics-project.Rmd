@@ -1,0 +1,29 @@
+---
+title: "Visual Analytics Project Submission"
+description: |
+  Submission for the project work for this course.
+author:
+  - name: Louelle TEO Fengmin
+  - name: Jason TEY Shou Heng
+  - name: WONG Kian Hoong (Andy)
+date: 04-25-2021
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Project submission 
+1) [Project Proposal](https://isss608grp1.netlify.app/posts/project-proposal/)
+
+2) [Project Poster](https://isss608grp1.netlify.app/posts/poster/)
+
+3) [Shiny Application](https://louelle.shinyapps.io/ISSS608Grp1-Shiny/)
+
+4) [User Guide for the Shiny Application](https://isss608grp1.netlify.app/posts/userguide/)
+
+5) [Project Research Paper](https://isss608grp1.netlify.app/posts/researchpaper/)

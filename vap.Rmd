@@ -1,10 +1,10 @@
 ---
 title: "Visual Analytics Project"
 listing:
-  posts:
-    - project-proposal
-    - poster
-    - shiny
-    - userguide
-    - researchpaper
+#  posts:
+#    - project-proposal
+#    - poster
+#    - shiny
+#    - userguide
+#    - researchpaper
 ---

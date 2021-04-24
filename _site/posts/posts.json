@@ -21,58 +21,8 @@
     "categories": [],
     "contents": "\r\n\r\nContents\r\nPOSTER HERE\r\n\r\nPOSTER HERE\r\n\r\n\r\n\r\n",
     "preview": {},
-    "last_modified": "2021-04-24T19:49:09+08:00",
-    "input_file": "poster.utf8.md"
-  },
-  {
-    "path": "posts/shiny/",
-    "title": "Visual Analytics Project: Shiny Application",
-    "description": "The Shiny application developed for the project work for this course.",
-    "author": [
-      {
-        "name": "Louelle TEO Fengmin",
-        "url": {}
-      },
-      {
-        "name": "Jason TEY Shou Heng",
-        "url": {}
-      },
-      {
-        "name": "WONG Kian Hoong (Andy)",
-        "url": {}
-      }
-    ],
-    "date": "2021-04-25",
-    "categories": [],
-    "contents": "\r\nClick here to access the Shiny application. \r\n\r\n\r\n\r\n",
-    "preview": {},
-    "last_modified": "2021-04-24T19:49:18+08:00",
-    "input_file": "shiny.utf8.md"
-  },
-  {
-    "path": "posts/userguide/",
-    "title": "Visual Analytics Project: User Guide",
-    "description": "User Guide for the Shiny application.",
-    "author": [
-      {
-        "name": "Louelle TEO Fengmin",
-        "url": {}
-      },
-      {
-        "name": "Jason TEY Shou Heng",
-        "url": {}
-      },
-      {
-        "name": "WONG Kian Hoong (Andy)",
-        "url": {}
-      }
-    ],
-    "date": "2021-04-25",
-    "categories": [],
-    "contents": "\r\n\r\nContents\r\nExploratory Data Analysis (EDA)\r\nBar Charts\r\nBoxplots\r\nBivariate Analysis\r\nCorrelation Analysis\r\n\r\nCluster Analysis\r\nExploratory Spatial Data Visualization and Analysis\r\nSentiment Analysis\r\nWord Cloud\r\nTopic Modelling\r\n\r\nMultiple Linear Regression\r\nRegression for Price\r\nRegression for Review Score Ratings\r\n\r\n\r\nExploratory Data Analysis (EDA)\r\nExploratory Data Analysis allows user to perform initial investigation on the data, so that user can discover correlation patterns and frequency distribution of different variables in the data set. It allows user to formulate hypothesis that forms the foundation for different statistics analysis that could be explored after.\r\nBar Charts\r\nBar charts allow user to explore the total count of relevant variables (e.g. number of hosts) in each geographical division (in this case, State and Local Government Area level)\r\n\r\nStep 1) Click on “Region:” to explore the different states in Australia\r\nStep 2) Click on “X Variable:” to select either “Number of Hosts” or “Number of Listings” as the variable of interest.\r\nThe top barchart (see above) showcases the “X Variable” (in this case, Number of Hosts) per State and is fixed.\r\n\r\nThe bottom barchart (see above) showcases the LGAs with the top-10 “Number of Hosts” within the selected region.\r\nBoxplots\r\nBox plots allow users to examine the distribution of selected variable, identifying any extreme outliers or skewness in the distribution.\r\n\r\nStep 1) Select “Region:” to explore the different states in Australia.\r\nStep 2) Click on “Local Government Area” to trigger a dropdown list of possible LGAs in the State to include for exploration. Users are able to choose multiple LGAs to view at a single time through clicking the chosen city in the drop down bar.\r\nStep 3) Select “Y Variable:” of interest such as Price, Review Scores Ratings, Bedrooms, Beds etc. to view the corresponding boxplots\r\n\r\nThe top boxplot (see above) showcases Boxplots of “Prices” in the selected LGAs. Hovering over each boxplot provides more information on the quantile, minimum, and maximum values.\r\n\r\nThe bottom boxplot (see above) showcases “Price” distribution for each “Property Type”, facet-wraped by select LGAs. Similarly, hovering over each boxplot provides more information on the quantile, minimum, and maximum values.\r\nBivariate Analysis\r\nDensity plot is an alternative view to the freqeuncy distribution of a selected variable.\r\nBivariate plot allows user to examine the relationship and visualize any observable correlation between two variables.\r\n\r\nStep 1) Select “Region:” to explore the different states in Australia.\r\nStep 2) Click on “Local Government Area” to trigger a dropdown list of possible LGAs in the State to include for exploration. Users are able to choose multiple LGAs to view at a single time through clicking the chosen city in the drop down bar.\r\nStep 3 Select “X Variable:” of interest to see density plot.\r\nStep 4) Select “Y Variable:” as well to view the bivariate plot between the X- and Y-variable of interest. This will allow user to explore how 2 variables interact with each other\r\n\r\nThe top plot (see above) is a density plot to showcase the frequency of the “X Variable”.\r\n\r\nThe bottom plot (see above) is a bivariate plot to explore the relationship between two variables. The two tables below the bivariate plots showcase the confidence interval of the “X Variable” and “Y Variable:”.\r\nCorrelation Analysis\r\n\r\nStep 1) Click on “Visualisation Method:” to view the correlation plots in different methods such as “circle, ellipse and number”.\r\nStep 2) Click on “Reorder Correlation Matrix:” to view the correlation plots in different orders such as “hclust, alphabet and AOE”.\r\n\r\nThe plot represents the correlation plot of all the variables in the Airbnb data set.\r\nCluster Analysis\r\n\r\nStep 1) Click on “Region:” to choose a states in Australia to focus on.\r\nStep 2) Select “Cluster Variable:” to include variables for the cluster analysis. Variables include “Price, Bedrooms, Beds, Review Score Ratings” etc.\r\nStep 3) Click on “Distance Function:” to choose between “euclid” and “cosine” distance for the clusters.\r\nStep 4) Toggle “Cluster Size” between the sizes 2 and 15, to see different cluster sizes in the data set.\r\n\r\nThe first plot is the K-Means plot, showcasing clustering with different number of clusters up to the K selected.\r\n\r\nThe second plot is an Optimal Cluster Plot, that gives you an indication the number of clusters that will be best for the data set used. Optimal K exists where the kink (change in gradient) is the steepest.\r\n\r\nThe third plot is a parallel plot that showcases the relationship of the variables and the clusters. It gives an indication of the characteristics of the cluster that was formed.\r\nExploratory Spatial Data Visualization and Analysis\r\nThis tab can be used for exploratory spatial data visualization and analysis on the Local Government Area (LGA) level for each of the States of Australia.\r\nStep 1) by clicking on the Spatial Cluster Analysis main left-hand panel, we enter this tab, with two maps coming into view (Note: it might take awhile for the viz to load). The left-hand viz provides an overview of the distribution of either the raw values (default) or clustering statistics for the LGAs within a selected area (State) of Australia. The right-hand viz displays the spatial cluster analysis results - showing areas of high/low clusters, and outliers\r\nStep 2) clicking on the drop down list on the “Select State:” tab allows users to select the state of interest from a list of nine different states in Australia (Note: while the visualization allows for user to select the “All” state option, it is highly discouraged as some of the spatial analyses do not have meaningful interpretations for areas with considerable missing data - for which at the whole-of-Australia level, data are more sparsed. When analyzing the data, users are also advised to conduct due diligence in determining whether the selected data range of interest has sufficiently satisfied analysis requirements.)\r\nStep 3) allows users to “Select Variable” of interest from a list of six.\r\nThe resultant maps also allow users to click on the area within each contiguous boundary to have more information, such as the name of the LGA, the status (e.g. (C) is a city, (A) an area, (T) towns, (M) municipalities, and (S) shire), and the value of the variable of interest on the first geographical visualization, and the clustering analysis statistics on the second geo-viz on the right.\r\n\r\nStep 4) we go on to the options for individual geoviz. For the left-hand viz, user can first select the reference value to be displayed - options include raw values and local indicators of spatial association’s statistics. Note that if the Moran’s I’s p-value or the Getis-Ord’s G z-scores are selected, selection for other options (see step 4 and 5 below) will be disabled as these statistical results are to be interpreted on pre-determined intervals.\r\nStep 5) allows user to select the binning methods - in other words, how should the values be split up, be it by equal intervals, by natural breaks (Jenks’ and Fisher’s), standard deviation bins, etc. A total of 10 options are available under the drop-down.\r\nStep 6) allows user to select the number of intervals to have - i.e. how many different classes should the data be split into. User can shift the slider manually to select the desired class. Note that the selection is very critical (compulsory) for classification methods such as the K-Mean selection; practical for methods such as Equal, Pretty, Jenks and Fisher; but not as useful for methods such as log10 Pretty or even standard deviation.\r\nStep 7) on the right-hand viz, user can select variables to alter the clustering parameters. Firstly, the level of confidence - i.e. how much confidence do we need to reject the null hypothesis that there are no spatial clustering/outlier at the areas identified to have such cluster/outlier.\r\nStep 8) there are also different methods to select the definition of ‘neighbor’ - this can be selected by changing the “Analysis methods:” panel options. Note that if “K Nearest Neighbors” is selected, an additional slider requesting user to input the number of nearest neighbors to be considered will appear. Same thing, if “Distance” is selected, a slider to select the distance radius to be considered neighbor will appear as well.\r\n\r\nSentiment Analysis\r\nThe sentiment analysis module of this Shiny app includes two analysis models: a word cloud and a topic model.\r\nWord Cloud\r\nStep 1) Click on Text and Sentiment Analysis to open the module.\r\nStep 2) Select the range of Review score ratings that user wants to focus on. By default, all scores will be included.\r\nStep 3) Select the Region of focus. In this case, it is Victoria.\r\nThe word cloud will be generated. The size of the font represents the relative frequency of the word in the description section of Airbnb listings that fall in the category of the filter settings above (the word in the largest font is the most common word).\r\n\r\nTopic Modelling\r\nTopic modeling is an unsupervised machine learning technique that detects word and phrase patterns in documents and clusters them into groups known as topics.\r\nLatent Dirichlet Allocation (LDA) is one common topic modeling technique. The basic assumption of LDA is that similar topics make use of similar words (i.e. distributional hypothesis). The purpose of LDA is to map the corpus to topics covering a significant number of words in the documents in the corpus.\r\nLDA assigns topics to arrangements of words for example, the best word for a topic related to accommodation. This is based on the assumption that documents are written with a certain arrangement of words and that those arrangements will determine the topics. LDA assumes that all words in the document can be assigned a probability of belonging to a topic. As such, the goal of LDA is to determine the mixture of topics that a document contains.\r\nThe navigation is similar to the Word Cloud pane.\r\nStep 1) Select the \"Topic Modelling tab under the Text and Sentiment Analysis panel tab to open the module.\r\nStep 2) Select the Range of review score ratings that user wants to focus on. By default, all scores will be included.\r\nStep 3) Select the Region of focus. In this case, it is Victoria.\r\nStep 4) Enter the number of topics user wants to identify. The default is three topics.\r\nStep 5) Enter the number of words user would like to have displayed for each topic. The default is 10 words.\r\nThe LDA topic model will be generated. The bar beside the corresponding word represents the probability (beta) of that word appearing in that particular topic. The longer the bar, the higher the probability.\r\n\r\nMultiple Linear Regression\r\nRegression for Price\r\n\r\nAt the “Regression for Price” tab,\r\nStep 1) Click on “Independent Variables:” to choose the multiple variables that you would like to apply in the Multiple Linear Regression (MLR). The choices of variables could be influenced through the correlation plot found in the EDA. Users are encouraged to choose variables with low correlation with each other.\r\nStep 2) Click on “Strategies of Stepwise:” to choose whether the Stepwise MLR will move in a “Forward”, “Backward”, or “Stepwise” direction.\r\n\r\nThe “Regression Summary” showcases the MLR calculation and gives us an indication of the significance of each variable in the regression with respect to “Price”.\r\nRegression for Review Score Ratings\r\n\r\nAt the “Regression for Review Score Rating” tab,\r\nStep 1) Click on “Independent Variables:” to choose the multiple variables that you would like to apply in the Multiple Linear Regression (MLR). The choices of variables could be influenced through the correlation plot found in the EDA. It is better to choose variables with low correlation with each other.\r\nStep 2) Click on “Strategies of Stepwise:” to choose whether the Stepwise MLR will move in a “Forward”, “Backward”, or “Stepwise” direction.\r\nThe “Regression Summary” showcases the MLR calculation and gives us an indication of the significance of each variable in the regression with respect to “Review Score Ratings”.\r\n\r\n\r\n\r\n",
-    "preview": {},
-    "last_modified": "2021-04-24T19:49:25+08:00",
-    "input_file": "userguide.utf8.md"
+    "last_modified": "2021-04-24T19:59:13+08:00",
+    "input_file": {}
   },
   {
     "path": "posts/researchpaper/",
@@ -96,8 +46,83 @@
     "categories": [],
     "contents": "\r\n\r\n\r\n\r\n\r\n",
     "preview": {},
-    "last_modified": "2021-04-24T19:49:32+08:00",
-    "input_file": "researchpaper.utf8.md"
+    "last_modified": "2021-04-24T19:49:33+08:00",
+    "input_file": {}
+  },
+  {
+    "path": "posts/shiny/",
+    "title": "Visual Analytics Project: Shiny Application",
+    "description": "The Shiny application developed for the project work for this course.",
+    "author": [
+      {
+        "name": "Louelle TEO Fengmin",
+        "url": {}
+      },
+      {
+        "name": "Jason TEY Shou Heng",
+        "url": {}
+      },
+      {
+        "name": "WONG Kian Hoong (Andy)",
+        "url": {}
+      }
+    ],
+    "date": "2021-04-25",
+    "categories": [],
+    "contents": "\r\nClick here to access the Shiny application. \r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2021-04-24T19:49:19+08:00",
+    "input_file": {}
+  },
+  {
+    "path": "posts/userguide/",
+    "title": "Visual Analytics Project: User Guide",
+    "description": "User Guide for the Shiny application.",
+    "author": [
+      {
+        "name": "Louelle TEO Fengmin",
+        "url": {}
+      },
+      {
+        "name": "Jason TEY Shou Heng",
+        "url": {}
+      },
+      {
+        "name": "WONG Kian Hoong (Andy)",
+        "url": {}
+      }
+    ],
+    "date": "2021-04-25",
+    "categories": [],
+    "contents": "\r\n\r\nContents\r\nExploratory Data Analysis (EDA)\r\nBar Charts\r\nBoxplots\r\nBivariate Analysis\r\nCorrelation Analysis\r\n\r\nCluster Analysis\r\nExploratory Spatial Data Visualization and Analysis\r\nSentiment Analysis\r\nWord Cloud\r\nTopic Modelling\r\n\r\nMultiple Linear Regression\r\nRegression for Price\r\nRegression for Review Score Ratings\r\n\r\n\r\nExploratory Data Analysis (EDA)\r\nExploratory Data Analysis allows user to perform initial investigation on the data, so that user can discover correlation patterns and frequency distribution of different variables in the data set. It allows user to formulate hypothesis that forms the foundation for different statistics analysis that could be explored after.\r\nBar Charts\r\nBar charts allow user to explore the total count of relevant variables (e.g. number of hosts) in each geographical division (in this case, State and Local Government Area level)\r\n\r\nStep 1) Click on “Region:” to explore the different states in Australia\r\nStep 2) Click on “X Variable:” to select either “Number of Hosts” or “Number of Listings” as the variable of interest.\r\nThe top barchart (see above) showcases the “X Variable” (in this case, Number of Hosts) per State and is fixed.\r\n\r\nThe bottom barchart (see above) showcases the LGAs with the top-10 “Number of Hosts” within the selected region.\r\nBoxplots\r\nBox plots allow users to examine the distribution of selected variable, identifying any extreme outliers or skewness in the distribution.\r\n\r\nStep 1) Select “Region:” to explore the different states in Australia.\r\nStep 2) Click on “Local Government Area” to trigger a dropdown list of possible LGAs in the State to include for exploration. Users are able to choose multiple LGAs to view at a single time through clicking the chosen city in the drop down bar.\r\nStep 3) Select “Y Variable:” of interest such as Price, Review Scores Ratings, Bedrooms, Beds etc. to view the corresponding boxplots\r\n\r\nThe top boxplot (see above) showcases Boxplots of “Prices” in the selected LGAs. Hovering over each boxplot provides more information on the quantile, minimum, and maximum values.\r\n\r\nThe bottom boxplot (see above) showcases “Price” distribution for each “Property Type”, facet-wraped by select LGAs. Similarly, hovering over each boxplot provides more information on the quantile, minimum, and maximum values.\r\nBivariate Analysis\r\nDensity plot is an alternative view to the freqeuncy distribution of a selected variable.\r\nBivariate plot allows user to examine the relationship and visualize any observable correlation between two variables.\r\n\r\nStep 1) Select “Region:” to explore the different states in Australia.\r\nStep 2) Click on “Local Government Area” to trigger a dropdown list of possible LGAs in the State to include for exploration. Users are able to choose multiple LGAs to view at a single time through clicking the chosen city in the drop down bar.\r\nStep 3 Select “X Variable:” of interest to see density plot.\r\nStep 4) Select “Y Variable:” as well to view the bivariate plot between the X- and Y-variable of interest. This will allow user to explore how 2 variables interact with each other\r\n\r\nThe top plot (see above) is a density plot to showcase the frequency of the “X Variable”.\r\n\r\nThe bottom plot (see above) is a bivariate plot to explore the relationship between two variables. The two tables below the bivariate plots showcase the confidence interval of the “X Variable” and “Y Variable:”.\r\nCorrelation Analysis\r\n\r\nStep 1) Click on “Visualisation Method:” to view the correlation plots in different methods such as “circle, ellipse and number”.\r\nStep 2) Click on “Reorder Correlation Matrix:” to view the correlation plots in different orders such as “hclust, alphabet and AOE”.\r\n\r\nThe plot represents the correlation plot of all the variables in the Airbnb data set.\r\nCluster Analysis\r\n\r\nStep 1) Click on “Region:” to choose a states in Australia to focus on.\r\nStep 2) Select “Cluster Variable:” to include variables for the cluster analysis. Variables include “Price, Bedrooms, Beds, Review Score Ratings” etc.\r\nStep 3) Click on “Distance Function:” to choose between “euclid” and “cosine” distance for the clusters.\r\nStep 4) Toggle “Cluster Size” between the sizes 2 and 15, to see different cluster sizes in the data set.\r\n\r\nThe first plot is the K-Means plot, showcasing clustering with different number of clusters up to the K selected.\r\n\r\nThe second plot is an Optimal Cluster Plot, that gives you an indication the number of clusters that will be best for the data set used. Optimal K exists where the kink (change in gradient) is the steepest.\r\n\r\nThe third plot is a parallel plot that showcases the relationship of the variables and the clusters. It gives an indication of the characteristics of the cluster that was formed.\r\nExploratory Spatial Data Visualization and Analysis\r\nThis tab can be used for exploratory spatial data visualization and analysis on the Local Government Area (LGA) level for each of the States of Australia.\r\nStep 1) by clicking on the Spatial Cluster Analysis main left-hand panel, we enter this tab, with two maps coming into view (Note: it might take awhile for the viz to load). The left-hand viz provides an overview of the distribution of either the raw values (default) or clustering statistics for the LGAs within a selected area (State) of Australia. The right-hand viz displays the spatial cluster analysis results - showing areas of high/low clusters, and outliers\r\nStep 2) clicking on the drop down list on the “Select State:” tab allows users to select the state of interest from a list of nine different states in Australia (Note: while the visualization allows for user to select the “All” state option, it is highly discouraged as some of the spatial analyses do not have meaningful interpretations for areas with considerable missing data - for which at the whole-of-Australia level, data are more sparsed. When analyzing the data, users are also advised to conduct due diligence in determining whether the selected data range of interest has sufficiently satisfied analysis requirements.)\r\nStep 3) allows users to “Select Variable” of interest from a list of six.\r\nThe resultant maps also allow users to click on the area within each contiguous boundary to have more information, such as the name of the LGA, the status (e.g. (C) is a city, (A) an area, (T) towns, (M) municipalities, and (S) shire), and the value of the variable of interest on the first geographical visualization, and the clustering analysis statistics on the second geo-viz on the right.\r\n\r\nStep 4) we go on to the options for individual geoviz. For the left-hand viz, user can first select the reference value to be displayed - options include raw values and local indicators of spatial association’s statistics. Note that if the Moran’s I’s p-value or the Getis-Ord’s G z-scores are selected, selection for other options (see step 4 and 5 below) will be disabled as these statistical results are to be interpreted on pre-determined intervals.\r\nStep 5) allows user to select the binning methods - in other words, how should the values be split up, be it by equal intervals, by natural breaks (Jenks’ and Fisher’s), standard deviation bins, etc. A total of 10 options are available under the drop-down.\r\nStep 6) allows user to select the number of intervals to have - i.e. how many different classes should the data be split into. User can shift the slider manually to select the desired class. Note that the selection is very critical (compulsory) for classification methods such as the K-Mean selection; practical for methods such as Equal, Pretty, Jenks and Fisher; but not as useful for methods such as log10 Pretty or even standard deviation.\r\nStep 7) on the right-hand viz, user can select variables to alter the clustering parameters. Firstly, the level of confidence - i.e. how much confidence do we need to reject the null hypothesis that there are no spatial clustering/outlier at the areas identified to have such cluster/outlier.\r\nStep 8) there are also different methods to select the definition of ‘neighbor’ - this can be selected by changing the “Analysis methods:” panel options. Note that if “K Nearest Neighbors” is selected, an additional slider requesting user to input the number of nearest neighbors to be considered will appear. Same thing, if “Distance” is selected, a slider to select the distance radius to be considered neighbor will appear as well.\r\n\r\nSentiment Analysis\r\nThe sentiment analysis module of this Shiny app includes two analysis models: a word cloud and a topic model.\r\nWord Cloud\r\nStep 1) Click on Text and Sentiment Analysis to open the module.\r\nStep 2) Select the range of Review score ratings that user wants to focus on. By default, all scores will be included.\r\nStep 3) Select the Region of focus. In this case, it is Victoria.\r\nThe word cloud will be generated. The size of the font represents the relative frequency of the word in the description section of Airbnb listings that fall in the category of the filter settings above (the word in the largest font is the most common word).\r\n\r\nTopic Modelling\r\nTopic modeling is an unsupervised machine learning technique that detects word and phrase patterns in documents and clusters them into groups known as topics.\r\nLatent Dirichlet Allocation (LDA) is one common topic modeling technique. The basic assumption of LDA is that similar topics make use of similar words (i.e. distributional hypothesis). The purpose of LDA is to map the corpus to topics covering a significant number of words in the documents in the corpus.\r\nLDA assigns topics to arrangements of words for example, the best word for a topic related to accommodation. This is based on the assumption that documents are written with a certain arrangement of words and that those arrangements will determine the topics. LDA assumes that all words in the document can be assigned a probability of belonging to a topic. As such, the goal of LDA is to determine the mixture of topics that a document contains.\r\nThe navigation is similar to the Word Cloud pane.\r\nStep 1) Select the \"Topic Modelling tab under the Text and Sentiment Analysis panel tab to open the module.\r\nStep 2) Select the Range of review score ratings that user wants to focus on. By default, all scores will be included.\r\nStep 3) Select the Region of focus. In this case, it is Victoria.\r\nStep 4) Enter the number of topics user wants to identify. The default is three topics.\r\nStep 5) Enter the number of words user would like to have displayed for each topic. The default is 10 words.\r\nThe LDA topic model will be generated. The bar beside the corresponding word represents the probability (beta) of that word appearing in that particular topic. The longer the bar, the higher the probability.\r\n\r\nMultiple Linear Regression\r\nRegression for Price\r\n\r\nAt the “Regression for Price” tab,\r\nStep 1) Click on “Independent Variables:” to choose the multiple variables that you would like to apply in the Multiple Linear Regression (MLR). The choices of variables could be influenced through the correlation plot found in the EDA. Users are encouraged to choose variables with low correlation with each other.\r\nStep 2) Click on “Strategies of Stepwise:” to choose whether the Stepwise MLR will move in a “Forward”, “Backward”, or “Stepwise” direction.\r\n\r\nThe “Regression Summary” showcases the MLR calculation and gives us an indication of the significance of each variable in the regression with respect to “Price”.\r\nRegression for Review Score Ratings\r\n\r\nAt the “Regression for Review Score Rating” tab,\r\nStep 1) Click on “Independent Variables:” to choose the multiple variables that you would like to apply in the Multiple Linear Regression (MLR). The choices of variables could be influenced through the correlation plot found in the EDA. It is better to choose variables with low correlation with each other.\r\nStep 2) Click on “Strategies of Stepwise:” to choose whether the Stepwise MLR will move in a “Forward”, “Backward”, or “Stepwise” direction.\r\nThe “Regression Summary” showcases the MLR calculation and gives us an indication of the significance of each variable in the regression with respect to “Review Score Ratings”.\r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2021-04-24T19:49:26+08:00",
+    "input_file": {}
+  },
+  {
+    "path": "posts/visual-analytics-project/",
+    "title": "Visual Analytics Project Submission",
+    "description": "Submission for the project work for this course.",
+    "author": [
+      {
+        "name": "Louelle TEO Fengmin",
+        "url": {}
+      },
+      {
+        "name": "Jason TEY Shou Heng",
+        "url": {}
+      },
+      {
+        "name": "WONG Kian Hoong (Andy)",
+        "url": {}
+      }
+    ],
+    "date": "2021-04-25",
+    "categories": [],
+    "contents": "\r\nProject submission\r\nProject Proposal\r\nProject Poster\r\nShiny Application\r\nUser Guide for the Shiny Application\r\nProject Research Paper\r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2021-04-24T20:13:34+08:00",
+    "input_file": {}
   },
   {
     "path": "posts/2021-03-31-assignment-andy-wong/",
