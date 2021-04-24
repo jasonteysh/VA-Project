@@ -16,4 +16,4 @@ output:
 options(tinytex.verbose = TRUE)
 ```
 
-# POSTER HERE
+![](images/poster-final.jpg)
