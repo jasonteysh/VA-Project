@@ -99,11 +99,11 @@ It is noted that **New South Wales** have the highest number of Hosts and Listin
 ```{r, echo=FALSE, fig.cap="Boxplots of Victoria's Property Prices", fig.align='center', dpi=300, fig.width=12, fig.height=6}
 knitr::include_graphics("images/boxplotvic.png")
 ```
-Taking a look at another State **Victoria**, we can analyze the distribution of the pricing or other variables through a boxplot. It gives us an insight into the pricing range for the type of housing. 
+Taking a look at the state of **Victoria**, we can analyze the distribution of the pricing or other variables through a boxplot. It gives us an insight into the pricing range for the type of housing. 
 ```{r, echo=FALSE, fig.cap="Density Plot of Victoria's Review Scores Rating", fig.align='center', dpi=300, fig.width=12, fig.height=6}
 knitr::include_graphics("images/densityplot.png")
 ```
-The Density plot of variables allows us to view and observe any skewness in the distribution. For example, in this density plot of the State of **Victoria**, the *Review Scores Ratings* are generally between 80 to 100, and peaks can be seen at multiples of 20.
+The Density plot of variables allows us to view and observe any skewness in the distribution. For example, in this density plot of **Victoria**, the *Review Scores Ratings* are generally between 80 to 100, and peaks can be seen at multiples of 20.
 ```{r, echo=FALSE, fig.cap="Bivariate Analysis between Price and Review Scores Ratings", fig.align='center', dpi=300, fig.width=12, fig.height=6}
 knitr::include_graphics("images/bivariate.png")
 ```
