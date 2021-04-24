@@ -2,9 +2,9 @@
 title: "Visual Analytics Project"
 listing:
   posts:
-  - project-proposal
-  - poster
-  - shiny
-  - userguide
-  - researchpaper
+    - project-proposal
+    - poster
+    - shiny
+    - userguide
+    - researchpaper
 ---

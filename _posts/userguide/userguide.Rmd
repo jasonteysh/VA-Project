@@ -1,15 +1,10 @@
 ---
 title: "Visual Analytics Project: User Guide"
 author:
-  - name: Louelle Teo Fengmin
-    email: louelle.teo.2020@mitb.smu.edu.sg
-    affiliation: Singapore Management University
-  - name: Jason Tey Shou Heng
-    email: jason.tey.2020@mitb.smu.edu.sg
-    affiliation: Singapore Management University
-  - name: Wong Kian Hoong
-    email: kh.wong.2020@mitb.smu.edu.sg
-    affiliation: Singapore Management University
+  - name: Louelle TEO Fengmin
+  - name: Jason TEY Shou Heng
+  - name: WONG Kian Hoong (Andy)
+date: 04-25-2021
 output:
   distill::distill_article:
     toc: true
