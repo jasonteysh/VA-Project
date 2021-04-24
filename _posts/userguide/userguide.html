@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["images/cluster.png","images/cluster2.png","images/cluster3.png","images/cluster4.png","images/edabar.png","images/edabar2.png","images/edabivariate.png","images/edabivariate2.png","images/edabivariate3.png","images/edabox.png","images/edabox2.png","images/edabox3.png","images/edacorr.png","images/edacorr2.png","images/geospatial1.PNG","images/geospatial2.PNG","images/imagecreator.pptx","images/mlr.png","images/mlr2.png","images/mlr3.png","images/sentimentanalysis1.jpg","images/topicmodel.png","images/wordcloud.png","userguide.pdf"]}
+  {"type":"character","attributes":{},"value":["images/cluster.png","images/cluster2.png","images/cluster3.png","images/cluster4.png","images/edabar.png","images/edabar2.png","images/edabivariate.png","images/edabivariate2.png","images/edabivariate3.png","images/edabox.png","images/edabox2.png","images/edabox3.png","images/edacorr.png","images/edacorr2.png","images/geospatial1.PNG","images/geospatial2.PNG","images/imagecreator.pptx","images/mlr.png","images/mlr2.png","images/mlr3.png","images/sentimentanalysis1.jpg","images/topicmodel.png","images/wordcloud.png","userguide.pdf","userguide_files/anchor-4.2.2/anchor.min.js","userguide_files/bowser-1.9.3/bowser.min.js","userguide_files/distill-2.2.21/template.v2.js","userguide_files/header-attrs-2.7/header-attrs.js","userguide_files/jquery-1.11.3/jquery.min.js","userguide_files/popper-2.6.0/popper.min.js","userguide_files/tippy-6.2.7/tippy-bundle.umd.min.js","userguide_files/tippy-6.2.7/tippy-light-border.css","userguide_files/tippy-6.2.7/tippy.css","userguide_files/tippy-6.2.7/tippy.umd.min.js","userguide_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1515,35 +1515,45 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h2 id="bar-charts">Bar Charts</h2>
 <p>Bar charts allow user to explore the total count of relevant variables (e.g. number of hosts) in each geographical division (in this case, State and Local Government Area level)</p>
 <p><img src="images/edabar.png" style="width:100.0%" /></p>
-<p>Step 1) Click on <em>“Region:”</em> to explore the different states in Australia Step 2) Click on <em>“X Variable:”</em> to select either <em>“Number of Hosts”</em> or <em>“Number of Listings”</em> as the variable of interest.</p>
+<p>Step 1) Click on <em>“Region:”</em> to explore the different states in Australia<br />
+Step 2) Click on <em>“X Variable:”</em> to select either <em>“Number of Hosts”</em> or <em>“Number of Listings”</em> as the variable of interest.</p>
 <p>The top barchart (see above) showcases the <em>“X Variable”</em> (in this case, Number of Hosts) per State and is fixed.</p>
 <p><img src="images/edabar2.png" style="width:100.0%" /></p>
 <p>The bottom barchart (see above) showcases the LGAs with the top-10 <em>“Number of Hosts”</em> within the selected region.</p>
 <h2 id="boxplots">Boxplots</h2>
 <p>Box plots allow users to examine the distribution of selected variable, identifying any extreme outliers or skewness in the distribution.</p>
 <p><img src="images/edabox.png" style="width:100.0%" /></p>
-<p>Step 1) Select <em>“Region:”</em> to explore the different states in Australia. Step 2) Click on <em>“Local Government Area”</em> to trigger a dropdown list of possible LGAs in the State to include for exploration. Users are able to choose multiple LGAs to view at a single time through clicking the chosen city in the drop down bar. Step 3) Select <em>“Y Variable:”</em> of interest such as <em>Price, Review Scores Ratings, Bedrooms, Beds</em> etc. to view the corresponding boxplots</p>
+<p>Step 1) Select <em>“Region:”</em> to explore the different states in Australia.<br />
+Step 2) Click on <em>“Local Government Area”</em> to trigger a dropdown list of possible LGAs in the State to include for exploration. Users are able to choose multiple LGAs to view at a single time through clicking the chosen city in the drop down bar.<br />
+Step 3) Select <em>“Y Variable:”</em> of interest such as <em>Price, Review Scores Ratings, Bedrooms, Beds</em> etc. to view the corresponding boxplots</p>
 <p><img src="images/edabox2.png" style="width:100.0%" /></p>
-<p>The top boxplot (see above) showcases Boxplots of <em>“Prices”</em> in the selected LGAs. Hovering over each boxplot provides more information on the quantile, minimum, and maximum values,</p>
+<p>The top boxplot (see above) showcases Boxplots of <em>“Prices”</em> in the selected LGAs. Hovering over each boxplot provides more information on the quantile, minimum, and maximum values.</p>
 <p><img src="images/edabox3.png" style="width:100.0%" /></p>
-<p>The bottom boxplot (see above) showcases <em>“Price”</em> distribution for each <em>“Property Type”</em>, facet-wraped by select LGAs. Similarly, hovering over each boxplot provides more information on the quantile, minimum, and maximum values</p>
+<p>The bottom boxplot (see above) showcases <em>“Price”</em> distribution for each <em>“Property Type”</em>, facet-wraped by select LGAs. Similarly, hovering over each boxplot provides more information on the quantile, minimum, and maximum values.</p>
 <h2 id="bivariate-analysis">Bivariate Analysis</h2>
 <p>Density plot is an alternative view to the freqeuncy distribution of a selected variable.</p>
 <p>Bivariate plot allows user to examine the relationship and visualize any observable correlation between two variables.</p>
 <p><img src="images/edabivariate.png" style="width:100.0%" /></p>
-<p>Step 1) Select <em>“Region:”</em> to explore the different states in Australia. Step 2) Click on <em>“Local Government Area”</em> to trigger a dropdown list of possible LGAs in the State to include for exploration. Users are able to choose multiple LGAs to view at a single time through clicking the chosen city in the drop down bar. Step 3 Select <em>“X Variable:”</em> of interest to see density plot. Step 4) Select <em>“Y Variable:”</em> as well to view the bivariate plot between the X- and Y-variable of interest. This will allow user to explore how 2 variables interact with each other</p>
+<p>Step 1) Select <em>“Region:”</em> to explore the different states in Australia.<br />
+Step 2) Click on <em>“Local Government Area”</em> to trigger a dropdown list of possible LGAs in the State to include for exploration. Users are able to choose multiple LGAs to view at a single time through clicking the chosen city in the drop down bar.<br />
+Step 3 Select <em>“X Variable:”</em> of interest to see density plot.<br />
+Step 4) Select <em>“Y Variable:”</em> as well to view the bivariate plot between the X- and Y-variable of interest. This will allow user to explore how 2 variables interact with each other</p>
 <p><img src="images/edabivariate2.png" style="width:100.0%" /></p>
 <p>The top plot (see above) is a density plot to showcase the frequency of the <em>“X Variable”</em>.</p>
 <p><img src="images/edabivariate3.png" style="width:100.0%" /></p>
 <p>The bottom plot (see above) is a bivariate plot to explore the relationship between two variables. The two tables below the bivariate plots showcase the confidence interval of the <em>“X Variable”</em> and <em>“Y Variable:”</em>.</p>
 <h2 id="correlation-analysis">Correlation Analysis</h2>
 <p><img src="images/edacorr.png" style="width:100.0%" /></p>
-<p>Step 1) Click on <em>“Visualisation Method:”</em> to view the correlation plots in different methods such as <em>“circle, ellipse and number”</em>. Step 2) Click on <em>“Reorder Correlation Matrix:”</em> to view the correlation plots in different orders such as <em>“hclust, alphabet and AOE”</em>.</p>
+<p>Step 1) Click on <em>“Visualisation Method:”</em> to view the correlation plots in different methods such as <em>“circle, ellipse and number”</em>.<br />
+Step 2) Click on <em>“Reorder Correlation Matrix:”</em> to view the correlation plots in different orders such as <em>“hclust, alphabet and AOE”</em>.</p>
 <p><img src="images/edacorr2.png" style="width:100.0%" /></p>
 <p>The plot represents the correlation plot of all the variables in the Airbnb data set.</p>
 <h1 id="cluster-analysis">Cluster Analysis</h1>
 <p><img src="images/cluster.png" style="width:100.0%" /></p>
-<p>Step 1) Click on <em>“Region:”</em> to choose a states in Australia to focus on. Step 2) Select <em>“Cluster Variable:”</em> to include variables for the cluster analysis. Variables include <em>“Price, Bedrooms, Beds, Review Score Ratings”</em> etc. Step 3) Click on <em>“Distance Function:”</em> to choose between <em>“euclid”</em> and <em>“cosine”</em> distance for the clusters. Step 4) Toggle <em>“Cluster Size”</em> between the sizes 2 and 15, to see different cluster sizes in the data set.</p>
+<p>Step 1) Click on <em>“Region:”</em> to choose a states in Australia to focus on.<br />
+Step 2) Select <em>“Cluster Variable:”</em> to include variables for the cluster analysis. Variables include <em>“Price, Bedrooms, Beds, Review Score Ratings”</em> etc.<br />
+Step 3) Click on <em>“Distance Function:”</em> to choose between <em>“euclid”</em> and <em>“cosine”</em> distance for the clusters.<br />
+Step 4) Toggle <em>“Cluster Size”</em> between the sizes 2 and 15, to see different cluster sizes in the data set.</p>
 <p><img src="images/cluster2.png" style="width:100.0%" /></p>
 <p>The first plot is the K-Means plot, showcasing clustering with different number of clusters up to the K selected.</p>
 <p><img src="images/cluster3.png" style="width:100.0%" /></p>
@@ -1554,7 +1564,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p>This tab can be used for exploratory spatial data visualization and analysis on the Local Government Area (LGA) level for each of the States of Australia.</p>
 <p>Step 1) by clicking on the <em>Spatial Cluster Analysis</em> main left-hand panel, we enter this tab, with two maps coming into view (Note: it might take awhile for the viz to load). The left-hand viz provides an overview of the distribution of either the raw values (default) or clustering statistics for the LGAs within a selected area (State) of Australia. The right-hand viz displays the spatial cluster analysis results - showing areas of high/low clusters, and outliers</p>
 <p>Step 2) clicking on the drop down list on the <em>“Select State:”</em> tab allows users to select the state of interest from a list of nine different states in Australia (<em>Note: while the visualization allows for user to select the “All” state option, it is highly discouraged as some of the spatial analyses do not have meaningful interpretations for areas with considerable missing data - for which at the whole-of-Australia level, data are more sparsed. When analyzing the data, users are also advised to conduct due diligence in determining whether the selected data range of interest has sufficiently satisfied analysis requirements.</em>)</p>
-<p>Step 3) allows users to <em>“Select Variable”</em> of interest from a list of six..</p>
+<p>Step 3) allows users to <em>“Select Variable”</em> of interest from a list of six.</p>
 <p>The resultant maps also allow users to click on the area within each contiguous boundary to have more information, such as the name of the LGA, the status (e.g. (C) is a city, (A) an area, (T) towns, (M) municipalities, and (S) shire), and the value of the variable of interest on the first geographical visualization, and the clustering analysis statistics on the second geo-viz on the right.</p>
 <p><img src="images/geospatial1.PNG" style="width:100.0%" /></p>
 <p>Step 4) we go on to the options for individual geoviz. For the left-hand viz, user can first select the <em>reference value</em> to be displayed - options include raw values and local indicators of spatial association’s statistics. Note that if the Moran’s I’s p-value or the Getis-Ord’s G z-scores are selected, selection for other options (see step 4 and 5 below) will be disabled as these statistical results are to be interpreted on pre-determined intervals.</p>
@@ -1587,13 +1597,15 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h2 id="regression-for-price">Regression for Price</h2>
 <p><img src="images/mlr.png" style="width:100.0%" /></p>
 <p>At the <em>“Regression for Price”</em> tab,</p>
-<p>Step 1) Click on <em>“Independent Variables:”</em> to choose the multiple variables that you would like to apply in the Multiple Linear Regression (MLR). The choices of variables could be influenced through the correlation plot found in the EDA. Users are encouraged to choose variables with low correlation with each other. Step 2) Click on <em>“Strategies of Stepwise:”</em> to choose whether the Stepwise MLR will move in a <em>“Forward”, “Backward”,</em> or <em>“Stepwise”</em> direction.</p>
+<p>Step 1) Click on <em>“Independent Variables:”</em> to choose the multiple variables that you would like to apply in the Multiple Linear Regression (MLR). The choices of variables could be influenced through the correlation plot found in the EDA. Users are encouraged to choose variables with low correlation with each other.<br />
+Step 2) Click on <em>“Strategies of Stepwise:”</em> to choose whether the Stepwise MLR will move in a <em>“Forward”, “Backward”,</em> or <em>“Stepwise”</em> direction.</p>
 <p><img src="images/mlr2.png" style="width:100.0%" /></p>
 <p>The <em>“Regression Summary”</em> showcases the MLR calculation and gives us an indication of the significance of each variable in the regression with respect to <em>“Price”</em>.</p>
 <h2 id="regression-for-review-score-ratings">Regression for Review Score Ratings</h2>
 <p><img src="images/mlr3.png" style="width:100.0%" /></p>
 <p>At the <em>“Regression for Review Score Rating”</em> tab,</p>
-<p>Step 1) Click on <em>“Independent Variables:”</em> to choose the multiple variables that you would like to apply in the Multiple Linear Regression (MLR). The choices of variables could be influenced through the correlation plot found in the EDA. It is better to choose variables with low correlation with each other. Step 2) Click on <em>“Strategies of Stepwise:”</em> to choose whether the Stepwise MLR will move in a <em>“Forward”, “Backward”,</em> or <em>“Stepwise”</em> direction.</p>
+<p>Step 1) Click on <em>“Independent Variables:”</em> to choose the multiple variables that you would like to apply in the Multiple Linear Regression (MLR). The choices of variables could be influenced through the correlation plot found in the EDA. It is better to choose variables with low correlation with each other.<br />
+Step 2) Click on <em>“Strategies of Stepwise:”</em> to choose whether the Stepwise MLR will move in a <em>“Forward”, “Backward”,</em> or <em>“Stepwise”</em> direction.</p>
 <p>The <em>“Regression Summary”</em> showcases the MLR calculation and gives us an indication of the significance of each variable in the regression with respect to <em>“Review Score Ratings”</em>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
