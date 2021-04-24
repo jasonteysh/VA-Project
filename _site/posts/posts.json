@@ -25,31 +25,6 @@
     "input_file": {}
   },
   {
-    "path": "posts/researchpaper/",
-    "title": "Visual Analytics Project: Research Paper",
-    "description": "Research paper for the project work for this course.",
-    "author": [
-      {
-        "name": "Louelle TEO Fengmin",
-        "url": {}
-      },
-      {
-        "name": "Jason TEY Shou Heng",
-        "url": {}
-      },
-      {
-        "name": "WONG Kian Hoong (Andy)",
-        "url": {}
-      }
-    ],
-    "date": "2021-04-25",
-    "categories": [],
-    "contents": "\r\n\r\n\r\n\r\n\r\n",
-    "preview": {},
-    "last_modified": "2021-04-24T19:49:33+08:00",
-    "input_file": {}
-  },
-  {
     "path": "posts/shiny/",
     "title": "Visual Analytics Project: Shiny Application",
     "description": "The Shiny application developed for the project work for this course.",
@@ -123,6 +98,31 @@
     "preview": {},
     "last_modified": "2021-04-24T20:13:34+08:00",
     "input_file": {}
+  },
+  {
+    "path": "posts/researchpaper/",
+    "title": "Visual Analytics Project: Research Paper",
+    "description": "Research paper for the project work for this course.",
+    "author": [
+      {
+        "name": "Louelle TEO Fengmin",
+        "url": {}
+      },
+      {
+        "name": "Jason TEY Shou Heng",
+        "url": {}
+      },
+      {
+        "name": "WONG Kian Hoong (Andy)",
+        "url": {}
+      }
+    ],
+    "date": "2021-04-25",
+    "categories": [],
+    "contents": "\r\n\r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2021-04-25T00:05:24+08:00",
+    "input_file": "researchpaper.utf8.md"
   },
   {
     "path": "posts/2021-03-31-assignment-andy-wong/",

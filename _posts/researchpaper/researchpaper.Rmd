@@ -26,3 +26,4 @@ knitr::opts_chunk$set(echo = FALSE)
 ![](images/researchpaperpg6.png){width=100%}
 ![](images/researchpaperpg7.png){width=100%}
 ![](images/researchpaperpg8.png){width=100%}
+![](images/researchpaperpg9.png){width=100%}
