@@ -9,6 +9,4 @@ navbar:
       href: index.html
     - text: "Visual Analytics Project"
       href: vap.html
-    - text: "About"
-      href: about.html
 output: distill::distill_article
