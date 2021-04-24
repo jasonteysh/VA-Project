@@ -1,6 +1,8 @@
 ---
-title: "Data Visualisation Project"
+title: "Visual Analytics Project"
 listing:
   posts:
     - project-proposal
+    - poster
+    - userguide
 ---
