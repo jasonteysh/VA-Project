@@ -2,7 +2,7 @@
 title: "Visual Analytics Project"
 listing:
   posts:
-    - project-proposal
-    - poster
-    - userguide
+  - project-proposal
+  - poster
+  - userguide
 ---
