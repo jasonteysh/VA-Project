@@ -77,6 +77,47 @@ All data preparation was performing using R in the RStudio IDE. This included dr
 ## Exploratory Data Analysis
 _(Can refer to Raymond Teo's paper: https://wiki.smu.edu.sg/1920t2isss608/Group11_research_paper and how they write this portion.)_
 
+Exploratory Data Analysis (EDA) is an approach to data sets to summarise their main characteristics. With EDA, we can
+- Propose hypotheses to explain the observed characteristics of the data
+- Assess the data sets and observe any anomalies and outliers
+- Support the selection of appropriate statistical tools and techniques
+- Provide a basis for further data collection through surveys and experiments
+
+### Barcharts
+
+Barcharts in our Shiny will showcase the number of Airbnb listings or hosts per *State* and *Local Government Area* (LGA). This allows users to understand their market share and competition in the area they are in. It also allows analyst to understand the different states and tourism density.
+
+![](images/hostlistings.png)
+
+## Boxplots
+
+Boxplots in the shiny allows us to explore statistical data of the different variables in each LGA, or per *Property Type*. It is a convenient way of depicting groups of numerical data through their 5-number summaries.
+- Smallest Observation
+- Lower Quartile
+- Median
+- Upper Quartile
+- Largest Deviation
+
+In this shiny, users will be able to toggle between different numerical data to analyse the boxplots in different LGA.
+
+![](images/boxplotvic.png)
+
+## Density & Bivariate Analysis
+
+The Density plot allows users to understand where most of the data is populated within the range. Therefore they are able to zoom in at the denser clusters to do a better analysis.
+
+![](images/densityplot.png)
+
+The bivariate plot we will be using for this report is for two continuous data. It allows us to consider the relationship between 2 variables.
+
+For example, for below, we can see that there is a small positive linear relationship between *Review Scores Rating* and *Price*.
+
+![](images/bivariate.png)
+
+### Correlation Plot
+
+
+
 ## Cluster Analysis
 _(Can refer to Raymond Teo's paper: https://wiki.smu.edu.sg/1920t2isss608/Group11_research_paper and how they write this portion.)_
 
