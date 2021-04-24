@@ -1,0 +1,8 @@
+Shiny:
+https://louelle.shinyapps.io/ISSS608Grp1-Shiny/
+
+Netlify:
+https://isss608grp1.netlify.app/posts/visual-analytics-project/
+
+GitHub:
+https://github.com/jasonteysh/VA-Project
