@@ -1,5 +1,7 @@
 ---
 title: "Visual Analytics Project: Poster"
+description: |
+  Poster for the project work for this course.
 author:
   - name: Louelle TEO Fengmin
   - name: Jason TEY Shou Heng
