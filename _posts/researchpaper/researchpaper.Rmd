@@ -1,5 +1,5 @@
 ---
-title: "Research Paper"
+title: "Visual Analytics Project: Research Paper"
 description: |
   Proposal for the project work for this course.
 author:

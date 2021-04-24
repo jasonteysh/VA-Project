@@ -1,5 +1,5 @@
 ---
-title: "User Guide - Understanding Airbnb listings in Australia"
+title: "Visual Analytics Project: User Guide"
 author:
   - name: Louelle Teo Fengmin
     email: louelle.teo.2020@mitb.smu.edu.sg

@@ -1,5 +1,5 @@
 ---
-title: "Shiny application"
+title: "Visual Analytics Project: Shiny Application"
 author:
   - name: Louelle Teo Fengmin
     email: louelle.teo.2020@mitb.smu.edu.sg
@@ -20,4 +20,5 @@ output:
 options(tinytex.verbose = TRUE)
 ```
 
-# [Shiny application is here](https://louelle.shinyapps.io/ISSS608Grp1-Shiny/)
+[CLick here to access the Shiny application.](https://louelle.shinyapps.io/ISSS608Grp1-Shiny/)
+![](images/shinyapp.png){width=100%}
