@@ -35,9 +35,9 @@ With millions of listings in 220 countries and over 100,000 cities[@airbnb2020],
 # Motivation
 _(Motivation of the application)_
 
-AirBnb is one of the pioneers, larger player, and rapidly-growing company in the increasingly important sharing economy of the world, Given rich multitude of data made available through its website, there are huge potential for a free-to-use analytical dashboard that housing market analyst, sharing economy professionals, property agents, research institutes, and would-be AirBnB hosts to utilise and better understand this business environment.  
+AirBnb is one of the pioneers, larger player, and rapidly-growing company in the increasingly important sharing economy of the world, given rich multitude of data made available through its website, there are huge potential for a free-to-use analytic dashboard that housing market analyst, sharing economy professionals, property agents, research institutes, and would-be AirBnB hosts to utilize and better understand this business environment.  
 
-However, analysts, hosts, and professionals who are keen to delve into such data sets might not have the requisite knowledge or programmatic skills to develop their own analytic tools. This application aims to bridge this gap by providing a publicly available analytic dashboard that provides various analytical techniques to enable interested parties to tap on the rich data provided to derive meaningful insights for their professional use. The target users of this application are analysts with some knowledge of statistical techniques but lack the coding skills to develop their own tools.
+However, analysts, hosts, and professionals who are keen to delve into such data sets might not have the requisite knowledge or programmatic skills to develop their own analytic tools. This application aims to bridge this gap by providing a publicly available analytic dashboard that provides various analytic techniques to enable interested parties to tap on the rich data provided to derive meaningful insights for their professional use. The target users of this application are analysts with some knowledge of statistical techniques but lack the coding skills to develop their own tools.
 
 While this application focuses on the Australia Airbnb listings dataset, the data processing, methodologies, and app development process can be easily replicated and reproduced with datasets of other geographical areas that bear the same data structure. 
 
@@ -83,9 +83,12 @@ Exploratory Data Analysis (EDA) is an approach to data sets to summarise their m
 
 ### Barcharts
 
-Barcharts in our Shiny will showcase the number of Airbnb listings or hosts per *State* and *Local Government Area* (LGA). This allows users to understand their market share and competition in the area they are in. It also allows analyst to understand the different states and tourism density.
+Barcharts in our Shiny will showcase the number of Airbnb listings or hosts per State and Local Government Area (LGA). This allows users to understand the market conditions of the area they are interested in. 
 
 ![](images/hostlistings.png)
+
+The above visualization is obtained by counting the unique Host ID and Listing ID against a State or LGA. It is noted that **New South Wales** have the highest number of Hosts and Listings, with the LGA, **Sydney** taking the top spot.
+
 
 ## Boxplots
 
@@ -96,28 +99,47 @@ Boxplots in the shiny allows us to explore statistical data of the different var
 - Upper Quartile
 - Largest Deviation
 
-In this shiny, users will be able to toggle between different numerical data to analyse the boxplots in different LGA.
+In this shiny, users will be able to toggle between different continuous data to analyze the boxplots in different LGAs. 
 
 ![](images/boxplotvic.png)
 
+Taking a look at another State **Victoria**, we can analyze the distribution of the pricing or other variables through a boxplot. It gives us an insight into the pricing range for the type of housing. 
+
 ## Density & Bivariate Analysis
 
-The Density plot allows users to understand where most of the data is populated within the range. Therefore they are able to zoom in at the denser clusters to do a better analysis.
+The Density plot of variables allows us to view and observe any skewness in the distribution. 
 
 ![](images/densityplot.png)
 
-The bivariate plot we will be using for this report is for two continuous data. It allows us to consider the relationship between 2 variables.
-
-For example, for below, we can see that there is a small positive linear relationship between *Review Scores Rating* and *Price*.
+For example, in this density plot of the State of **Victoria**, the *Review Scores Ratings* are generally between 80 to 100, and peaks can be seen at multiples of 20.
 
 ![](images/bivariate.png)
 
-### Correlation Plot
+In the Bivariate analysis, we can review how the X Variable of interest (eg, *Review Score Rating*) correlates to another variable. In the plot above, we found the four LGAs to have a low correlation between *Price* and *Review Scores Rating*.
 
+### Correlation Matrix
 
+A correlation matrix is a table showing correlation coefficients between variables. Each cell in the table shows the correlation between two variables. 
+
+![](images/corrplot.png)
+Highly correlation variables should be treated carefully. For example, with linear regression, a high amount of correlations suggests that the linear regression estimates will be unreliable.
 
 ## Cluster Analysis
 _(Can refer to Raymond Teo's paper: https://wiki.smu.edu.sg/1920t2isss608/Group11_research_paper and how they write this portion.)_
+
+K Means clustering is a partitioning clustering approach. Each cluster is associated with a centroid, where the data is assigned to the cluster based on distance. The number of clusters, K must be specified, and the basic algorithm will repeatedly reassign cases to clusters. Clustering is an unsupervised learning technique that help users to identify data driven patterns that may warrant further investigations.
+
+![](images/kmeans.png)
+The above visualisation is achieved by using package *biganalytics*. It clusters the chosen variables using euclid distance in the region of Victoria.
+
+![](images/optimalclust.png)
+An optimal cluster size is plotted using the Elbow Method, to find out the number of clusters that is optimized for our dataset.
+The cluster size of four would be chosen, and a parallel plot is created to further visualise the characteristics of the dataset.
+
+![](images/parallelplot.png)
+
+From the parallel plot above, cluster 4 appears to be listings with higher number of beds and bedrooms that are listed at a higher price with varying review scores rating. This cluster of listings likely caters to large groups.
+
 
 ## Spatial Data Analysis  
 The spatial data analysis provides an analytical overview of the geographical distribution of different variables of interest across the different Local Government Areas (LGAs) of Australia. For example, the choropleth below presents the median price of listing is in each of the LGAs in the Victoria State - the darker the color, the higher the median price for that LGA, and we see the darkest range of median price in the area around the tip of the Melbourne bay. This way, we can easily compare whether median prices are within the same range, higher, or lower across the different LGAs. 
@@ -185,6 +207,16 @@ _Figure 2: Topic Modelling using LDA_
 ## Multi-linear Regression Analysis
 _(Can refer to Raymond Teo's paper: https://wiki.smu.edu.sg/1920t2isss608/Group11_research_paper and how they write this portion.)_
 
+Multi Linear Regression (MLR) is a statistical technique that uses multiple variables to predict the outcome of a target variable. 
+
+![](images/mlr.png)
+
+Users will be able to explore a Multi Linear Regression of either *Price* or *Review Score Ratings* to understand the variables that will directly affect the target variables. With this information, they can therefore understand the effect an individual predictor can cause.
+
+Users are able to select multiple variables, and toggle through different analysis method such as "Forward", "Backward" and "Stepwise" regression. 
+
+The regression above returns four variables that are of statistical significance in predicting *Price*. However, the model is only able to explain 4% of the variation in price. (Adjusted R-squared = 0.044)
+
 # Demonstration
 _(Use case)_
 
@@ -240,13 +272,16 @@ From the sentiment analysis, it was observed that most guests only gave a review
 # Future Work
 _(A description of how your system could be extended or refined.)_
 
-Future versions of such an application could include other countries to provide more comprehensive analysis of different regions and markets. FOr example, Airbnb listings in South Africa may provide different insight into what hosts provide and what guests want, compared to Australia or other countries.
+Based on the exploratory spatial data analysis, we noted that prices are highly driven by location-based factors. This is further confirmed when the MLR fails to account for a large portion of the variation in price. A Geographically-Weighted Regression (GWR) can be introduced in future editions to enhance the performance of the predictive model.
 
-Other sentiment analysis techniques such as LSA could be included, to provide the analyst with a more comprehensive suite of statistical analysis tools with which to perform their analysis.
+Other sentiment analysis techniques such as LSA could also be included, to provide the analyst with a more comprehensive suite of statistical analysis tools. Complex statistical analysis such as hierarchical clustering can also be included, with the support of adequate computing hardware.
 
-Deeper analysis could also be done on the profile of hosts as well as guests, for example what type of hosts were more likely to have listings that gained good reviews, or what type of guests were more likely to match a certain type of listing and give good reviews.
+Deeper analysis could also be done on the profile of hosts as well as guests, for example the type of hosts that are more likely to have listings with good reviews, or the type of guest are more likely to give good reviews, for a particular listing type.
 
 On a whole-of-Australia scale, there are numerous LGAs with missing data. In order support a more robust and holistic geospatial association analysis, these information gaps will need to be plucked. 
+
+Future versions of such an application could include other countries to provide more comprehensive analysis of different regions and markets. FOr example, Airbnb listings in South Africa may provide different insight into what hosts provide and what guests want, compared to Australia or other countries.
+
 
 # References
 
